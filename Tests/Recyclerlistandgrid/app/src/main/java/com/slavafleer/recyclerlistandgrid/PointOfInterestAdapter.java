@@ -27,7 +27,7 @@ public class PointOfInterestAdapter extends RecyclerView.Adapter<PointOfInterest
 
         View view = layoutInflater.inflate(R.layout.item_point_of_interest, null);
 
-        return new PointOfInterestHolder(context, view);
+        return new PointOfInterestHolder(view);
     }
 
     // Will be invoked for each item presented.
