@@ -5,30 +5,29 @@
 
     <TextView
         android:id="@+id/textViewId"
-        android:layout_width="0dp"
+        android:layout_width="50dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/textViewName"
-        android:layout_width="0dp"
+        android:layout_width="100"
         android:layout_height="match_parent"
-        android:layout_weight="5"
+        android:layout_weight="1"
         android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/textViewAddress"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="10"
+        android:layout_weight="1"
         android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/textViewDistance"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="1"
         android:textSize="20sp"/>
 
 </LinearLayout>
