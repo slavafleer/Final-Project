@@ -42,7 +42,9 @@ public class MainActivity extends AppCompatActivity implements ListFragment.Call
     public void onItemClick(int itemPosition) {
         Toast.makeText(this, "Clicked on " + itemPosition, Toast.LENGTH_SHORT).show();
 
+        // Run if device is tablet
         if (deviceType.equals("tablet")) {
+
             ItemPositionFragment itemPositionFragment = new ItemPositionFragment();
 
             Bundle bundle = new Bundle();
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements ListFragment.Call
 
         } else { // If device is phone
 
+            // Open a new activity and send data
             Intent intent = new Intent(this, ItemPositionActivity.class);
             intent.putExtra("position", itemPosition);
             startActivity(intent);
