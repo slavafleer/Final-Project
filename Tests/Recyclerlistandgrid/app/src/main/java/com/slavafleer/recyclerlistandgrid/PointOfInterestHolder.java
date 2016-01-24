@@ -1,5 +1,6 @@
 package com.slavafleer.recyclerlistandgrid;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -12,12 +13,12 @@ public class PointOfInterestHolder extends RecyclerView.ViewHolder {
     private TextView textViewAddress;
     private TextView textViewDistance;
 
-    public PointOfInterestHolder(View itemView) {
+    public PointOfInterestHolder(Context context, View itemView) {
         super(itemView);
 
         textViewId = (TextView) itemView.findViewById(R.id.textViewId);
         textViewName = (TextView) itemView.findViewById(R.id.textViewName);
-        textViewAddress = (TextView) itemView.findViewById(R.id.textViewAddress);
+        textViewAddress = (TextView) itemView.findViewById(R.id.textViewName);
         textViewDistance = (TextView) itemView.findViewById(R.id.textViewDistance);
     }
 
