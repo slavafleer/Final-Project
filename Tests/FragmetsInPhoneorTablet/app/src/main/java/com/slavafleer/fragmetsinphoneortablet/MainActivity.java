@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements ListFragment.Callbacks {
@@ -17,7 +18,17 @@ public class MainActivity extends AppCompatActivity implements ListFragment.Call
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        deviceType = (String) findViewById(R.id.linearLayoutRoot).getTag();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        View view = findViewById(android.R.id.content);
+
+        deviceType = (String)view.getTag();
+
+        //Toast.makeText(this, deviceType, Toast.LENGTH_LONG).show();
 
         Toast.makeText(this, "Running on " + deviceType, Toast.LENGTH_LONG).show();
 
