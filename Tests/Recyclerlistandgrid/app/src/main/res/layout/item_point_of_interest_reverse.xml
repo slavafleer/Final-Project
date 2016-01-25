@@ -3,22 +3,15 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:layout_marginTop="10dp"
-              android:background="#0043fa">
+              android:background="#ff1616">
 
     <TextView
-        android:id="@+id/textViewId"
+        android:id="@+id/textViewDistance"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:adjustViewBounds="true"
-        android:textSize="20sp"/>
-
-    <TextView
-        android:id="@+id/textViewName"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:adjustViewBounds="true"
+        android:gravity="right"
         android:textSize="20sp"/>
 
     <TextView
@@ -27,14 +20,25 @@
         android:layout_height="match_parent"
         android:layout_weight="5"
         android:adjustViewBounds="true"
+        android:gravity="right"
         android:textSize="20sp"/>
 
     <TextView
-        android:id="@+id/textViewDistance"
+        android:id="@+id/textViewName"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:adjustViewBounds="true"
+        android:gravity="right"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/textViewId"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:adjustViewBounds="true"
+        android:gravity="right"
         android:textSize="20sp"/>
 
 </LinearLayout>
