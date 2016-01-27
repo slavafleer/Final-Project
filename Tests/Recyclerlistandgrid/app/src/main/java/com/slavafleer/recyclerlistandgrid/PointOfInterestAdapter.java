@@ -25,7 +25,16 @@ public class PointOfInterestAdapter extends RecyclerView.Adapter<PointOfInterest
 
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = layoutInflater.inflate(R.layout.item_point_of_interest, null);
+        View view;
+        switch (viewType) {
+            case 3:
+                view = layoutInflater.inflate(R.layout.item_point_of_interest, parent, false); // Not null, cause it make problem with weight.
+                break;
+
+            default:
+                view = layoutInflater.inflate(R.layout.item_point_of_interest_reverse, parent, false); // Not null, cause it make problem with weight.
+                break;
+        }
 
         return new PointOfInterestHolder(view);
     }
@@ -43,5 +52,10 @@ public class PointOfInterestAdapter extends RecyclerView.Adapter<PointOfInterest
     @Override
     public int getItemCount() {
         return pointOfInterests.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 }
