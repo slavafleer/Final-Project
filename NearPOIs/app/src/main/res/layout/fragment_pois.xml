@@ -65,7 +65,7 @@
         android:layout_height="0dp"
         android:layout_weight="7"
         android:layout_marginTop="10dp"
-        android:id="@+id/recyclerViewPoiList">
+        android:id="@+id/recyclerViewPois">
 
     </android.support.v7.widget.RecyclerView>
 
