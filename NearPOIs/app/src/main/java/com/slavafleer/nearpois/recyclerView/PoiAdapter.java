@@ -42,7 +42,7 @@ public class PoiAdapter extends RecyclerView.Adapter<PoiHolder> {
                 view = layoutInflater.inflate(R.layout.item_poi_gray, parent, false); // Not null, cause it make problem with weight.
                 break;
         }
-        return new PoiHolder(view);
+        return new PoiHolder(context, view);
     }
 
     // Will be invoked for each item presented.
