@@ -20,3 +20,8 @@ As option would be added a way to this poi and arriving time.
 In Setting choosing from big list which defaults buttons would be in quick search bar.
 *****************************************
 
+The place types in default search buttons:
+ bank, bar, bus_station, cafe, doctor,
+ gas_station, barber, dentist, lodging, movie_theater,
+ museum, police, post_office, restaurant, shopping_mall, stadium,
+ synagogue, taxi_stand, train_station.

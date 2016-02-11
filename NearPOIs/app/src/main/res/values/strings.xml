@@ -7,4 +7,52 @@
     <string name="item_poi_address">Address</string>
     <string name="item_poi_vicinity">Vicinity</string>
     <string name="item_poi_distance">Distance</string>
+
+    <!-- 19 search types for quick search-->
+    <string-array name="searchTypes">
+        <item>bank</item>
+        <item>bar</item>
+        <item>barber</item>
+        <item>bus_station</item>
+        <item>cafe</item>
+        <item>dentist</item>
+        <item>doctor</item>
+        <item>gas_station</item>
+        <item>lodging</item>
+        <item>movie_theater</item>
+        <item>museum</item>
+        <item>police</item>
+        <item>post_office</item>
+        <item>restaurant</item>
+        <item>shopping_mall</item>
+        <item>stadium</item>
+        <item>synagogue</item>
+        <item>taxi_stand</item>
+        <item>train_station</item>
+    </string-array>
+
+    <!-- 19 images for quick search-->
+    <string-array name="imageNames">
+        <item>bank_dollar_71</item>
+        <item>bar_71</item>
+        <item>barber_71</item>
+        <item>bus_71</item>
+        <item>cafe_71</item>
+        <item>dentist_71</item>
+        <item>doctor_71</item>
+        <item>gas_station_71</item>
+        <item>lodging_71</item>
+        <item>movies_71</item>
+        <item>museum_71</item>
+        <item>police_71</item>
+        <item>post_office_71</item>
+        <item>restaurant_71</item>
+        <item>shopping_71</item>
+        <item>stadium_71</item>
+        <item>worship_jewish_71</item>
+        <item>taxi_71</item>
+        <item>train_71</item>
+    </string-array>
+
+
 </resources>

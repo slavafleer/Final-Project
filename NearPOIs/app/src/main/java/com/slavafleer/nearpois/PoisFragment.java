@@ -1,6 +1,7 @@
 package com.slavafleer.nearpois;
 
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.slavafleer.nearpois.recyclerView.PoiAdapter;
+import com.slavafleer.nearpois.recyclerView.QuickSearchAdapter;
 
 import java.util.ArrayList;
 
@@ -22,6 +24,9 @@ import java.util.ArrayList;
 public class PoisFragment extends Fragment {
 
     private RecyclerView recyclerViewPois;
+    private RecyclerView recyclerViewQuickSearches;
+
+    private Activity activity;
 
     public PoisFragment() {
         // Required empty public constructor
@@ -34,7 +39,10 @@ public class PoisFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_pois, container, false);
 
+        activity = getActivity();
+
         recyclerViewPois = (RecyclerView) view.findViewById(R.id.recyclerViewPois);
+        recyclerViewQuickSearches = (RecyclerView) view.findViewById(R.id.recyclerViewQuickSearches);
 
         // TODO: TESTING
         ArrayList<Poi> pois = new ArrayList<>();
@@ -47,9 +55,24 @@ public class PoisFragment extends Fragment {
         pois.add(new Poi("Place 7"));
 
         // Initialising Pois Recycler View.
-        PoiAdapter poiAdapter = new PoiAdapter(getActivity(), pois);
-        recyclerViewPois.setLayoutManager(new LinearLayoutManager(getActivity()));
+        PoiAdapter poiAdapter = new PoiAdapter(activity, pois);
+        recyclerViewPois.setLayoutManager(new LinearLayoutManager(activity));
         recyclerViewPois.setAdapter(poiAdapter);
+
+        // Initialising Quick Search Array;
+        String[] searchTypes = getResources().getStringArray(R.array.searchTypes);
+        String[] imageNames = getResources().getStringArray(R.array.imageNames);
+
+        ArrayList<QuickSearch> quickSearches = new ArrayList<>();
+        for(int i = 0; i < searchTypes.length; i++) {
+            quickSearches.add(new QuickSearch(activity, searchTypes[i], imageNames[i]));
+        }
+
+        // Initialising Quick Search Recycler View.
+        QuickSearchAdapter quickSearchAdapter = new QuickSearchAdapter(activity, quickSearches);
+        recyclerViewQuickSearches.setLayoutManager(
+                new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewQuickSearches.setAdapter(quickSearchAdapter);
 
         return view;
     }
