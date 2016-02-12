@@ -2,15 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_margin="@dimen/view_vertical_margin"
+              android:layout_marginBottom="@dimen/view_vertical_margin"
               android:orientation="horizontal">
 
     <LinearLayout
+        android:id="@+id/linearLayoutPoiData"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:id="@+id/linearLayoutPoiData">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textViewItemPoiName"
@@ -33,8 +33,8 @@
             style="@style/ItemPoiDistance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/item_poi_vicinity"
-            android:layout_marginBottom="@dimen/view_vertical_margin"/>
+            android:layout_marginBottom="@dimen/view_vertical_margin"
+            android:text="@string/item_poi_vicinity"/>
 
         <TextView
             android:id="@+id/textViewItemPoiDistance"

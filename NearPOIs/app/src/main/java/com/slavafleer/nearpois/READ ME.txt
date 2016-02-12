@@ -18,6 +18,8 @@ screen would show the map of chosen poi from the list.
 As option would be added a way to this poi and arriving time.
 
 In Setting choosing from big list which defaults buttons would be in quick search bar.
+
+Use sounds when pressing buttons.
 *****************************************
 
 The place types in default search buttons:
