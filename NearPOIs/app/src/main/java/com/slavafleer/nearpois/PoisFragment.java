@@ -75,7 +75,8 @@ public class PoisFragment extends Fragment {
         recyclerViewQuickSearches.setAdapter(quickSearchAdapter);
 
         // Put Recycler in middle of "endless" icons.
-        recyclerViewQuickSearches.scrollToPosition(19 * 100/2);
+        recyclerViewQuickSearches.scrollToPosition(
+                Constants.NUMBER_OF_QUICK_SEARCH_ICONS * QuickSearchAdapter.LOOPS_AMMOUNT / 2);
 
         return view;
     }

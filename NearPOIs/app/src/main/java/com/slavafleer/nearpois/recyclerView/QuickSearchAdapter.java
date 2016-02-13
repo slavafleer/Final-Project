@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.slavafleer.nearpois.Constants;
 import com.slavafleer.nearpois.QuickSearch;
 import com.slavafleer.nearpois.R;
 
@@ -15,6 +16,9 @@ import java.util.ArrayList;
  * Adapter for Quick Search Recycler.
  */
 public class QuickSearchAdapter extends RecyclerView.Adapter<QuickSearchHolder> {
+
+    // This number does simulation of endless loops for quick search recycler view.
+    public static final int LOOPS_AMMOUNT = 100;
 
     private Context context;
     private ArrayList<QuickSearch> quickSearches;
@@ -42,7 +46,8 @@ public class QuickSearchAdapter extends RecyclerView.Adapter<QuickSearchHolder> 
     @Override
     public void onBindViewHolder(QuickSearchHolder holder, int position) {
 
-        QuickSearch quickSearch = quickSearches.get(position % 19);
+        QuickSearch quickSearch = quickSearches.get(
+                position % Constants.NUMBER_OF_QUICK_SEARCH_ICONS);
 
         holder.bindQuickSearch(quickSearch);
     }
@@ -50,6 +55,6 @@ public class QuickSearchAdapter extends RecyclerView.Adapter<QuickSearchHolder> 
     @Override
     public int getItemCount() {
 //        return quickSearches.size();
-        return quickSearches.size() * 100;
+        return quickSearches.size() * LOOPS_AMMOUNT;
     }
 }
