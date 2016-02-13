@@ -74,6 +74,9 @@ public class PoisFragment extends Fragment {
                 new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
         recyclerViewQuickSearches.setAdapter(quickSearchAdapter);
 
+        // Put Recycler in middle of "endless" icons.
+        recyclerViewQuickSearches.scrollToPosition(19 * 100/2);
+
         return view;
     }
 

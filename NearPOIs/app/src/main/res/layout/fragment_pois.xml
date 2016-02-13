@@ -9,7 +9,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.5">
+        android:layout_weight="1.5"
+        android:paddingLeft="@dimen/view_horizontal_margin"
+        android:paddingRight="@dimen/view_horizontal_margin">
 
         <EditText
             android:id="@+id/editTextSearchText"
@@ -42,7 +44,9 @@
         android:id="@+id/recyclerViewQuickSearches"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:paddingLeft="@dimen/view_horizontal_margin"
+        android:paddingRight="@dimen/view_horizontal_margin">
 
     </android.support.v7.widget.RecyclerView>
 
@@ -50,7 +54,7 @@
         android:id="@+id/recyclerViewPois"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/view_vertical_margin"
         android:layout_weight="7">
 
     </android.support.v7.widget.RecyclerView>

@@ -18,7 +18,6 @@ public class QuickSearchHolder extends RecyclerView.ViewHolder {
     public QuickSearchHolder(View itemView) {
         super(itemView);
 
-        //TODO: why imageViewItemQuickSearch remains null ?!!!!
         imageViewItemQuickSearch = (ImageView) itemView.findViewById(R.id.imageViewItemQuickSearch);
     }
 

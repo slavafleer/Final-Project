@@ -42,13 +42,14 @@ public class QuickSearchAdapter extends RecyclerView.Adapter<QuickSearchHolder> 
     @Override
     public void onBindViewHolder(QuickSearchHolder holder, int position) {
 
-        QuickSearch quickSearch = quickSearches.get(position);
+        QuickSearch quickSearch = quickSearches.get(position % 19);
 
         holder.bindQuickSearch(quickSearch);
     }
 
     @Override
     public int getItemCount() {
-        return quickSearches.size();
+//        return quickSearches.size();
+        return quickSearches.size() * 100;
     }
 }
