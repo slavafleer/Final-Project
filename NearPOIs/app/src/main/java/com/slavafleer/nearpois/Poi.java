@@ -23,6 +23,21 @@ public class Poi {
         this.name = name;
     }
 
+    public Poi(long id, String name, String address, String vicinity,
+               double distance, String place_id, float latitude,
+               float longitude, String photoReference, String iconUrl) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.vicinity = vicinity;
+        this.distance = distance;
+        this.place_id = place_id;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.photoReference = photoReference;
+        this.iconUrl = iconUrl;
+    }
+
     public long getId() {
         return id;
     }

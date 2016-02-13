@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class QuickSearchAdapter extends RecyclerView.Adapter<QuickSearchHolder> {
 
     // This number does simulation of endless loops for quick search recycler view.
-    public static final int LOOPS_AMMOUNT = 100;
+    public static final int LOOPS_AMOUNT = 100;
 
     private Context context;
     private ArrayList<QuickSearch> quickSearches;
@@ -55,6 +55,6 @@ public class QuickSearchAdapter extends RecyclerView.Adapter<QuickSearchHolder> 
     @Override
     public int getItemCount() {
 //        return quickSearches.size();
-        return quickSearches.size() * LOOPS_AMMOUNT;
+        return quickSearches.size() * LOOPS_AMOUNT;
     }
 }
