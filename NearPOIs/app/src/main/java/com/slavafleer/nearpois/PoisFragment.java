@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.slavafleer.nearpois.db.ResultsLogic;
 import com.slavafleer.nearpois.recyclerView.PoiAdapter;
 import com.slavafleer.nearpois.recyclerView.QuickSearchAdapter;
 
@@ -28,6 +29,9 @@ public class PoisFragment extends Fragment {
 
     private Activity activity;
 
+    private ResultsLogic resultsLogic; // db business logic
+
+
     public PoisFragment() {
         // Required empty public constructor
     }
@@ -40,19 +44,17 @@ public class PoisFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_pois, container, false);
 
         activity = getActivity();
+        resultsLogic = new ResultsLogic(activity);
 
         recyclerViewPois = (RecyclerView) view.findViewById(R.id.recyclerViewPois);
         recyclerViewQuickSearches = (RecyclerView) view.findViewById(R.id.recyclerViewQuickSearches);
 
         // TODO: TESTING
         ArrayList<Poi> pois = new ArrayList<>();
-        pois.add(new Poi("Place 1"));
-        pois.add(new Poi("Place 2"));
-        pois.add(new Poi("Place 3"));
-        pois.add(new Poi("Place 4"));
-        pois.add(new Poi("Place 5"));
-        pois.add(new Poi("Place 6"));
-        pois.add(new Poi("Place 7"));
+
+        resultsLogic.open();
+        pois = resultsLogic.getAllResults();
+        resultsLogic.close();
 
         // Initialising Pois Recycler View.
         PoiAdapter poiAdapter = new PoiAdapter(activity, pois);
@@ -80,5 +82,4 @@ public class PoisFragment extends Fragment {
 
         return view;
     }
-
 }

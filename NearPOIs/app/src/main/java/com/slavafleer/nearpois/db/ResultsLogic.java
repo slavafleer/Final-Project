@@ -57,7 +57,7 @@ public class ResultsLogic extends BaseLogic {
     }
 
     // Delete a POI from results database.
-    public long deleteFriend(Poi poi) {
+    public long deletePoi(Poi poi) {
 
         String where = DB.Results.ID + "=" + poi.getId();
 
