@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements PoiHolder.ClickLi
         resultsLogic = new ResultsLogic(this);
 
         // TODO: for testing only, need to delete.
-        initTestResults();
+        //initTestResults();
 
         getFragmentManager()
                 .beginTransaction()
