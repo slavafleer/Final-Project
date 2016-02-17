@@ -1,6 +1,7 @@
 package com.slavafleer.nearpois.recyclerView;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,13 +10,17 @@ import android.widget.TextView;
 
 import com.slavafleer.nearpois.Poi;
 import com.slavafleer.nearpois.R;
+import com.slavafleer.nearpois.asynkTask.ImageDownloaderAsyncTask;
+import com.squareup.picasso.Picasso;
 
 /**
  * Poi Holder for Poi Recycler View
  */
-public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener, ImageDownloaderAsyncTask.Callbacks {
 
     private static final String TAG = "PoiHolder";
+
+    private Context context;
 
     private ClickListener clickListener;
 
@@ -29,6 +34,8 @@ public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     // Find views in each item.
     public PoiHolder(Context context, View itemView) {
         super(itemView);
+
+        this.context = context;
 
         linearLayoutPoiData = (LinearLayout) itemView.findViewById(R.id.linearLayoutPoiData);
         textViewName = (TextView) linearLayoutPoiData.findViewById(R.id.textViewItemPoiName);
@@ -53,32 +60,55 @@ public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         String vicinity = poi.getVicinity();
         double distance = poi.getDistance();
 
-        if(name != null) {
+        if (name != null) {
             textViewName.setText(name);
         }
 
-        if(address != null) {
+        if (address != null) {
             textViewAddress.setText(address);
         }
 
-        if(vicinity != null) {
+        if (vicinity != null) {
             textViewVicinity.setText(vicinity);
         }
 
         // TODO: to add dependence for settings (km or miles) and show the relevant one.
-        if(distance > 0) {
+        if (distance > 0) {
             textViewDistance.setText(String.format("%.0fkm", distance));
         }
 
         // TODO: load image, need to decide from where
         // TODO: probably to load from Data Base.
+        String photoReference = poi.getPhotoReference();
+
+        String url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference + "&key=AIzaSyBqZywUvsonHXo6gVpiI0p-ABQ9oRuYdJw";
+        Picasso.with(context)
+                .load(url)
+                .into(imageViewPhoto);
+
+    }
+
+    // ImageDownloaderAsyncTask Callbacks
+    @Override
+    public void onAboutToStartDownloadImage() {
+
+    }
+
+    @Override
+    public void onImageDownloadSuccess(Bitmap bitmap) {
+        imageViewPhoto.setImageBitmap(bitmap);
+    }
+
+    @Override
+    public void onImageDownloadError(int httpStatusCode, String errorMessage) {
+        imageViewPhoto.setImageBitmap(null);
     }
 
     // Do it on poi item (data or photo) clicked.
     @Override
     public void onClick(View v) {
 
-        if(v instanceof LinearLayout) { // data part
+        if (v instanceof LinearLayout) { // data part
 //            Log.i(TAG, textViewName.getText().toString());
             clickListener.onDataClick(textViewName.getText().toString());
         } else { // photo part
@@ -100,7 +130,9 @@ public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     public interface ClickListener {
 
         void onDataClick(String name);
+
         void onDataLongClick(String name);
+
         void onPhotoClick(String name);
     }
 }

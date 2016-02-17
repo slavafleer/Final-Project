@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.slavafleer.nearpois.asynkTask.SendQueryAsyncTask;
+import com.slavafleer.nearpois.asynkTask.QuerySenderAsyncTask;
 import com.slavafleer.nearpois.db.ResultsLogic;
 import com.slavafleer.nearpois.recyclerView.PoiAdapter;
 import com.slavafleer.nearpois.recyclerView.QuickSearchAdapter;
@@ -30,9 +30,11 @@ import java.util.ArrayList;
  * running default buttons for quick searching
  * and the list of results.
  */
-public class PoisFragment extends Fragment implements SendQueryAsyncTask.Callbacks {
+public class PoisFragment extends Fragment implements QuerySenderAsyncTask.Callbacks {
 
     private static final String TAG = PoisFragment.class.getSimpleName();
+
+    private static final int REQUEST_POIS = 1;
 
     private RecyclerView recyclerViewPois;
     private RecyclerView recyclerViewQuickSearches;
@@ -61,10 +63,10 @@ public class PoisFragment extends Fragment implements SendQueryAsyncTask.Callbac
 
         try {
             URL url = new URL("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=31.2589,34.7997&type=cafe&rankby=distance&key=AIzaSyBqZywUvsonHXo6gVpiI0p-ABQ9oRuYdJw");
-            new SendQueryAsyncTask(this, 1).execute(url);
+            new QuerySenderAsyncTask(this, REQUEST_POIS).execute(url);
 
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
         }
 
         recyclerViewPois = (RecyclerView) view.findViewById(R.id.recyclerViewPois);
@@ -104,19 +106,20 @@ public class PoisFragment extends Fragment implements SendQueryAsyncTask.Callbac
         return view;
     }
 
-    // Interface Callbacks from SendQueryAsyncTask
+    // Interface Callbacks from QuerySenderAsyncTask
     // Precede before asyncTask.
     @Override
-    public void onAboutToStart() {
+    public void onAboutToStartQuerySender() {
 
     }
 
     // When result received, send it to main thread.
     @Override
-    public void onSuccess(String result, int respondKey) {
+    public void onSuccessQuerySender(String result, int respondId) {
 
-        switch (respondKey) {
-            case 1: {
+        switch (respondId) {
+            // Put received result of pois to arrayList
+            case REQUEST_POIS: {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     Log.v(TAG, result);
@@ -159,7 +162,7 @@ public class PoisFragment extends Fragment implements SendQueryAsyncTask.Callbac
 
     // If error received, send it to main thread.
     @Override
-    public void onError(String errorMessage, int respondKey) {
+    public void onErrorQuerySender(String errorMessage, int respondId) {
 
     }
 }

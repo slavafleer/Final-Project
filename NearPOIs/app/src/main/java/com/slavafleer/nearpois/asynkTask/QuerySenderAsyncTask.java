@@ -9,24 +9,24 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * AsynkTask for pois search request from Google Place API.
+ * AsyncTask for pois search request from Google Place API.
  */
-public class SendQueryAsyncTask extends AsyncTask<URL, Void, String> {
+public class QuerySenderAsyncTask extends AsyncTask<URL, Void, String> {
 
     private Callbacks callbacks;
-    private int requestKey;
+    private int requestId;
     private String errorMessage;
 
-    public SendQueryAsyncTask(Callbacks callbacks, int requestKey) {
+    public QuerySenderAsyncTask(Callbacks callbacks, int requestKey) {
         this.callbacks = callbacks;
-        this.requestKey = requestKey;
+        this.requestId = requestKey;
     }
 
     // Precede before asyncTask.
     @Override
     protected void onPreExecute() {
 
-        callbacks.onAboutToStart();
+        callbacks.onAboutToStartQuerySender();
     }
 
     // Send query for results from api - done in parallel thread.
@@ -85,20 +85,20 @@ public class SendQueryAsyncTask extends AsyncTask<URL, Void, String> {
     protected void onPostExecute(String result) {
 
         if(errorMessage != null) {
-            callbacks.onError(errorMessage, requestKey);
+            callbacks.onErrorQuerySender(errorMessage, requestId);
         }
         else {
-            callbacks.onSuccess(result, requestKey);
+            callbacks.onSuccessQuerySender(result, requestId);
         }
     }
 
     // Interface for adding relevant actions in parent Class.
     public interface Callbacks {
 
-        void onAboutToStart();
+        void onAboutToStartQuerySender();
 
-        void onSuccess(String result, int respondKey);
+        void onSuccessQuerySender(String result, int respondId);
 
-        void onError(String errorMessage, int respondKey);
+        void onErrorQuerySender(String errorMessage, int respondId);
     }
 }

@@ -1,0 +1,460 @@
+<resources>
+    <string name="app_name">GSON</string>
+
+    <string name="json">{
+   "html_attributions" : [],
+   "next_page_token" : "CoQC-wAAAASJ2gJyYdZgNIYqNEaOsbX80-MfqQXgOGT558FH-RMc5laxoou85cYGD-Wig1a6sj3i3xtUqgJEKZ6jGQ7u6aXH4DU4wmenEnU5EFXR6x5YTxkmL29g0YCLgGuZTHsHVWPcqu4caolv4buIkWBsft-rG6PUafiBUbyRWUv1DbEqcxAlVbs1RiG8qmEquOKUJCZbwpq1NQIX3d5pYnKkAaOS02riIEF8iEysnMCO7ig4QfH6f4becWM7wJdLMPbC4A8Yf2xFBHrkC5KWCgi3n903YcwZH39iTlS5M6qZZ_Z2RUSrN_J2KlaWWoDk52rCk-BA6LFA1LRN3ei1q9pS4GMSEMlBavmvr-p9FfrxCHFF1rYaFG3dGtODoQNTqkEWVHsBmvQqbMvs",
+   "results" : [
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 31.26201219999999,
+               "lng" : 34.8007827
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+         "id" : "e2a0188d426f85e1e2bdc32c050dd20473f1507f",
+         "name" : "Aroma",
+         "place_id" : "ChIJtUmQ2F5mAhUR_B3RCkGYCXA",
+         "reference" : "CmRYAAAANYOzcOQEVrawrXCuf3Rd9nHr987wmPNi7CcQyKZ-4B9rbmuGmmb1jrUOS1LTDWSfLrr32IbGv7jVwIB9UqcFt6mZwzoEVGl3D2y9Lie9r_ly354LbWeUEKutU-kd_oegEhC4kmpQmZ2kBPXqwl567LXcGhShWtZvc1jr4yXIAqa0mToilRdhtA",
+         "scope" : "GOOGLE",
+         "types" : [ "cafe", "food", "point_of_interest", "establishment" ],
+         "vicinity" : "David Ben Gurion Boulevard 4, Be'er Sheva"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 31.2581987,
+               "lng" : 34.8056352
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+         "id" : "28c5e3dd5fcee4d9db98b0aad340974d27b94a7f",
+         "name" : "Coca Brewpub",
+         "opening_hours" : {
+            "open_now" : true,
+            "weekday_text" : []
+         },
+         "photos" : [
+            {
+               "height" : 1123,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/105058004433429481254/photos\"\u003eCoca Brewpub\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRdAAAAf5ENiLL_odt7YhF6mSajrGsPxDCko5BHDOSDMXvMbhvr8C15of1eMHk4jHoiyFd7JOYcc1wH5oF1Mvdt_xq_RaqqEQ35UJPUY46dV2diKQuHn0GlbqvZaYzYadw0JsJREhAj1RoPBbjE84KHPxBQDOosGhSLXqR0-pdua-NhYqByH5X_80wuZQ",
+               "width" : 1685
+            }
+         ],
+         "place_id" : "ChIJeXQwillmAhURkIilATwfIKU",
+         "rating" : 4.4,
+         "reference" : "CmRgAAAAjHR2G4l5GtWvjAXU7hBZbfIVna8H9OejEwik073OUid9w3rtXFfAkSLqsRY48rGII3OKJwdi1CXr8IPgBWdSEPYxZoLINcoxq-7VT_JE5pa9meyuw-UraNyy9feVgBswEhCwLl06UAEqv-tFSvEEMu9aGhQVjwrTCFcqVCwJTvF2wIDF1hc9QQ",
+         "scope" : "GOOGLE",
+         "types" : [
+            "cafe",
+            "restaurant",
+            "food",
+            "store",
+            "bar",
+            "point_of_interest",
+            "establishment"
+         ],
+         "vicinity" : "Arlozorov Street 50, Be'er Sheva"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 31.2687096,
+               "lng" : 34.8005268
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+         "id" : "1a98a11b32bb2a053ee29db311fee7ad3aa251e7",
+         "name" : "קפה רינגלבלום",
+         "photos" : [
+            {
+               "height" : 764,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/111986000192130400189/photos\"\u003eolga paleev\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRdAAAA2WsRhCGbTHjzQ9u9wceczKVpVT7DE0hzMY7DMYCqFPgEQTbUi9ECwyzr_9VKXr1hheL0IOI7FyAqHGboohf5yOq1cVyl22me_WoXqgdbbhw29Kpfciw3YvPqMXt8S6aNEhAVlzZTLvXDuEF8hP3cK5OCGhTgs7Nj21YCKqwMBOGjH_ZHMb5O2w",
+               "width" : 1024
+            }
+         ],
+         "place_id" : "ChIJzUgFyPVmAhURsLpxf9jHzvY",
+         "rating" : 3.6,
+         "reference" : "CnRtAAAAB7LKqufEtwNBtJ74PuJqhao4l3ukkKuW5Da1dfqJhXO8jCNZIZzvqO3vEMwC84F9jWP4saeTdsm7kHPyVMGHGnd3z42kp0zEatAfNK2aSbGgWaOzYlHQr-cc9XUWzub9PzHAFEHG-z83uih_Br-eghIQHSXwgAUM9zY_TAWfAHn6LRoUf7j55vp3QNRIjrhtQi7kgBMtjD0",
+         "scope" : "GOOGLE",
+         "types" : [ "cafe", "food", "store", "point_of_interest", "establishment" ],
+         "vicinity" : "Ringelblum Street 6, Be'er Sheva"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 31.2472389,
+               "lng" : 34.7989646
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+         "id" : "c23773674f2e3316c55840e6695dca65cc97986c",
+         "name" : "סבא ג'בטו בע\"מ",
+         "opening_hours" : {
+            "open_now" : true,
+            "weekday_text" : []
+         },
+         "photos" : [
+            {
+               "height" : 2988,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/102647410649022090082/photos\"\u003eMatan Harsat\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRdAAAAgNAsU7c-Dvbi5Vg_nrcfJuaZ-_tvnog2Y_Y-Y65FD_jbqcavbThItn9X8vZIt1k6nfrsL9MtiWr1BZlQ-I7PIj-jbhYhEzXBvHK_9QgWK_RBkArsv3vGjWb_m2_aMyDjEhATRn2XAlh-YzCw9Lq3V8odGhQqNcPJrz8keyQ8t4pBHb8lvuYWlQ",
+               "width" : 5312
+            }
+         ],
+         "place_id" : "ChIJl9wh_0BmAhURW_uK0yHyhu8",
+         "rating" : 4.5,
+         "reference" : "CnRsAAAAwBygOhAyfiC3WzfavCl5CU2rMyP9zGsr1PzffPhOUenrFWmJjH_q1Ny_4ZsF8axaVYEwHGlfq1dDbhYDfpnoCDH30GWz9PheC3MvYjXqSkh80plHrcBcGprhPvoWj9QarmH8MYGSLOVEj9iO1TVfwhIQMa8CraFS0raV-PLRqRf3khoU75Mq-LlhtS74bsVGMonSixZmDrU",
+         "scope" : "GOOGLE",
+         "types" : [
+            "restaurant",
+            "meal_takeaway",
+            "cafe",
+            "bar",
+            "liquor_store",
+            "store",
+            "food",
+            "point_of_interest",
+            "establishment"
+         ],
+         "vicinity" : "Ha-Tikva Street 8, Be'er Sheva"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 31.2440101,
+               "lng" : 34.7978008
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/shopping-71.png",
+         "id" : "26ce27a0b5ccd153e9938985ef44dd39e1d4564c",
+         "name" : "גלידה אלדו באר שבע",
+         "opening_hours" : {
+            "open_now" : true,
+            "weekday_text" : []
+         },
+         "place_id" : "ChIJu9M9vj9mAhUR_FkXmExBEQ0",
+         "reference" : "CoQBdAAAAJZoHVlQbxXLECtMZG7dnoxUBtHPUUDNFwNxgMhRC3PQS5Htk1DLdYWPZAV0YI71boGoaOFjAXIy7ZFOf-vw5iZ2AmVKMBTmszHzQ7RJDvU3HFY1aWsdrtciTdJUiBeZEmnQ5Ge08rPngQUxVj5jbHeNUcrCMQJJ0xaWzadNzlHFEhBoexNbFcRiKG0gd5FycahOGhSkIGapRD16cXxwC7Vjms53mqq1pA",
+         "scope" : "GOOGLE",
+         "types" : [ "cafe", "store", "food", "point_of_interest", "establishment" ],
+         "vicinity" : "Yitshak Ben Zvi Street 3, Be'er Sheva"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 31.24419589999999,
+               "lng" : 34.7961414
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+         "id" : "dc6b42978cb4b92238494ff0ecfa0e81e39adf0e",
+         "name" : "cofix",
+         "place_id" : "ChIJPXqHYhVmAhURBjIhzFkEIFM",
+         "reference" : "CmRYAAAA9xX2Z-QQdMbLDZEL6VZhapmZxtVaAJ0N7PyxJmtIH4RCLK-1Ojlq7KJ5QxPsLQm4ZDz2bfYuCqKRl4BYBvmXb8_YplwiqacCYrIxaqRP13cCm7a-IhMLlTnt9vhqpT-fEhARmDYSf5vlahtIvUIYdV3BGhTWHc9SqhJRuIGmeHJmZ_LK3QDg_A",
+         "scope" : "GOOGLE",
+         "types" : [ "cafe", "food", "point_of_interest", "establishment" ],
+         "vicinity" : "Yitshak Ben Zvi Street 4, Be'er Sheva"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 31.2438127,
+               "lng" : 34.801614
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/shopping-71.png",
+         "id" : "923d88107f97d3f136313c5b521964c07ad3ca3d",
+         "name" : "גלידה אלדו באר שבע",
+         "opening_hours" : {
+            "open_now" : true,
+            "weekday_text" : []
+         },
+         "photos" : [
+            {
+               "height" : 768,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/113316895825559515026/photos\"\u003eran amar\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRdAAAAWG2vp9o0ffVW_A25qfP1UfCns1NiR1DComRkyU0msiDK3UxocrrFolvsS6uYUSA8nLG78xXn5FKEGnItV6hJ6S1T_6QFhWJWjM4ejISv8LVY1nZioBFyPy3b_nOH2sNVEhDcG0de5d2YB5htjqm31MsrGhTv6O2SiNRjnJlHmM2uJDKEggSHVA",
+               "width" : 1024
+            }
+         ],
+         "place_id" : "ChIJMTMFUz9mAhURnBF1G3FpInk",
+         "reference" : "CoQBdAAAAGvmyOMUuWyFmXIrXYPsGHsEoW2HzIOAZ9pFNpfTOpR2RXrd_XeDYGQ_yVOyosNx2X5y5jpEkSYIZJGsgn5nts_4xJfCVAd-Ge8mp8epYyRN0DYI31DqauZUHOxpHhEbv-dot3-AE8I5RbzSxw2w_kf6FhR-2pgqxtNYV5xSzE2pEhCo5ldyapCvN6doQ1XnXCmRGhRv-nk35m-dvgcVpMjlcEF6U1Zofw",
+         "scope" : "GOOGLE",
+         "types" : [ "cafe", "store", "food", "point_of_interest", "establishment" ],
+         "vicinity" : "Khayim Yakhil Street 18, Be'er Sheva"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 31.243945,
+               "lng" : 34.795703
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+         "id" : "bbf3d45a22507af138ac86aa6a637906426a74e8",
+         "name" : "ארומה",
+         "opening_hours" : {
+            "open_now" : true,
+            "weekday_text" : []
+         },
+         "place_id" : "ChIJM2u4exVmAhUR-Uug60XyJ_c",
+         "reference" : "CmReAAAAbCStA5rRKtz5hUHZDdPECQX92DmtSb8Hi-Yz0yTX50vbvp8dJCaGNkph5IC05uEBeLERX73cu5N3aRyBdIbLnSNwsBlqL5w18H77kfnzVQZd86c-pe9QNbTIBGO-LMhmEhBt3A6E4l24lXJ0NDfHIqb5GhR5neKA3AyfXpS6rIBs2ReJdnwkOg",
+         "scope" : "GOOGLE",
+         "types" : [ "cafe", "food", "store", "point_of_interest", "establishment" ],
+         "vicinity" : "קניון הנגב, צומת אלי כהן, באר שבע"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 31.2437873,
+               "lng" : 34.7956914
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+         "id" : "b0f8b9d44469fcc3d9da01fa28c7a7c15a5ad2ae",
+         "name" : "ארומה",
+         "place_id" : "ChIJ5zQNeRVmAhURSVUiJsdzJN8",
+         "reference" : "CmReAAAAYckIZinvEZYHIy-fj7YAnapWUxMxiHA6H5Ck1akBz9fHM91jAAZYIB1uIRvtzSB4J3dxvRyAHIJpPfRNs_81GBb812QQ1_xJjrV9DwyKH7tSqyHc_cJUkGdhBoULFIiyEhAujtLarh57dlsNPFpKrBIZGhQx_p5UNqTEIpS_hwyt7kymlrwgXA",
+         "scope" : "GOOGLE",
+         "types" : [ "cafe", "food", "store", "point_of_interest", "establishment" ],
+         "vicinity" : "Israel"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 31.2437532,
+               "lng" : 34.79472980000001
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+         "id" : "cdef279a55c93b99cc00596b601aa14393350588",
+         "name" : "ארומה",
+         "place_id" : "ChIJGRA8oBVmAhUR89622ei3oaQ",
+         "reference" : "CmReAAAA3X8MPXiARvsPdydwEwpVt8BlbdbNSgRV8Zq7VRV9f_BzFXyw-lldDeJDdHTG3AKApanE4QpjbdgL-viiT2PeNyYfnJvZHot7-v-RnQd0NZVtuQn9J9wT1XJU5Fp-f8-gEhCh0BDaf9o9-m6Ab47oJp12GhS1IX3OWP5Ni2VrZzfCa89Sk1-s3A",
+         "scope" : "GOOGLE",
+         "types" : [ "cafe", "food", "store", "point_of_interest", "establishment" ],
+         "vicinity" : "Israel"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 31.2431968,
+               "lng" : 34.7985591
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+         "id" : "7d77fc2c3d3ba9bb318ed92b9dd96f8b0d9bc2aa",
+         "name" : "דוכן קפה עלית",
+         "place_id" : "ChIJKTIxrz9mAhUR35mwg6n218M",
+         "reference" : "CnRsAAAAlbcT_TESv3aB3Xq1ajTRYdzPJmZ9x4d9EcMafvSt63ElmuGW12pu-fHlggiwpstKhfFG0_zMBQwYfOtaFL7NqYZUX-glIBFBQrKPj5-V-i-b6kMLPEceYAhPIfZtnphcqKMdpQ1j9mtRuaTomsJzyRIQq7ickE6fpkLGWOmkoBWs-xoUtesjzbVR6ep-bc_QdWfpWFyNN8k",
+         "scope" : "GOOGLE",
+         "types" : [ "cafe", "food", "store", "point_of_interest", "establishment" ],
+         "vicinity" : "Yitshak Ben Zvi Street 8, Be'er Sheva"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 31.2438327,
+               "lng" : 34.794229
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+         "id" : "408f98b5094b1fdb43cb5b6a6bc62c935e41435b",
+         "name" : "קפה גרג",
+         "place_id" : "ChIJoY5NphVmAhURk7FTvLtC0ck",
+         "reference" : "CnRhAAAAMYwf0ZmoiyEgHDCNX3Svhdkr0FEI3IxoGBXIHF9q9Zg11949PwXi_iPEKeKymJ87eO6TLK1bB4c3lreaxeDXpQ45bz147QhAnoTvhUobAqhkGbE0C0hBc2aFS1ybAEd-rJsiRaYPYi87uROd-VhtJhIQeSHTS8RH_PlpZNV_cdwyMBoU3v5A69HPaxIa8FNwxjHjNJXx7CQ",
+         "scope" : "GOOGLE",
+         "types" : [ "cafe", "food", "point_of_interest", "establishment" ],
+         "vicinity" : "קניון הנגב, צומת אלי כהן, באר שבע"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 31.2432382,
+               "lng" : 34.7972702
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+         "id" : "a1ba3e819388ab91df5f6cc7142f6ec077f930a3",
+         "name" : "מאפה נאמן",
+         "place_id" : "ChIJpRmcyz9mAhURKgdpHUtAZCo",
+         "reference" : "CnRkAAAALYMko59cuZUc2kPPBraN94EDG7mkfv4on2OySAayUb_3Xt7XXZ2yH3z7oj-nXM6Qm9xuOt7Kq7ZU_U5OVeb5MvK1utHYAoyfmCdYpAnUf9T1MR7FGG-_lJfavK09jhdTpiW2pj1k1M2i78j3WJ7TRBIQJ3t2O18XiRNH8QnzzlQ6IBoUmclqnMV3h215J0VBb3E6ZnSaNLo",
+         "scope" : "GOOGLE",
+         "types" : [ "cafe", "food", "point_of_interest", "establishment" ],
+         "vicinity" : "Be'er Sheva"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 31.24615889999999,
+               "lng" : 34.812259
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+         "id" : "085667b11c750f7994f78da916ae85abe443de3d",
+         "name" : "קפה קפה - באר שבע",
+         "opening_hours" : {
+            "open_now" : true,
+            "weekday_text" : []
+         },
+         "place_id" : "ChIJTV6lP0lmAhURdUcOFr3pshI",
+         "rating" : 4.2,
+         "reference" : "CnRwAAAAaduNPPOF_SVbNQV_U6oWToHAlrCFFksB6ZbL69unLDkM_GbzchvA2xIWEW_WvIlgkca4F6PGWe433YQmsqEIwpZP0mGJPNHoXFOQp8J0yRUF0zTMbtq_Rel7MhskZ1Rbubzn_cXzx0WoZNeodUQnshIQKY20uQYJ1bmMOR5203EIWhoUY4rAgb6qo1xspw4pKuDHMLF_wAA",
+         "scope" : "GOOGLE",
+         "types" : [ "cafe", "food", "point_of_interest", "establishment" ],
+         "vicinity" : "דרך חברון 133, Be'er Sheva"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 31.24516,
+               "lng" : 34.811227
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+         "id" : "4029b2176a47b9fd7779ae6c738ed0d651fae9cb",
+         "name" : "Epv Epv",
+         "place_id" : "ChIJq_SvP0lmAhUR3sGISkf_MoE",
+         "reference" : "CmRbAAAA9YG-UYWfTCpd05gYK9Ef4sFdT0zu0XQQaEegc8hhICxacFJ3P7dso5gv3TfkDJ3gVkkX1xoa_f2RvPrhmbEy0wWkIMEId8Li17JXeyNyr9PNnFOK4VJxOq32lEiNjx5oEhAIKmnGTfWSwbTyKzeKfyVfGhSFwuWXJAQSzJ_WUeTfE6HhERSaPQ",
+         "scope" : "GOOGLE",
+         "types" : [ "cafe", "food", "point_of_interest", "establishment" ],
+         "vicinity" : "Derekh Hebron 133, Be'er Sheva"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 31.2437146,
+               "lng" : 34.8090498
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+         "id" : "6a1a1520415dadc3fe1d7fda43adb30c7d896de3",
+         "name" : "רולדין Roladin",
+         "opening_hours" : {
+            "open_now" : true,
+            "weekday_text" : []
+         },
+         "photos" : [
+            {
+               "height" : 3120,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/100695504401787615455/photos\"\u003eBoris Rosenstein Levin\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRdAAAA99N_GQqGPVZOha5Ak2h8JeVrzc8KKBCem4SYa0yhhxxRi1UwEgsg4RGd0c2gWztzzWnit2kbwP1YRo0YO8PpJGRtAJAt2dyRS7JXCsjLh_1VkdaLl6d40aR6yOvv8yM-EhDEow-I9y0QIBZEWx1eGOWrGhRiEj5n3VJqRoCex46uJEbpTu2W0w",
+               "width" : 4160
+            }
+         ],
+         "place_id" : "ChIJf9_tREhmAhUREq24376n2i0",
+         "reference" : "CnRnAAAAX7rlffNrD8iAWh__7agBK3M1IERuZkgQT6mwBAFe8IJRy1WOukRHKeNWsacPCJTW39PcMfKVoNaDIaWjr81UEBZ9e5MhHrv3cH3Y0lprozpQgrAaby2bgt0ae5sed6r_mcwiNDzEId7QdQ8vCFvKSBIQwb65MSxB1-8p9qkdgwm5jBoUjgiAUEAnpT4HU247o1a-OHpoNHw",
+         "scope" : "GOOGLE",
+         "types" : [ "cafe", "food", "point_of_interest", "establishment" ],
+         "vicinity" : "Derekh Hebron 21, Be'er Sheva"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 31.2432088,
+               "lng" : 34.79144869999999
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+         "id" : "c571d16ca601f3e2479c7d8814013f8af31ae602",
+         "name" : "בית קפה פטפוט",
+         "opening_hours" : {
+            "open_now" : true,
+            "weekday_text" : []
+         },
+         "photos" : [
+            {
+               "height" : 60,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/108079096641229202836/photos\"\u003eבית קפה פטפוט\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRbAAAAXsjxENCNeT9ulzcfhZNbjrzYj1akBdtca7HIW1qZTqFtWIa5jsQPpzdol0B35FAen9pzbtbz_ZExCCk_jVrXftTkB8mnDo3kSpmWmF8UZ84JTkwhD8sCjM1pJ5EbMahCEhAuz2rPDoSZjH32sIokeCdTGhScUNylJBZWEGk189eognuvEpQOlQ",
+               "width" : 90
+            }
+         ],
+         "place_id" : "ChIJnVnlERRmAhURV5RnqikpHQc",
+         "reference" : "CnRrAAAA55cZ6xdhbmDd2Erb7G7D_yGTBTtunkM5tCy9Xmb3Pl5ocumJo-knlRwilFL6QHCsn33QLNUVTlMEl2Ml-FpuTR0QvW15N4VEZkcwX4kCiHJ3rYCYjVEYr6wSt-hAE9tEdijEEIZ6ZG3e6FIhjFOp-RIQpL7iG7ar0-LhkcUinoYn6hoUAaxNrfkUsNnSZZG_qclXpT9T6jU",
+         "scope" : "GOOGLE",
+         "types" : [ "cafe", "food", "store", "point_of_interest", "establishment" ],
+         "vicinity" : "Herzl Street 122, Be'er Sheva"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 31.24299529999999,
+               "lng" : 34.7913356
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+         "id" : "f9e77579435e714b92c26ffa849ca32b53dbca4c",
+         "name" : "פטפוט בעיר",
+         "place_id" : "ChIJMwPvERRmAhURusMpZW1rgx8",
+         "reference" : "CnRmAAAA2psekFK5jTsadu6HRHGLgmmmVZDjp6cH2uraxbpunohkDaJX1xcZhF7zdo2L11hpTXHj1EtVgf29NZybLzY_nWLfTJXnPUfOLaqxhx2J3GkPZbyKodCeC8Vyz27e9NH9__u8R5ewOYicCr27eAjZchIQD2Y66Ro4S5z8hU-zK7XpcBoUGLmZUDqpJxLSBx4wlkO7ma2uQtM",
+         "scope" : "GOOGLE",
+         "types" : [ "cafe", "food", "point_of_interest", "establishment" ],
+         "vicinity" : "Herzl Street 122, Be'er Sheva"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 31.2444257,
+               "lng" : 34.8115295
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+         "id" : "19d614c54ccb0f63873b2ea6a2046c3f043340b3",
+         "name" : "Aroma",
+         "opening_hours" : {
+            "open_now" : true,
+            "weekday_text" : []
+         },
+         "photos" : [
+            {
+               "height" : 1224,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/111022694907349429185/photos\"\u003eYuri Raysper\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRdAAAAhtvzZd8oGvofuP7tjjolUsecPbMfCtwOCiV1cKFopV2cSpojLW9h9QjzSzaGWYZVwOZOkJJOteqBXpCMOwQ2pMRw8HpPh9VtfesDww5DaXVsoEHp-_Os6kzS-JhpODFZEhCVGYKgBPnTswgH6MVQT7E2GhTIS6WbOcBJSj04Nx3PPQ0hckj7Ew",
+               "width" : 1632
+            }
+         ],
+         "place_id" : "ChIJzysIbUlmAhURPdoWBTzRKyY",
+         "rating" : 4,
+         "reference" : "CmRYAAAAn7Rkx5EUspUR_8Rb2Z0zl6CXn1m3oyd7kyquZdReD1KZGNh6BUCXBlOcBsy5EjjkVPXFR00-nhyRNyz4UGYgAzrVPRDo2PVZx0QBDbyJvoH72HZZbVhgBG5i1H9o5ND_EhBoMCMmTTKyy_B1vDphliODGhQxFxpZ6tgiyoBNv4JmpXox0MBKkA",
+         "scope" : "GOOGLE",
+         "types" : [ "cafe", "food", "store", "point_of_interest", "establishment" ],
+         "vicinity" : "Derekh Hebron 21, Be'er Sheva"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 31.2443028,
+               "lng" : 34.8114849
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+         "id" : "95fd8c061978be29131cab2a1134409d01bdd854",
+         "name" : "Biga",
+         "place_id" : "ChIJES-bcklmAhUREsbe2me5bA4",
+         "reference" : "CmRXAAAAYBTKXtP3iLikGeamd8hO1Q4RDMSUMiy8TKtpqTUVRLcyuNEUoG0fd6wgxDS7ZEbM4JB1IQG-KKiQyPREISGyBCctauN8W-F3ek0sP2Fd7TcOG0vPiYh6dteHHEiGIOw0EhCzwiWkZ17LLQ5PVuNZbSnAGhTbGXZ2fzwIlHzmBATItlK6IjTe6A",
+         "scope" : "GOOGLE",
+         "types" : [ "cafe", "food", "point_of_interest", "establishment" ],
+         "vicinity" : "Be'er Sheva"
+      }
+   ],
+   "status" : "OK"
+}</string>
+</resources>

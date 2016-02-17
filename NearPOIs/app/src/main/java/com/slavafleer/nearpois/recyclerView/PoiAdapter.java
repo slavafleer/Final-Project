@@ -53,6 +53,7 @@ public class PoiAdapter extends RecyclerView.Adapter<PoiHolder> {
         Poi poi = pois.get(position);
 
         holder.bindPoi(poi);
+
     }
 
     @Override
