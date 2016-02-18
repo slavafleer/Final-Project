@@ -1,9 +1,13 @@
 package com.slavafleer.nearpois;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,6 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.slavafleer.nearpois.asynkTask.QuerySenderAsyncTask;
 import com.slavafleer.nearpois.db.ResultsLogic;
 import com.slavafleer.nearpois.recyclerView.PoiAdapter;
@@ -30,7 +37,10 @@ import java.util.ArrayList;
  * running default buttons for quick searching
  * and the list of results.
  */
-public class PoisFragment extends Fragment implements QuerySenderAsyncTask.Callbacks {
+public class PoisFragment extends Fragment implements
+        QuerySenderAsyncTask.Callbacks,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = PoisFragment.class.getSimpleName();
 
@@ -47,6 +57,11 @@ public class PoisFragment extends Fragment implements QuerySenderAsyncTask.Callb
 
     private ArrayList<Poi> pois = new ArrayList<>();
 
+    private GoogleApiClient googleApiClient;
+    private Location lastLocation;
+    private double clientLatitide;
+    private double clientLongitude;
+
     public PoisFragment() {
         // Required empty public constructor
     }
@@ -61,9 +76,15 @@ public class PoisFragment extends Fragment implements QuerySenderAsyncTask.Callb
         activity = getActivity();
         resultsLogic = new ResultsLogic(activity);
 
+        buildGoogleApiClient();
+
         try {
-            URL url = new URL("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=31.2589,34.7997&type=cafe&rankby=distance&key=AIzaSyBqZywUvsonHXo6gVpiI0p-ABQ9oRuYdJw");
-            new QuerySenderAsyncTask(this, REQUEST_POIS).execute(url);
+//            URL url = new URL("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
+//                    clientLatitide +"," + clientLongitude +"&type=food&rankby=distance&key=AIzaSyBqZywUvsonHXo6gVpiI0p-ABQ9oRuYdJw");
+            URL url = new URL("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
+                    clientLatitide +"," + clientLongitude +"&type=food&rankby=distance&key=AIzaSyBqZywUvsonHXo6gVpiI0p-ABQ9oRuYdJw");
+
+                    new QuerySenderAsyncTask(this, REQUEST_POIS).execute(url);
 
         } catch (MalformedURLException e) {
             Log.e(TAG, e.getMessage());
@@ -106,11 +127,36 @@ public class PoisFragment extends Fragment implements QuerySenderAsyncTask.Callb
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        googleApiClient.connect();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        if (googleApiClient.isConnected()) {
+            googleApiClient.disconnect();
+        }
+    }
+
+    // Build Google Api Client
+    private void buildGoogleApiClient() {
+        googleApiClient = new GoogleApiClient.Builder(activity)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
     // Interface Callbacks from QuerySenderAsyncTask
     // Precede before asyncTask.
     @Override
     public void onAboutToStartQuerySender() {
-
+        Log.i(TAG, "Client location: " + clientLatitide + ", " + clientLongitude);
     }
 
     // When result received, send it to main thread.
@@ -122,12 +168,12 @@ public class PoisFragment extends Fragment implements QuerySenderAsyncTask.Callb
             case REQUEST_POIS: {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
-                    Log.v(TAG, result);
+//                    Log.v(TAG, result);
                     String status = jsonObject.getString(Constants.KEY_STATUS);
 
                     if (status.equals(Constants.VALUE_OK)) {
                         JSONArray results = jsonObject.getJSONArray(Constants.KEY_RESULTS);
-                        for(int i = 0; i < results.length(); i++) {
+                        for (int i = 0; i < results.length(); i++) {
                             JSONObject oneResult = results.getJSONObject(i);
                             String name = oneResult.getString(Constants.KEY_NAME);
                             String vicinity = oneResult.getString(Constants.KEY_VICINITY);
@@ -137,7 +183,7 @@ public class PoisFragment extends Fragment implements QuerySenderAsyncTask.Callb
                             String latitude = location.getString(Constants.KEY_LATITUDE);
                             String longitude = location.getString(Constants.KEY_LONGITUDE);
                             String photo_reference = null;
-                            if(oneResult.has(Constants.KEY_PHOTOS)) {
+                            if (oneResult.has(Constants.KEY_PHOTOS)) {
                                 JSONArray photos = oneResult.getJSONArray(Constants.KEY_PHOTOS);
                                 JSONObject photo = photos.getJSONObject(0);
                                 photo_reference = photo.getString(Constants.KEY_PHOTO_REFERENCE);
@@ -164,5 +210,49 @@ public class PoisFragment extends Fragment implements QuerySenderAsyncTask.Callb
     @Override
     public void onErrorQuerySender(String errorMessage, int respondId) {
 
+    }
+
+    // For Google Location API
+    // Runs when a GoogleApiClient object successfully connects.
+    @Override
+    public void onConnected(Bundle bundle) {
+
+        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+
+        if(lastLocation != null) {
+            clientLatitide = lastLocation.getLatitude();
+            clientLongitude = lastLocation.getLongitude();
+            Log.i(TAG, "Client location: " + clientLatitide + ", " + clientLongitude);
+        } else {
+            Log.i(TAG, "Client location is not found.");
+        }
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+        // The connection to Google Play services was lost for some reason.
+        // We call connect() to attempt to re-establish the connection.
+        Log.i(TAG, "Connection suspended");
+        googleApiClient.connect();
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+        // Refer to the javadoc for ConnectionResult to see what error codes
+        // might be returned in onConnectionFailed.
+        Log.i(TAG, "Connection failed: ErrorCode: " + connectionResult.getErrorCode());
     }
 }
