@@ -2,6 +2,7 @@ package com.slavafleer.nearpois.recyclerView;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -82,8 +83,15 @@ public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         String photoReference = poi.getPhotoReference();
 
         String url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference + "&key=AIzaSyBqZywUvsonHXo6gVpiI0p-ABQ9oRuYdJw";
-        Picasso.with(context)
-                .load(url)
+        Picasso picasso = new Picasso.Builder(context)
+                .listener(new Picasso.Listener() {
+                    @Override
+                    public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
+//                        imageViewPhoto.setImageResource(android.R.drawable.ic_menu_crop);
+                    }
+                })
+                .build();
+        picasso.load(url)
                 .into(imageViewPhoto);
 
     }
