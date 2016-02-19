@@ -6,6 +6,6 @@
     <dimen name="view_horizontal_margin">8dp</dimen>
     <dimen name="view_vertical_margin">8dp</dimen>
 
-    <dimen name="card_elevetion">8dp</dimen>
+    <dimen name="card_elevation">8dp</dimen>
     <dimen name="card_corner_radius">8dp</dimen>
 </resources>

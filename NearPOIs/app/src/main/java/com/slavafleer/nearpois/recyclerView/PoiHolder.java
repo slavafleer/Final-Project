@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.slavafleer.nearpois.Constants;
 import com.slavafleer.nearpois.Poi;
 import com.slavafleer.nearpois.R;
 import com.slavafleer.nearpois.asynkTask.ImageDownloaderAsyncTask;
@@ -60,7 +61,7 @@ public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     public void bindPoi(Poi poi) {
 
         String name = poi.getName();
-        String address = poi.getAddress();
+//        String address = poi.getAddress();
         String vicinity = poi.getVicinity();
         double distance = poi.getDistance();
 
@@ -87,7 +88,9 @@ public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         // Show image in item.
         String photoReference = poi.getPhotoReference();
 
-        String url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference + "&key=AIzaSyBqZywUvsonHXo6gVpiI0p-ABQ9oRuYdJw";
+
+//        imageViewPhoto.setImageDrawable(null);
+        String url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference + "&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
         Picasso.with(context)
                 .load(url)
 //                .error(android.R.drawable.ic_menu_crop)

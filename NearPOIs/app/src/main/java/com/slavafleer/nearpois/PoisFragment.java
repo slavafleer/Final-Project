@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -27,6 +29,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -59,8 +62,15 @@ public class PoisFragment extends Fragment implements
 
     private GoogleApiClient googleApiClient;
     private Location lastLocation;
-    private double clientLatitide;
+    private double clientLatitude;
     private double clientLongitude;
+
+    private EditText editTextSearchText;
+    private ImageView imageViewFind;
+    private ImageView imageViewFindAll;
+
+    //    private String type = "food";
+    private String type;
 
     public PoisFragment() {
         // Required empty public constructor
@@ -78,17 +88,25 @@ public class PoisFragment extends Fragment implements
 
         buildGoogleApiClient();
 
-        try {
-//            URL url = new URL("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
-//                    clientLatitide +"," + clientLongitude +"&type=food&rankby=distance&key=AIzaSyBqZywUvsonHXo6gVpiI0p-ABQ9oRuYdJw");
-            URL url = new URL("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
-                    clientLatitide +"," + clientLongitude +"&type=food&rankby=distance&key=AIzaSyBqZywUvsonHXo6gVpiI0p-ABQ9oRuYdJw");
+        editTextSearchText = (EditText) view.findViewById(R.id.editTextSearchText);
 
-                    new QuerySenderAsyncTask(this, REQUEST_POIS).execute(url);
+        // Find Button On Click
+        imageViewFind = (ImageView) view.findViewById(R.id.imageViewFind);
+        imageViewFind.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findPois();
+            }
+        });
 
-        } catch (MalformedURLException e) {
-            Log.e(TAG, e.getMessage());
-        }
+        // FindAll Button On Click
+        imageViewFindAll = (ImageView) view.findViewById(R.id.imageViewFindAll);
+        imageViewFindAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findPois();
+            }
+        });
 
         recyclerViewPois = (RecyclerView) view.findViewById(R.id.recyclerViewPois);
         recyclerViewQuickSearches = (RecyclerView) view.findViewById(R.id.recyclerViewQuickSearches);
@@ -127,6 +145,25 @@ public class PoisFragment extends Fragment implements
         return view;
     }
 
+    // Create poi request and send it to API.
+    private void findPois() {
+        try {
+            String encodedSearchText = java.net.URLEncoder.encode(editTextSearchText.getText().toString().trim(), "UTF-8");
+//            URL url = new URL("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
+//                    clientLatitude + "," + clientLongitude + "&name=" + encodedSearchText +
+//                    "&type=" + type + "&rankby=distance&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API);
+            URL url = new URL("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
+                    clientLatitude + "," + clientLongitude + "&name=" + encodedSearchText +
+                    "&rankby=distance&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API);
+            Log.i(TAG, url.toString());
+
+            new QuerySenderAsyncTask(this, REQUEST_POIS).execute(url);
+
+        } catch (MalformedURLException | UnsupportedEncodingException e) {
+            Log.e(TAG, e.getMessage());
+        }
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -156,7 +193,7 @@ public class PoisFragment extends Fragment implements
     // Precede before asyncTask.
     @Override
     public void onAboutToStartQuerySender() {
-        Log.i(TAG, "Client location: " + clientLatitide + ", " + clientLongitude);
+        Log.i(TAG, "Client location: " + clientLatitude + ", " + clientLongitude);
     }
 
     // When result received, send it to main thread.
@@ -172,6 +209,7 @@ public class PoisFragment extends Fragment implements
                     String status = jsonObject.getString(Constants.KEY_STATUS);
 
                     if (status.equals(Constants.VALUE_OK)) {
+                        pois.clear();
                         JSONArray results = jsonObject.getJSONArray(Constants.KEY_RESULTS);
                         for (int i = 0; i < results.length(); i++) {
                             JSONObject oneResult = results.getJSONObject(i);
@@ -209,7 +247,7 @@ public class PoisFragment extends Fragment implements
     // If error received, send it to main thread.
     @Override
     public void onErrorQuerySender(String errorMessage, int respondId) {
-
+        Log.e(TAG, errorMessage);
     }
 
     // For Google Location API
@@ -229,10 +267,10 @@ public class PoisFragment extends Fragment implements
         }
         lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
 
-        if(lastLocation != null) {
-            clientLatitide = lastLocation.getLatitude();
+        if (lastLocation != null) {
+            clientLatitude = lastLocation.getLatitude();
             clientLongitude = lastLocation.getLongitude();
-            Log.i(TAG, "Client location: " + clientLatitide + ", " + clientLongitude);
+            Log.i(TAG, "Client location: " + clientLatitude + ", " + clientLongitude);
         } else {
             Log.i(TAG, "Client location is not found.");
         }

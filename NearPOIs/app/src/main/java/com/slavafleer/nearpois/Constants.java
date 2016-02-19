@@ -23,4 +23,7 @@ public class Constants {
 
     // Google Place API Values
     public static final String VALUE_OK = "OK";
+
+    // Google Place API Access Key
+    public static final String ACCESS_KEY_GOOGLE_PLACE_API = "AIzaSyBqZywUvsonHXo6gVpiI0p-ABQ9oRuYdJw";
 }
