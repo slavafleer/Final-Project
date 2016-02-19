@@ -1,7 +1,6 @@
 package com.slavafleer.nearpois.recyclerView;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 import com.slavafleer.nearpois.Constants;
 import com.slavafleer.nearpois.Poi;
 import com.slavafleer.nearpois.R;
-import com.slavafleer.nearpois.asynkTask.ImageDownloaderAsyncTask;
 import com.slavafleer.nearpois.helper.RoundedTransformation;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -19,7 +17,7 @@ import com.squareup.picasso.Picasso;
 /**
  * Poi Holder for Poi Recycler View
  */
-public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener, ImageDownloaderAsyncTask.Callbacks {
+public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
     private static final String TAG = "PoiHolder";
 
@@ -88,7 +86,6 @@ public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         // Show image in item.
         String photoReference = poi.getPhotoReference();
 
-
 //        imageViewPhoto.setImageDrawable(null);
         String url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference + "&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
         Picasso.with(context)
@@ -107,23 +104,6 @@ public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickLi
                         imageViewDefaultPhoto.setVisibility(View.VISIBLE);
                     }
                 });
-
-    }
-
-    // ImageDownloaderAsyncTask Callbacks
-    @Override
-    public void onAboutToStartDownloadImage() {
-
-    }
-
-    @Override
-    public void onImageDownloadSuccess(Bitmap bitmap) {
-        imageViewPhoto.setImageBitmap(bitmap);
-    }
-
-    @Override
-    public void onImageDownloadError(int httpStatusCode, String errorMessage) {
-        imageViewPhoto.setImageBitmap(null);
     }
 
     // Do it on poi item (data or photo) clicked.

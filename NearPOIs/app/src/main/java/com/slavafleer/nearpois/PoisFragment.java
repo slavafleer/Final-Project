@@ -25,7 +25,6 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-import com.slavafleer.nearpois.asynkTask.QuerySenderAsyncTask;
 import com.slavafleer.nearpois.db.ResultsLogic;
 import com.slavafleer.nearpois.recyclerView.PoiAdapter;
 import com.slavafleer.nearpois.recyclerView.QuickSearchAdapter;
@@ -44,7 +43,6 @@ import java.util.ArrayList;
  * and the list of results.
  */
 public class PoisFragment extends Fragment implements
-        QuerySenderAsyncTask.Callbacks,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
@@ -152,21 +150,17 @@ public class PoisFragment extends Fragment implements
     private void findPois() {
         try {
             String encodedSearchText = java.net.URLEncoder.encode(editTextSearchText.getText().toString().trim(), "UTF-8");
-//            URL url = new URL("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
-//                    clientLatitude + "," + clientLongitude + "&name=" + encodedSearchText +
-//                    "&type=" + type + "&rankby=distance&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API);
-//            URL url = new URL("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
-//                    clientLatitude + "," + clientLongitude + "&name=" + encodedSearchText +
-//                    "&rankby=distance&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API);
+
             String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
                     clientLatitude + "," + clientLongitude + "&name=" + encodedSearchText +
                     "&rankby=distance&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
-            Log.i(TAG, url.toString());
 
-//            new QuerySenderAsyncTask(this, REQUEST_POIS).execute(url);
+            Log.i(TAG, url.toString());
 
             JsonObjectRequest jsonRequest = new JsonObjectRequest(
                     Request.Method.GET, url, (String)null, new Response.Listener<JSONObject>() {
+
+                // On receive json, update pois array.
                 @Override
                 public void onResponse(JSONObject response) {
 
@@ -243,67 +237,6 @@ public class PoisFragment extends Fragment implements
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
-    }
-
-    // Interface Callbacks from QuerySenderAsyncTask
-    // Precede before asyncTask.
-    @Override
-    public void onAboutToStartQuerySender() {
-        Log.i(TAG, "Client location: " + clientLatitude + ", " + clientLongitude);
-    }
-
-    // When result received, send it to main thread.
-    @Override
-    public void onSuccessQuerySender(String result, int respondId) {
-
-        switch (respondId) {
-            // Put received result of pois to arrayList
-            case REQUEST_POIS: {
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-//                    Log.v(TAG, result);
-                    String status = jsonObject.getString(Constants.KEY_STATUS);
-
-                    if (status.equals(Constants.VALUE_OK)) {
-                        pois.clear();
-                        JSONArray results = jsonObject.getJSONArray(Constants.KEY_RESULTS);
-                        for (int i = 0; i < results.length(); i++) {
-                            JSONObject oneResult = results.getJSONObject(i);
-                            String name = oneResult.getString(Constants.KEY_NAME);
-                            String vicinity = oneResult.getString(Constants.KEY_VICINITY);
-                            String place_id = oneResult.getString(Constants.KEY_PLACE_ID);
-                            JSONObject geometry = oneResult.getJSONObject(Constants.KEY_GEOMETRY);
-                            JSONObject location = geometry.getJSONObject(Constants.KEY_LOCATION);
-                            String latitude = location.getString(Constants.KEY_LATITUDE);
-                            String longitude = location.getString(Constants.KEY_LONGITUDE);
-                            String photo_reference = null;
-                            if (oneResult.has(Constants.KEY_PHOTOS)) {
-                                JSONArray photos = oneResult.getJSONArray(Constants.KEY_PHOTOS);
-                                JSONObject photo = photos.getJSONObject(0);
-                                photo_reference = photo.getString(Constants.KEY_PHOTO_REFERENCE);
-                            }
-                            String iconUrl = oneResult.getString(Constants.KEY_ICON_URL);
-
-                            pois.add(new Poi(name, vicinity, place_id, Float.parseFloat(latitude),
-                                    Float.parseFloat(longitude), photo_reference, iconUrl));
-                        }
-
-                        poiAdapter.notifyDataSetChanged(); // update recycler
-                    } else {
-                        Log.e(TAG, status);
-                    }
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                }
-            }
-        }
-
-    }
-
-    // If error received, send it to main thread.
-    @Override
-    public void onErrorQuerySender(String errorMessage, int respondId) {
-        Log.e(TAG, errorMessage);
     }
 
     // For Google Location API
