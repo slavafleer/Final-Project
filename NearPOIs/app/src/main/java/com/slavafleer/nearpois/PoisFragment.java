@@ -17,6 +17,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -30,8 +35,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -152,14 +155,67 @@ public class PoisFragment extends Fragment implements
 //            URL url = new URL("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
 //                    clientLatitude + "," + clientLongitude + "&name=" + encodedSearchText +
 //                    "&type=" + type + "&rankby=distance&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API);
-            URL url = new URL("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
+//            URL url = new URL("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
+//                    clientLatitude + "," + clientLongitude + "&name=" + encodedSearchText +
+//                    "&rankby=distance&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API);
+            String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
                     clientLatitude + "," + clientLongitude + "&name=" + encodedSearchText +
-                    "&rankby=distance&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API);
+                    "&rankby=distance&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
             Log.i(TAG, url.toString());
 
-            new QuerySenderAsyncTask(this, REQUEST_POIS).execute(url);
+//            new QuerySenderAsyncTask(this, REQUEST_POIS).execute(url);
 
-        } catch (MalformedURLException | UnsupportedEncodingException e) {
+            JsonObjectRequest jsonRequest = new JsonObjectRequest(
+                    Request.Method.GET, url, (String)null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+
+                    try {
+                        String status = response.getString(Constants.KEY_STATUS);
+
+                        if (status.equals(Constants.VALUE_OK)) {
+                            pois.clear();
+                            JSONArray results = response.getJSONArray(Constants.KEY_RESULTS);
+                            for (int i = 0; i < results.length(); i++) {
+                                JSONObject oneResult = results.getJSONObject(i);
+                                String name = oneResult.getString(Constants.KEY_NAME);
+                                String vicinity = oneResult.getString(Constants.KEY_VICINITY);
+                                String place_id = oneResult.getString(Constants.KEY_PLACE_ID);
+                                JSONObject geometry = oneResult.getJSONObject(Constants.KEY_GEOMETRY);
+                                JSONObject location = geometry.getJSONObject(Constants.KEY_LOCATION);
+                                String latitude = location.getString(Constants.KEY_LATITUDE);
+                                String longitude = location.getString(Constants.KEY_LONGITUDE);
+                                String photo_reference = null;
+                                if (oneResult.has(Constants.KEY_PHOTOS)) {
+                                    JSONArray photos = oneResult.getJSONArray(Constants.KEY_PHOTOS);
+                                    JSONObject photo = photos.getJSONObject(0);
+                                    photo_reference = photo.getString(Constants.KEY_PHOTO_REFERENCE);
+                                }
+                                String iconUrl = oneResult.getString(Constants.KEY_ICON_URL);
+
+                                pois.add(new Poi(name, vicinity, place_id, Float.parseFloat(latitude),
+                                        Float.parseFloat(longitude), photo_reference, iconUrl));
+                            }
+
+                            poiAdapter.notifyDataSetChanged(); // update recycler
+                        } else {
+                            Log.e(TAG, status);
+                        }
+
+                    }catch (JSONException e) {
+                        Log.e(TAG, e.getMessage());
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e(TAG, error.getMessage());
+                }
+            });
+
+            Volley.newRequestQueue(activity).add(jsonRequest);
+
+        } catch (UnsupportedEncodingException e) {
             Log.e(TAG, e.getMessage());
         }
     }
@@ -274,7 +330,6 @@ public class PoisFragment extends Fragment implements
         } else {
             Log.i(TAG, "Client location is not found.");
         }
-
     }
 
     @Override
