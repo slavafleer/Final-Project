@@ -11,10 +11,12 @@ public class Poi {
     private String vicinity;
     private double distance;
     private String place_id;
-    private float latitude;
-    private float longitude;
+    private double latitude;
+    private double longitude;
     private String photoReference;
     private String iconUrl;
+    private String isOpen;
+    private double rating;
 
     public Poi() {
     }
@@ -23,8 +25,9 @@ public class Poi {
         this.name = name;
     }
 
-    public Poi(String name, String vicinity, String place_id, float latitude,
-               float longitude, String photoReference, String iconUrl) {
+    public Poi(String name, String vicinity, String place_id, double latitude,
+               double longitude, String photoReference, String iconUrl, String isOpen,
+               double rating) {
         this.name = name;
         this.vicinity = vicinity;
         this.place_id = place_id;
@@ -32,11 +35,14 @@ public class Poi {
         this.longitude = longitude;
         this.photoReference = photoReference;
         this.iconUrl = iconUrl;
+        this.isOpen = isOpen;
+        this.rating = rating;
     }
 
     public Poi(long id, String name, String address, String vicinity,
-               double distance, String place_id, float latitude,
-               float longitude, String photoReference, String iconUrl) {
+               double distance, String place_id, double latitude,
+               double longitude, String photoReference, String iconUrl, String isOpen,
+               double rating) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -47,6 +53,8 @@ public class Poi {
         this.longitude = longitude;
         this.photoReference = photoReference;
         this.iconUrl = iconUrl;
+        this.isOpen = isOpen;
+        this.rating = rating;
     }
 
     public long getId() {
@@ -99,19 +107,19 @@ public class Poi {
         this.place_id = place_id;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -129,5 +137,21 @@ public class Poi {
 
     public void setIconUrl(String iconUrl) {
         this.iconUrl = iconUrl;
+    }
+
+    public String getIsOpen() {
+        return isOpen;
+    }
+
+    public void setIsOpen(String isOpen) {
+        this.isOpen = isOpen;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 }

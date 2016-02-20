@@ -28,6 +28,8 @@ public class ResultsLogic extends BaseLogic {
         contentValues.put(DB.Results.LONGITUDE, poi.getLongitude());
         contentValues.put(DB.Results.PHOTO_REFERENCE, poi.getPhotoReference());
         contentValues.put(DB.Results.ICON_URL, poi.getIconUrl());
+        contentValues.put(DB.Results.IS_OPEN, poi.getIsOpen());
+        contentValues.put(DB.Results.RATING, poi.getRating());
 
         long createdId = dal.insert(DB.Results.TABLE_NAME, contentValues);
 
@@ -48,6 +50,8 @@ public class ResultsLogic extends BaseLogic {
         contentValues.put(DB.Results.LONGITUDE, poi.getLongitude());
         contentValues.put(DB.Results.PHOTO_REFERENCE, poi.getPhotoReference());
         contentValues.put(DB.Results.ICON_URL, poi.getIconUrl());
+        contentValues.put(DB.Results.IS_OPEN, poi.getIsOpen());
+        contentValues.put(DB.Results.RATING, poi.getRating());
 
         String where = DB.Results.ID + "=" + poi.getId();
 
@@ -82,13 +86,15 @@ public class ResultsLogic extends BaseLogic {
             String vicinity = cursor.getString(cursor.getColumnIndex(DB.Results.VICINITY));
             double distance = cursor.getDouble(cursor.getColumnIndex(DB.Results.DISTANCE));
             String place_id = cursor.getString(cursor.getColumnIndex(DB.Results.PLACE_ID));
-            float latitude = cursor.getFloat(cursor.getColumnIndex(DB.Results.LATITUDE));
-            float longitude = cursor.getFloat(cursor.getColumnIndex(DB.Results.LONGITUDE));
+            double latitude = cursor.getDouble(cursor.getColumnIndex(DB.Results.LATITUDE));
+            double longitude = cursor.getDouble(cursor.getColumnIndex(DB.Results.LONGITUDE));
             String photoReference = cursor.getString(cursor.getColumnIndex(DB.Results.PHOTO_REFERENCE));
             String iconUrl = cursor.getString(cursor.getColumnIndex(DB.Results.ICON_URL));
+            String isOpen = cursor.getString(cursor.getColumnIndex(DB.Results.IS_OPEN));
+            double rating = cursor.getDouble(cursor.getColumnIndex(DB.Results.RATING));
 
             Poi poi = new Poi(id, name, address, vicinity, distance, place_id, latitude,
-                    longitude, photoReference, iconUrl);
+                    longitude, photoReference, iconUrl, isOpen, rating);
 
             pois.add(poi);
         }

@@ -158,7 +158,7 @@ public class PoisFragment extends Fragment implements
             Log.i(TAG, url.toString());
 
             JsonObjectRequest jsonRequest = new JsonObjectRequest(
-                    Request.Method.GET, url, (String)null, new Response.Listener<JSONObject>() {
+                    Request.Method.GET, url, (String) null, new Response.Listener<JSONObject>() {
 
                 // On receive json, update pois array.
                 @Override
@@ -186,9 +186,20 @@ public class PoisFragment extends Fragment implements
                                     photo_reference = photo.getString(Constants.KEY_PHOTO_REFERENCE);
                                 }
                                 String iconUrl = oneResult.getString(Constants.KEY_ICON_URL);
+                                String isOpen = null;
+                                if (oneResult.has(Constants.KEY_OPENING_HOURS)) {
+                                    JSONObject openingHours = oneResult.getJSONObject(Constants.KEY_OPENING_HOURS);
+                                    isOpen = openingHours.getString(Constants.KEY_OPEN_NOW)
+                                            .equals("true") ? "Open" : "Closed";
+                                }
+                                double rating = Constants.NO_RATING;
+                                if (oneResult.has(Constants.KEY_RATING)) {
+                                    rating = oneResult.getDouble(Constants.KEY_RATING);
+                                }
 
-                                pois.add(new Poi(name, vicinity, place_id, Float.parseFloat(latitude),
-                                        Float.parseFloat(longitude), photo_reference, iconUrl));
+                                pois.add(new Poi(name, vicinity, place_id, Double.parseDouble(latitude),
+                                        Double.parseDouble(longitude), photo_reference, iconUrl, isOpen,
+                                        rating));
                             }
 
                             poiAdapter.notifyDataSetChanged(); // update recycler
@@ -196,7 +207,7 @@ public class PoisFragment extends Fragment implements
                             Log.e(TAG, status);
                         }
 
-                    }catch (JSONException e) {
+                    } catch (JSONException e) {
                         Log.e(TAG, e.getMessage());
                     }
                 }

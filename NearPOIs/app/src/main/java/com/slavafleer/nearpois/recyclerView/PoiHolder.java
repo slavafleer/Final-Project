@@ -11,6 +11,7 @@ import com.slavafleer.nearpois.Constants;
 import com.slavafleer.nearpois.Poi;
 import com.slavafleer.nearpois.R;
 import com.slavafleer.nearpois.helper.RoundedTransformation;
+import com.slavafleer.nearpois.helper.Utils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -27,11 +28,12 @@ public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
     private LinearLayout linearLayoutPoiData;
     private TextView textViewName;
-//    private TextView textViewAddress;
     private TextView textViewVicinity;
     private TextView textViewDistance;
     private ImageView imageViewPhoto;
     private ImageView imageViewDefaultPhoto;
+    private TextView textViewIsOpen;
+    private TextView textViewRating;
 
     // Find views in each item.
     public PoiHolder(Context context, View itemView) {
@@ -41,9 +43,10 @@ public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
         linearLayoutPoiData = (LinearLayout) itemView.findViewById(R.id.linearLayoutPoiData);
         textViewName = (TextView) linearLayoutPoiData.findViewById(R.id.textViewItemPoiName);
-//        textViewAddress = (TextView) linearLayoutPoiData.findViewById(R.id.textViewItemPoiAddress);
         textViewVicinity = (TextView) linearLayoutPoiData.findViewById(R.id.textViewItemPoiVicinity);
         textViewDistance = (TextView) linearLayoutPoiData.findViewById(R.id.textViewItemPoiDistance);
+        textViewIsOpen = (TextView) linearLayoutPoiData.findViewById(R.id.textViewItemPoiIsOpen);
+        textViewRating = (TextView) linearLayoutPoiData.findViewById(R.id.textViewItemPoiRating);
         imageViewPhoto = (ImageView) itemView.findViewById(R.id.imageViewItemPoiPhoto);
         imageViewDefaultPhoto = (ImageView) itemView.findViewById(R.id.imageViewDefaultItemPoiPhoto);
 
@@ -59,25 +62,38 @@ public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     public void bindPoi(Poi poi) {
 
         String name = poi.getName();
-//        String address = poi.getAddress();
         String vicinity = poi.getVicinity();
         double distance = poi.getDistance();
+        String isOPen = poi.getIsOpen();
+        double rating = poi.getRating();
 
         if (name != null) {
             textViewName.setText(name);
+        } else {
+            textViewName.setText(R.string.no_information);
         }
-
-//        if (address != null) {
-//            textViewAddress.setText(address);
-//        }
 
         if (vicinity != null) {
             textViewVicinity.setText(vicinity);
+        } else {
+            textViewVicinity.setText(R.string.no_information);
         }
 
         // TODO: to add dependence for settings (km or miles) and show the relevant one.
         if (distance > 0) {
             textViewDistance.setText(String.format("%.0fkm", distance));
+        }
+
+        if (isOPen != null) {
+            textViewIsOpen.setText(isOPen);
+        } else {
+            textViewIsOpen.setText("");
+        }
+
+        if (rating != Constants.NO_RATING) {
+            textViewRating.setText(Utils.formatRating(rating) + "");
+        } else {
+            textViewRating.setText("");
         }
 
         // TODO: load image, need to decide from where
@@ -87,7 +103,8 @@ public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         String photoReference = poi.getPhotoReference();
 
 //        imageViewPhoto.setImageDrawable(null);
-        String url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference + "&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
+        String url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="
+                + photoReference + "&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
         Picasso.with(context)
                 .load(url)
 //                .error(android.R.drawable.ic_menu_crop)

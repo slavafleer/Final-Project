@@ -7,6 +7,7 @@
     <string name="item_poi_address">Address</string>
     <string name="item_poi_vicinity">Vicinity</string>
     <string name="item_poi_distance">Distance</string>
+    <string name="no_information">No information</string>
 
     <!-- 19 search types for quick search-->
     <string-array name="searchTypes">

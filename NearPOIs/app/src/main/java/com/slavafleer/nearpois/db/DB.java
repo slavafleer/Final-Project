@@ -22,6 +22,8 @@ public class DB {
         public static final String LONGITUDE = "longitude";
         public static final String PHOTO_REFERENCE = "photoReference";
         public static final String ICON_URL = "iconUrl";
+        public static final String IS_OPEN = "getIsOpen";
+        public static final String RATING = "rating";
 
         // Creation Statement
         public static final String CREATION_STATEMENT = "CREATE TABLE " + TABLE_NAME +
@@ -34,7 +36,9 @@ public class DB {
                 LATITUDE + " REAL, " +
                 LONGITUDE + " REAL, " +
                 PHOTO_REFERENCE + " TEXT, " +
-                ICON_URL + " TEXT )";
+                ICON_URL + " TEXT, " +
+                IS_OPEN +
+                RATING + ")";
 
         // Deletion Statement
         public static final String DELETION_STATEMENT = "DROP TABLE IF EXISTS " + TABLE_NAME;

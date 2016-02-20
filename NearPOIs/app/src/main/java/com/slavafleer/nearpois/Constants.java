@@ -20,6 +20,12 @@ public class Constants {
     public static final String KEY_PHOTOS = "photos";
     public static final String KEY_PHOTO_REFERENCE = "photo_reference";
     public static final String KEY_ICON_URL = "icon";
+    public static final String KEY_OPENING_HOURS = "opening_hours";
+    public static final String KEY_OPEN_NOW = "open_now";
+    public static final String KEY_RATING = "rating";
+
+    // Helpers
+    public static final int NO_RATING = -1;
 
     // Google Place API Values
     public static final String VALUE_OK = "OK";
