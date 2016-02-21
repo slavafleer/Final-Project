@@ -54,8 +54,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@+id/frameLayout"
-                        android:layout_toStartOf="@+id/frameLayout"
-                        android:text="20,7 km"/>
+                        android:layout_toStartOf="@+id/frameLayout"/>
 
                     <FrameLayout
                         android:id="@+id/frameLayout"
@@ -117,13 +116,12 @@
                             android:src="@drawable/black_walking_71"/>
 
                         <TextView
-                            android:id="@+id/textViewItemPoiWalkingTime"
+                            android:id="@+id/textViewItemPoiWalkingDuration"
                             style="@style/ItemPoiDistance"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:gravity="bottom"
-                            android:text="1:23"
-                            />
+                            android:gravity="bottom"/>
+
                     </LinearLayout>
 
 
@@ -141,13 +139,13 @@
                             android:src="@drawable/black_car_71"/>
 
                         <TextView
-                            android:id="@+id/textViewItemPoiDrivingTime"
+                            android:id="@+id/textViewItemPoiDrivingDuration"
                             style="@style/ItemPoiDistance"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="2dp"
-                            android:gravity="bottom"
-                            android:text="14:23"/>
+                            android:gravity="bottom"/>
+
                     </LinearLayout>
 
                 </LinearLayout>

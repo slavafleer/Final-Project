@@ -91,6 +91,9 @@ public class PoisFragment extends Fragment implements
 
         editTextSearchText = (EditText) view.findViewById(R.id.editTextSearchText);
 
+        //TODO: delete at the end
+        editTextSearchText.setText("bar");
+
         // Find Button On Click
         imageViewFind = (ImageView) view.findViewById(R.id.imageViewFind);
         imageViewFind.setOnClickListener(new View.OnClickListener() {
@@ -120,7 +123,8 @@ public class PoisFragment extends Fragment implements
 
 
         // Initialising Pois Recycler View.
-        poiAdapter = new PoiAdapter(activity, pois);
+        //TODO: to check if we have location
+        poiAdapter = new PoiAdapter(activity, pois, lastLocation);
         recyclerViewPois.setLayoutManager(new LinearLayoutManager(activity));
         recyclerViewPois.setAdapter(poiAdapter);
 
@@ -202,7 +206,12 @@ public class PoisFragment extends Fragment implements
                                         rating));
                             }
 
-                            poiAdapter.notifyDataSetChanged(); // update recycler
+//                            poiAdapter.notifyDataSetChanged(); // update recycler
+                            // Initialising Pois Recycler View.
+                            //TODO: to check if we have location
+                            poiAdapter = new PoiAdapter(activity, pois, lastLocation);
+                            recyclerViewPois.setLayoutManager(new LinearLayoutManager(activity));
+                            recyclerViewPois.setAdapter(poiAdapter);
                         } else {
                             Log.e(TAG, status);
                         }

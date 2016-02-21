@@ -1,12 +1,19 @@
 package com.slavafleer.nearpois.recyclerView;
 
 import android.content.Context;
+import android.location.Location;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.slavafleer.nearpois.Constants;
 import com.slavafleer.nearpois.Poi;
 import com.slavafleer.nearpois.R;
@@ -14,6 +21,10 @@ import com.slavafleer.nearpois.helper.RoundedTransformation;
 import com.slavafleer.nearpois.helper.Utils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Poi Holder for Poi Recycler View
@@ -34,6 +45,8 @@ public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     private ImageView imageViewDefaultPhoto;
     private TextView textViewIsOpen;
     private TextView textViewRating;
+    private TextView textViewWalkingDuration;
+    private TextView textViewDrivingDuration;
 
     // Find views in each item.
     public PoiHolder(Context context, View itemView) {
@@ -49,6 +62,8 @@ public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         textViewRating = (TextView) linearLayoutPoiData.findViewById(R.id.textViewItemPoiRating);
         imageViewPhoto = (ImageView) itemView.findViewById(R.id.imageViewItemPoiPhoto);
         imageViewDefaultPhoto = (ImageView) itemView.findViewById(R.id.imageViewDefaultItemPoiPhoto);
+        textViewWalkingDuration = (TextView) linearLayoutPoiData.findViewById(R.id.textViewItemPoiWalkingDuration);
+        textViewDrivingDuration = (TextView) linearLayoutPoiData.findViewById(R.id.textViewItemPoiDrivingDuration);
 
         linearLayoutPoiData.setOnClickListener(this);
         linearLayoutPoiData.setOnLongClickListener(this);
@@ -59,7 +74,7 @@ public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     }
 
     // Bind Data Object to the Views.
-    public void bindPoi(Poi poi) {
+    public void bindPoi(Poi poi, Location lastLocation) {
 
         String name = poi.getName();
         String vicinity = poi.getVicinity();
@@ -103,10 +118,10 @@ public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         String photoReference = poi.getPhotoReference();
 
 //        imageViewPhoto.setImageDrawable(null);
-        String url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="
+        String urlPhoto = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="
                 + photoReference + "&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
         Picasso.with(context)
-                .load(url)
+                .load(urlPhoto)
 //                .error(android.R.drawable.ic_menu_crop)
 //                .fit()
                 .transform(new RoundedTransformation(16, 0)) // used 3rd side class
@@ -121,6 +136,51 @@ public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickLi
                         imageViewDefaultPhoto.setVisibility(View.VISIBLE);
                     }
                 });
+
+        // Send queries to Google Distance Matrix API and show the data in item
+        String mode = "walking";
+        String urlDistance = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" +
+                lastLocation.getLatitude() + "," + lastLocation.getLongitude() + "&destinations=" +
+                poi.getLatitude() + "," + poi.getLongitude() + "&mode=" + mode +
+                "&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
+        Log.i(TAG, urlDistance);
+        textViewDistance.setVisibility(View.INVISIBLE);
+        textViewWalkingDuration.setVisibility(View.INVISIBLE);
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(
+                Request.Method.GET, urlDistance, (String) null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i(TAG, response.toString());
+                try {
+                    if (response.getString(Constants.KEY_STATUS).equals(Constants.VALUE_OK)) {
+                        JSONArray rows = response.getJSONArray(Constants.KEY_ROWS);
+                        JSONObject row = rows.getJSONObject(0);
+                        JSONArray elements = row.getJSONArray(Constants.KEY_ELEMENTS);
+                        JSONObject element = elements.getJSONObject(0);
+                        JSONObject distance = element.getJSONObject(Constants.KEY_DISTANCE);
+                        String distanceText = distance.getString(Constants.KEY_TEXT);
+                        int distanceValue = distance.getInt(Constants.KEY_VALUE);
+                        JSONObject duration = element.getJSONObject(Constants.KEY_DURATION);
+                        String durationText = duration.getString(Constants.KEY_TEXT);
+                        int durationValue = duration.getInt(Constants.KEY_VALUE);
+
+                        textViewDistance.setText(distanceText);
+                        textViewWalkingDuration.setText(durationText);
+                        textViewDistance.setVisibility(View.VISIBLE);
+                        textViewWalkingDuration.setVisibility(View.VISIBLE);
+                    }
+                } catch (JSONException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.getMessage());
+            }
+        });
+
+        Volley.newRequestQueue(context).add(jsonRequest);
     }
 
     // Do it on poi item (data or photo) clicked.

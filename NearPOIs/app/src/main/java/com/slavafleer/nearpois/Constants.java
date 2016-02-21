@@ -24,6 +24,15 @@ public class Constants {
     public static final String KEY_OPEN_NOW = "open_now";
     public static final String KEY_RATING = "rating";
 
+    // Google Distance Matrix API Keys
+    public static final String KEY_ROWS = "rows";
+    public static final String KEY_ELEMENTS = "elements";
+    public static final String KEY_DISTANCE = "distance";
+    public static final String KEY_TEXT = "text";
+    public static final String KEY_VALUE = "value";
+    public static final String KEY_DURATION = "duration";
+
+
     // Helpers
     public static final int NO_RATING = -1;
 

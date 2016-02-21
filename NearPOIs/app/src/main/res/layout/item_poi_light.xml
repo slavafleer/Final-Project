@@ -117,7 +117,7 @@
                             android:src="@drawable/black_walking_71"/>
 
                         <TextView
-                            android:id="@+id/textViewItemPoiWalkingTime"
+                            android:id="@+id/textViewItemPoiWalkingDuration"
                             style="@style/ItemPoiDistance"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -141,7 +141,7 @@
                             android:src="@drawable/black_car_71"/>
 
                         <TextView
-                            android:id="@+id/textViewItemPoiDrivingTime"
+                            android:id="@+id/textViewItemPoiDrivingDuration"
                             style="@style/ItemPoiDistance"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"

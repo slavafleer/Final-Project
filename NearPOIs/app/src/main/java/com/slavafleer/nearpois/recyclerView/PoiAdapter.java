@@ -1,6 +1,7 @@
 package com.slavafleer.nearpois.recyclerView;
 
 import android.content.Context;
+import android.location.Location;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +19,12 @@ public class PoiAdapter extends RecyclerView.Adapter<PoiHolder> {
 
     private Context context;
     private ArrayList<Poi> pois;
+    private Location lastLocation;
 
-    public PoiAdapter(Context context, ArrayList<Poi> pois) {
+    public PoiAdapter(Context context, ArrayList<Poi> pois, Location lastLocation) {
         this.context = context;
         this.pois = pois;
+        this.lastLocation = lastLocation;
     }
 
     // Will be invoked only for the first shown items!
@@ -52,7 +55,7 @@ public class PoiAdapter extends RecyclerView.Adapter<PoiHolder> {
 
         Poi poi = pois.get(position);
 
-        holder.bindPoi(poi);
+        holder.bindPoi(poi, lastLocation);
 
     }
 
