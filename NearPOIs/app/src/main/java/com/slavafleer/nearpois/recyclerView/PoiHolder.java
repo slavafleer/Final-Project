@@ -1,7 +1,6 @@
 package com.slavafleer.nearpois.recyclerView;
 
 import android.content.Context;
-import android.location.Location;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -65,11 +64,10 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
     }
 
     // Bind Data Object to the Views.
-    public void bindPoi(Poi poi, Location lastLocation) {
+    public void bindPoi(Poi poi) {
 
         String name = poi.getName();
         String vicinity = poi.getVicinity();
-//        double distance = poi.getDistance();
         String distanceText = poi.getDistanceText();
         String isOPen = poi.getIsOpen();
         double rating = poi.getRating();

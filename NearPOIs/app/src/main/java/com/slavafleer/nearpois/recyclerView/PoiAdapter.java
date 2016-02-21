@@ -21,10 +21,9 @@ public class PoiAdapter extends RecyclerView.Adapter<PoiHolder> {
     private ArrayList<Poi> pois;
     private Location lastLocation;
 
-    public PoiAdapter(Context context, ArrayList<Poi> pois, Location lastLocation) {
+    public PoiAdapter(Context context, ArrayList<Poi> pois) {
         this.context = context;
         this.pois = pois;
-        this.lastLocation = lastLocation;
     }
 
     // Will be invoked only for the first shown items!
@@ -55,7 +54,7 @@ public class PoiAdapter extends RecyclerView.Adapter<PoiHolder> {
 
         Poi poi = pois.get(position);
 
-        holder.bindPoi(poi, lastLocation);
+        holder.bindPoi(poi);
 
     }
 

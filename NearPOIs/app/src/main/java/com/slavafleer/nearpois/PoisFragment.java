@@ -49,8 +49,6 @@ public class PoisFragment extends Fragment implements
 
     private static final String TAG = PoisFragment.class.getSimpleName();
 
-    private static final int REQUEST_POIS = 1;
-
     private RecyclerView recyclerViewPois;
     private RecyclerView recyclerViewQuickSearches;
 
@@ -132,7 +130,7 @@ public class PoisFragment extends Fragment implements
 
         // Initialising Pois Recycler View.
         //TODO: to check if we have location
-        poiAdapter = new PoiAdapter(activity, pois, lastLocation);
+        poiAdapter = new PoiAdapter(activity, pois);
         recyclerViewPois.setLayoutManager(new LinearLayoutManager(activity));
         recyclerViewPois.setAdapter(poiAdapter);
 
@@ -307,7 +305,7 @@ public class PoisFragment extends Fragment implements
 //                            poiAdapter.notifyDataSetChanged(); // update recycler
                             // Initialising Pois Recycler View.
                             //TODO: to check if we have location
-                            poiAdapter = new PoiAdapter(activity, pois, lastLocation);
+                            poiAdapter = new PoiAdapter(activity, pois);
                             recyclerViewPois.setLayoutManager(new LinearLayoutManager(activity));
                             recyclerViewPois.setAdapter(poiAdapter);
                         }
@@ -365,7 +363,7 @@ public class PoisFragment extends Fragment implements
 //                            poiAdapter.notifyDataSetChanged(); // update recycler
                             // Initialising Pois Recycler View.
                             //TODO: to check if we have location
-                            poiAdapter = new PoiAdapter(activity, pois, lastLocation);
+                            poiAdapter = new PoiAdapter(activity, pois);
                             recyclerViewPois.setLayoutManager(new LinearLayoutManager(activity));
                             recyclerViewPois.setAdapter(poiAdapter);
                         }

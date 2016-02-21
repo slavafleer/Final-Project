@@ -10,7 +10,8 @@ import com.slavafleer.nearpois.R;
 /**
  * Holder for Quick Search Recycler.
  */
-public class QuickSearchHolder extends RecyclerView.ViewHolder {
+public class QuickSearchHolder extends RecyclerView.ViewHolder implements
+        View.OnClickListener {
 
     private ImageView imageViewItemQuickSearch;
     private String type;
@@ -28,5 +29,10 @@ public class QuickSearchHolder extends RecyclerView.ViewHolder {
         int imageId = quickSearch.getImageId();
 
         imageViewItemQuickSearch.setImageResource(imageId);
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }
