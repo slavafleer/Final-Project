@@ -3,17 +3,11 @@ package com.slavafleer.nearpois.recyclerView;
 import android.content.Context;
 import android.location.Location;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.slavafleer.nearpois.Constants;
 import com.slavafleer.nearpois.Poi;
 import com.slavafleer.nearpois.R;
@@ -22,14 +16,11 @@ import com.slavafleer.nearpois.helper.Utils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 /**
  * Poi Holder for Poi Recycler View
  */
-public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+public class PoiHolder extends RecyclerView.ViewHolder implements
+        View.OnClickListener, View.OnLongClickListener {
 
     private static final String TAG = "PoiHolder";
 
@@ -78,9 +69,12 @@ public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
         String name = poi.getName();
         String vicinity = poi.getVicinity();
-        double distance = poi.getDistance();
+//        double distance = poi.getDistance();
+        String distanceText = poi.getDistanceText();
         String isOPen = poi.getIsOpen();
         double rating = poi.getRating();
+        String walkingDurationText = poi.getWalkingDurationText();
+        String drivingDurationText = poi.getDrivingDurationText();
 
         if (name != null) {
             textViewName.setText(name);
@@ -95,8 +89,22 @@ public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         }
 
         // TODO: to add dependence for settings (km or miles) and show the relevant one.
-        if (distance > 0) {
-            textViewDistance.setText(String.format("%.0fkm", distance));
+        if (distanceText != null) {
+            textViewDistance.setText(distanceText);
+        } else {
+            textViewDistance.setText("");
+        }
+
+        if (walkingDurationText != null) {
+            textViewWalkingDuration.setText(walkingDurationText);
+        } else {
+            textViewWalkingDuration.setText("");
+        }
+
+        if (drivingDurationText != null) {
+            textViewDrivingDuration.setText(drivingDurationText);
+        } else {
+            textViewDrivingDuration.setText("");
         }
 
         if (isOPen != null) {
@@ -136,51 +144,6 @@ public class PoiHolder extends RecyclerView.ViewHolder implements View.OnClickLi
                         imageViewDefaultPhoto.setVisibility(View.VISIBLE);
                     }
                 });
-
-        // Send queries to Google Distance Matrix API and show the data in item
-        String mode = "walking";
-        String urlDistance = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" +
-                lastLocation.getLatitude() + "," + lastLocation.getLongitude() + "&destinations=" +
-                poi.getLatitude() + "," + poi.getLongitude() + "&mode=" + mode +
-                "&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
-        Log.i(TAG, urlDistance);
-        textViewDistance.setVisibility(View.INVISIBLE);
-        textViewWalkingDuration.setVisibility(View.INVISIBLE);
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(
-                Request.Method.GET, urlDistance, (String) null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.i(TAG, response.toString());
-                try {
-                    if (response.getString(Constants.KEY_STATUS).equals(Constants.VALUE_OK)) {
-                        JSONArray rows = response.getJSONArray(Constants.KEY_ROWS);
-                        JSONObject row = rows.getJSONObject(0);
-                        JSONArray elements = row.getJSONArray(Constants.KEY_ELEMENTS);
-                        JSONObject element = elements.getJSONObject(0);
-                        JSONObject distance = element.getJSONObject(Constants.KEY_DISTANCE);
-                        String distanceText = distance.getString(Constants.KEY_TEXT);
-                        int distanceValue = distance.getInt(Constants.KEY_VALUE);
-                        JSONObject duration = element.getJSONObject(Constants.KEY_DURATION);
-                        String durationText = duration.getString(Constants.KEY_TEXT);
-                        int durationValue = duration.getInt(Constants.KEY_VALUE);
-
-                        textViewDistance.setText(distanceText);
-                        textViewWalkingDuration.setText(durationText);
-                        textViewDistance.setVisibility(View.VISIBLE);
-                        textViewWalkingDuration.setVisibility(View.VISIBLE);
-                    }
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, error.getMessage());
-            }
-        });
-
-        Volley.newRequestQueue(context).add(jsonRequest);
     }
 
     // Do it on poi item (data or photo) clicked.

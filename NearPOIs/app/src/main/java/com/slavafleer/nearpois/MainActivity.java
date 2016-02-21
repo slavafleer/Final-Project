@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.WindowManager;
 
-import com.slavafleer.nearpois.db.ResultsLogic;
 import com.slavafleer.nearpois.recyclerView.PoiHolder;
 
 import java.util.ArrayList;
@@ -14,14 +13,14 @@ public class MainActivity extends AppCompatActivity implements PoiHolder.ClickLi
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private ResultsLogic resultsLogic; // db business logic
+//    private ResultsLogic resultsLogic; // db business logic
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        resultsLogic = new ResultsLogic(this);
+//        resultsLogic = new ResultsLogic(this);
 
         // TODO: for testing only, need to delete.
         //initTestResults();
@@ -47,11 +46,11 @@ public class MainActivity extends AppCompatActivity implements PoiHolder.ClickLi
         pois.add(new Poi("Place 6"));
         pois.add(new Poi("Place 7"));
 
-        resultsLogic.open();
-        for(Poi poi : pois) {
-            resultsLogic.addPoi(poi);
-        }
-        resultsLogic.close();
+//        resultsLogic.open();
+//        for(Poi poi : pois) {
+//            resultsLogic.addPoi(poi);
+//        }
+//        resultsLogic.close();
     }
 
     // Do it on poi item data part clicked.

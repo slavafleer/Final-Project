@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -70,6 +71,10 @@ public class PoisFragment extends Fragment implements
     private ImageView imageViewFind;
     private ImageView imageViewFindAll;
 
+    private int readyPoisCounter; // Show completed data of Pois
+
+    private RequestQueue requestQueue;
+
     //    private String type = "food";
     private String type;
 
@@ -85,6 +90,9 @@ public class PoisFragment extends Fragment implements
         View view = inflater.inflate(R.layout.fragment_pois, container, false);
 
         activity = getActivity();
+
+        requestQueue = Volley.newRequestQueue(activity);
+
         resultsLogic = new ResultsLogic(activity);
 
         buildGoogleApiClient();
@@ -152,6 +160,9 @@ public class PoisFragment extends Fragment implements
 
     // Create poi request and send it to API.
     private void findPois() {
+
+        readyPoisCounter = 0; // Show completed data of Pois
+
         try {
             String encodedSearchText = java.net.URLEncoder.encode(editTextSearchText.getText().toString().trim(), "UTF-8");
 
@@ -204,14 +215,11 @@ public class PoisFragment extends Fragment implements
                                 pois.add(new Poi(name, vicinity, place_id, Double.parseDouble(latitude),
                                         Double.parseDouble(longitude), photo_reference, iconUrl, isOpen,
                                         rating));
+
+                                getDistanceAndWalkingDuration(i);
+                                getDrivingDuration(i);
                             }
 
-//                            poiAdapter.notifyDataSetChanged(); // update recycler
-                            // Initialising Pois Recycler View.
-                            //TODO: to check if we have location
-                            poiAdapter = new PoiAdapter(activity, pois, lastLocation);
-                            recyclerViewPois.setLayoutManager(new LinearLayoutManager(activity));
-                            recyclerViewPois.setAdapter(poiAdapter);
                         } else {
                             Log.e(TAG, status);
                         }
@@ -227,7 +235,7 @@ public class PoisFragment extends Fragment implements
                 }
             });
 
-            Volley.newRequestQueue(activity).add(jsonRequest);
+            requestQueue.add(jsonRequest);
 
         } catch (UnsupportedEncodingException e) {
             Log.e(TAG, e.getMessage());
@@ -257,6 +265,127 @@ public class PoisFragment extends Fragment implements
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
+    }
+
+    // Send queries to Google Distance Matrix API
+    private void getDistanceAndWalkingDuration(final int position) {
+
+        String mode = "walking";
+        String urlDistance = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" +
+                lastLocation.getLatitude() + "," + lastLocation.getLongitude() + "&destinations=" +
+                pois.get(position).getLatitude() + "," + pois.get(position).getLongitude() +
+                "&mode=" + mode + "&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
+        Log.i(TAG, urlDistance);
+
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(
+                Request.Method.GET, urlDistance, (String) null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i(TAG, response.toString());
+                try {
+                    if (response.getString(Constants.KEY_STATUS).equals(Constants.VALUE_OK)) {
+                        JSONArray rows = response.getJSONArray(Constants.KEY_ROWS);
+                        JSONObject row = rows.getJSONObject(0);
+                        JSONArray elements = row.getJSONArray(Constants.KEY_ELEMENTS);
+                        JSONObject element = elements.getJSONObject(0);
+                        JSONObject distance = element.getJSONObject(Constants.KEY_DISTANCE);
+                        String distanceText = distance.getString(Constants.KEY_TEXT);
+                        double distanceValue = distance.getInt(Constants.KEY_VALUE);
+                        JSONObject duration = element.getJSONObject(Constants.KEY_DURATION);
+                        String durationText = duration.getString(Constants.KEY_TEXT);
+                        int durationValue = duration.getInt(Constants.KEY_VALUE);
+
+                        pois.get(position).setDistance(distanceValue);
+                        pois.get(position).setDistanceText(distanceText);
+                        pois.get(position).setWalkingDurationText(durationText);
+
+                        readyPoisCounter++;
+
+                        // waiting for finishing of all asyncTasks
+                        if(readyPoisCounter >= pois.size() * 2) {
+
+//                            poiAdapter.notifyDataSetChanged(); // update recycler
+                            // Initialising Pois Recycler View.
+                            //TODO: to check if we have location
+                            poiAdapter = new PoiAdapter(activity, pois, lastLocation);
+                            recyclerViewPois.setLayoutManager(new LinearLayoutManager(activity));
+                            recyclerViewPois.setAdapter(poiAdapter);
+                        }
+                    }
+                } catch (JSONException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+
+                readyPoisCounter++;
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.getMessage());
+
+                readyPoisCounter++;
+            }
+        });
+
+        requestQueue.add(jsonRequest);
+    }
+
+    // Send queries to Google Distance Matrix API
+    private void getDrivingDuration(final int position) {
+
+        String mode = "driving";
+        String urlDistance = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" +
+                lastLocation.getLatitude() + "," + lastLocation.getLongitude() + "&destinations=" +
+                pois.get(position).getLatitude() + "," + pois.get(position).getLongitude() +
+                "&mode=" + mode + "&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
+        Log.i(TAG, urlDistance);
+
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(
+                Request.Method.GET, urlDistance, (String) null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i(TAG, response.toString());
+                try {
+                    if (response.getString(Constants.KEY_STATUS).equals(Constants.VALUE_OK)) {
+                        JSONArray rows = response.getJSONArray(Constants.KEY_ROWS);
+                        JSONObject row = rows.getJSONObject(0);
+                        JSONArray elements = row.getJSONArray(Constants.KEY_ELEMENTS);
+                        JSONObject element = elements.getJSONObject(0);
+                        JSONObject duration = element.getJSONObject(Constants.KEY_DURATION);
+                        String durationText = duration.getString(Constants.KEY_TEXT);
+                        int durationValue = duration.getInt(Constants.KEY_VALUE);
+
+                        pois.get(position).setDrivingDurationText(durationText);
+
+                        readyPoisCounter++;
+
+                        // waiting for finishing of all asyncTasks
+                        if(readyPoisCounter >= pois.size() * 2) {
+
+//                            poiAdapter.notifyDataSetChanged(); // update recycler
+                            // Initialising Pois Recycler View.
+                            //TODO: to check if we have location
+                            poiAdapter = new PoiAdapter(activity, pois, lastLocation);
+                            recyclerViewPois.setLayoutManager(new LinearLayoutManager(activity));
+                            recyclerViewPois.setAdapter(poiAdapter);
+                        }
+                    }
+                } catch (JSONException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+
+                readyPoisCounter++;
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.getMessage());
+
+                readyPoisCounter++;
+            }
+        });
+
+        requestQueue.add(jsonRequest);
     }
 
     // For Google Location API

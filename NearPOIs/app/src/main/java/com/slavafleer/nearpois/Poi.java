@@ -17,6 +17,9 @@ public class Poi {
     private String iconUrl;
     private String isOpen;
     private double rating;
+    private String distanceText;
+    private String walkingDurationText;
+    private String drivingDurationText;
 
     public Poi() {
     }
@@ -153,5 +156,29 @@ public class Poi {
 
     public void setRating(double rating) {
         this.rating = rating;
+    }
+
+    public String getDistanceText() {
+        return distanceText;
+    }
+
+    public void setDistanceText(String distanceText) {
+        this.distanceText = distanceText;
+    }
+
+    public String getWalkingDurationText() {
+        return walkingDurationText;
+    }
+
+    public void setWalkingDurationText(String walkingDurationText) {
+        this.walkingDurationText = walkingDurationText;
+    }
+
+    public String getDrivingDurationText() {
+        return drivingDurationText;
+    }
+
+    public void setDrivingDurationText(String drivingDurationText) {
+        this.drivingDurationText = drivingDurationText;
     }
 }

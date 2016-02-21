@@ -45,22 +45,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/textViewItemPoiDistance"
-                        style="@style/ItemPoiDistance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/frameLayout"
-                        android:layout_toStartOf="@+id/frameLayout"/>
-
                     <FrameLayout
                         android:id="@+id/frameLayout"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true">
+                        android:layout_height="wrap_content">
 
                         <TextView
                             android:id="@+id/textViewItemPoiRating"
@@ -84,72 +72,74 @@
                     </FrameLayout>
 
                     <TextView
+                        android:id="@+id/textViewItemPoiDistance"
+                        style="@style/ItemPoiDistance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="20,7 km"
+                        android:layout_alignBottom="@+id/frameLayout"
+                        android:layout_toRightOf="@+id/frameLayout"
+                        android:layout_toEndOf="@+id/frameLayout"
+                        android:layout_marginLeft="4dp"/>
+
+                    <TextView
                         android:id="@+id/textViewItemPoiIsOpen"
                         style="@style/ItemPoiDistance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/frameLayout"
-                        android:layout_toRightOf="@+id/frameLayout"
                         android:gravity="center"
-                        android:textSize="15dp"/>
+                        android:textSize="15dp"
+                        android:layout_alignBottom="@+id/textViewItemPoiDistance"
+                        android:layout_toRightOf="@+id/textViewItemPoiDistance"
+                        android:layout_toEndOf="@+id/textViewItemPoiDistance"
+                        android:layout_marginLeft="4dp"
+                        android:text="Open"/>
+
+                    <ImageView
+                        android:id="@+id/imageViewWalkingIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleX="0.75"
+                        android:scaleY="0.75"
+                        android:src="@drawable/black_walking_71"
+                        android:layout_below="@+id/frameLayout"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"/>
+
+                    <TextView
+                        android:id="@+id/textViewItemPoiWalkingDuration"
+                        style="@style/ItemPoiDistance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="bottom"
+                        android:text="12 min"
+                        android:layout_alignLeft="@+id/textViewItemPoiDrivingDuration"
+                        android:layout_alignStart="@+id/textViewItemPoiDrivingDuration"
+                        android:layout_alignBottom="@+id/imageViewWalkingIcon"/>
+
+                    <ImageView
+                        android:id="@+id/imageViewDrivingIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/black_car_71"
+                        android:layout_below="@+id/imageViewWalkingIcon"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="-6dp"/>
+
+                    <TextView
+                        android:id="@+id/textViewItemPoiDrivingDuration"
+                        style="@style/ItemPoiDistance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3 min"
+                        android:layout_alignParentBottom="false"
+                        android:layout_toRightOf="@+id/imageViewDrivingIcon"
+                        android:layout_toEndOf="@+id/imageViewDrivingIcon"
+                        android:layout_marginLeft="4dp"
+                        android:layout_below="@+id/textViewItemPoiWalkingDuration"/>
 
                 </RelativeLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:id="@+id/imageViewWalkingIcon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:scaleX="0.75"
-                            android:scaleY="0.75"
-                            android:src="@drawable/black_walking_71"/>
-
-                        <TextView
-                            android:id="@+id/textViewItemPoiWalkingDuration"
-                            style="@style/ItemPoiDistance"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="bottom"/>
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:id="@+id/imageViewDrivingIcon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="2dp"
-                            android:layout_marginTop="-4dp"
-                            android:src="@drawable/black_car_71"/>
-
-                        <TextView
-                            android:id="@+id/textViewItemPoiDrivingDuration"
-                            style="@style/ItemPoiDistance"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="2dp"
-                            android:gravity="bottom"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
 
             </LinearLayout>
 
