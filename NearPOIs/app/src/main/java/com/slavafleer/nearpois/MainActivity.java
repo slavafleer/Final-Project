@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements
         //initTestResults();
 
 
-        deviceType = (String) findViewById(R.id.frameLayoutMainRoot).getTag();
+        deviceType = (String) findViewById(R.id.linearLayoutMainRoot).getTag();
 
         poisFragment = new PoisFragment();
 
