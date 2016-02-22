@@ -19,6 +19,9 @@ public class MainActivity extends AppCompatActivity implements
 
     private PoisFragment poisFragment;
 
+    private String deviceType;
+
+
 //    private ResultsLogic resultsLogic; // db business logic
 
     @Override
@@ -31,12 +34,22 @@ public class MainActivity extends AppCompatActivity implements
         // TODO: for testing only, need to delete.
         //initTestResults();
 
+
+        deviceType = (String) findViewById(R.id.linearLayoutMainRoot).getTag();
+
         poisFragment = new PoisFragment();
 
         getFragmentManager()
                 .beginTransaction()
-                .add(R.id.poisContainer, poisFragment)
+                .replace(R.id.poisContainer, poisFragment)
                 .commit();
+
+        if (deviceType.equals("tablet")) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.mapContainer, new PoisFragment())
+                    .commit();
+        }
 
         // Hide soft keyboard on start.
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
