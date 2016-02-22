@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements
     public void onQuickSearchClick(String type) {
 
         poisFragment.setType(type);
-        Toast.makeText(this, "Chosen " + type, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Searched by type: " + type, Toast.LENGTH_SHORT).show();
         Log.i(TAG, type);
     }
 }

@@ -13,7 +13,7 @@
     <string-array name="searchTypes">
         <item>bank</item>
         <item>bar</item>
-        <item>barber</item>
+        <item>hair_care</item>
         <item>bus_station</item>
         <item>cafe</item>
         <item>dentist</item>

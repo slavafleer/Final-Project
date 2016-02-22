@@ -73,8 +73,8 @@ public class PoisFragment extends Fragment implements
 
     private RequestQueue requestQueue;
 
-    //    private String type = "food";
     private String type;
+    private String url;
 
     public PoisFragment() {
         // Required empty public constructor
@@ -105,7 +105,18 @@ public class PoisFragment extends Fragment implements
         imageViewFind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                findPois();
+
+                try {
+                    String encodedSearchText = java.net.URLEncoder.encode(editTextSearchText.getText().toString().trim(), "UTF-8");
+                    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
+                            clientLatitude + "," + clientLongitude + "&name=" + encodedSearchText +
+                            "&rankby=distance&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
+                    findPois();
+                } catch (UnsupportedEncodingException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+
+
             }
         });
 
@@ -114,6 +125,9 @@ public class PoisFragment extends Fragment implements
         imageViewFindAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
+                        clientLatitude + "," + clientLongitude +
+                        "&radius=10000&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
                 findPois();
             }
         });
@@ -161,83 +175,74 @@ public class PoisFragment extends Fragment implements
 
         readyPoisCounter = 0; // Show completed data of Pois
 
-        try {
-            String encodedSearchText = java.net.URLEncoder.encode(editTextSearchText.getText().toString().trim(), "UTF-8");
 
-            String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
-                    clientLatitude + "," + clientLongitude + "&name=" + encodedSearchText +
-                    "&rankby=distance&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
+        Log.i(TAG, url.toString());
 
-            Log.i(TAG, url.toString());
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(
+                Request.Method.GET, url, (String) null, new Response.Listener<JSONObject>() {
 
-            JsonObjectRequest jsonRequest = new JsonObjectRequest(
-                    Request.Method.GET, url, (String) null, new Response.Listener<JSONObject>() {
+            // On receive json, update pois array.
+            @Override
+            public void onResponse(JSONObject response) {
 
-                // On receive json, update pois array.
-                @Override
-                public void onResponse(JSONObject response) {
+                try {
+                    String status = response.getString(Constants.KEY_STATUS);
 
-                    try {
-                        String status = response.getString(Constants.KEY_STATUS);
-
-                        if (status.equals(Constants.VALUE_OK)) {
-                            pois.clear();
-                            JSONArray results = response.getJSONArray(Constants.KEY_RESULTS);
-                            for (int i = 0; i < results.length(); i++) {
-                                JSONObject oneResult = results.getJSONObject(i);
-                                String name = oneResult.getString(Constants.KEY_NAME);
-                                String vicinity = oneResult.getString(Constants.KEY_VICINITY);
-                                String place_id = oneResult.getString(Constants.KEY_PLACE_ID);
-                                JSONObject geometry = oneResult.getJSONObject(Constants.KEY_GEOMETRY);
-                                JSONObject location = geometry.getJSONObject(Constants.KEY_LOCATION);
-                                String latitude = location.getString(Constants.KEY_LATITUDE);
-                                String longitude = location.getString(Constants.KEY_LONGITUDE);
-                                String photo_reference = null;
-                                if (oneResult.has(Constants.KEY_PHOTOS)) {
-                                    JSONArray photos = oneResult.getJSONArray(Constants.KEY_PHOTOS);
-                                    JSONObject photo = photos.getJSONObject(0);
-                                    photo_reference = photo.getString(Constants.KEY_PHOTO_REFERENCE);
-                                }
-                                String iconUrl = oneResult.getString(Constants.KEY_ICON_URL);
-                                String isOpen = null;
-                                if (oneResult.has(Constants.KEY_OPENING_HOURS)) {
-                                    JSONObject openingHours = oneResult.getJSONObject(Constants.KEY_OPENING_HOURS);
-                                    isOpen = openingHours.getString(Constants.KEY_OPEN_NOW)
-                                            .equals("true") ? "Open" : "Closed";
-                                }
-                                double rating = Constants.NO_RATING;
-                                if (oneResult.has(Constants.KEY_RATING)) {
-                                    rating = oneResult.getDouble(Constants.KEY_RATING);
-                                }
-
-                                pois.add(new Poi(name, vicinity, place_id, Double.parseDouble(latitude),
-                                        Double.parseDouble(longitude), photo_reference, iconUrl, isOpen,
-                                        rating));
-
-                                getDistanceAndWalkingDuration(i);
-                                getDrivingDuration(i);
+                    if (status.equals(Constants.VALUE_OK)) {
+                        pois.clear();
+                        JSONArray results = response.getJSONArray(Constants.KEY_RESULTS);
+                        for (int i = 0; i < results.length(); i++) {
+                            JSONObject oneResult = results.getJSONObject(i);
+                            String name = oneResult.getString(Constants.KEY_NAME);
+                            String vicinity = oneResult.getString(Constants.KEY_VICINITY);
+                            String place_id = oneResult.getString(Constants.KEY_PLACE_ID);
+                            JSONObject geometry = oneResult.getJSONObject(Constants.KEY_GEOMETRY);
+                            JSONObject location = geometry.getJSONObject(Constants.KEY_LOCATION);
+                            String latitude = location.getString(Constants.KEY_LATITUDE);
+                            String longitude = location.getString(Constants.KEY_LONGITUDE);
+                            String photo_reference = null;
+                            if (oneResult.has(Constants.KEY_PHOTOS)) {
+                                JSONArray photos = oneResult.getJSONArray(Constants.KEY_PHOTOS);
+                                JSONObject photo = photos.getJSONObject(0);
+                                photo_reference = photo.getString(Constants.KEY_PHOTO_REFERENCE);
+                            }
+                            String iconUrl = oneResult.getString(Constants.KEY_ICON_URL);
+                            String isOpen = null;
+                            if (oneResult.has(Constants.KEY_OPENING_HOURS)) {
+                                JSONObject openingHours = oneResult.getJSONObject(Constants.KEY_OPENING_HOURS);
+                                isOpen = openingHours.getString(Constants.KEY_OPEN_NOW)
+                                        .equals("true") ? "Open" : "Closed";
+                            }
+                            double rating = Constants.NO_RATING;
+                            if (oneResult.has(Constants.KEY_RATING)) {
+                                rating = oneResult.getDouble(Constants.KEY_RATING);
                             }
 
-                        } else {
-                            Log.e(TAG, status);
+                            pois.add(new Poi(name, vicinity, place_id, Double.parseDouble(latitude),
+                                    Double.parseDouble(longitude), photo_reference, iconUrl, isOpen,
+                                    rating));
+
+                            getDistanceAndWalkingDuration(i);
+                            getDrivingDuration(i);
                         }
 
-                    } catch (JSONException e) {
-                        Log.e(TAG, e.getMessage());
+                    } else {
+                        Log.e(TAG, status);
                     }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e(TAG, error.getMessage());
-                }
-            });
 
-            requestQueue.add(jsonRequest);
+                } catch (JSONException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.getMessage());
+            }
+        });
 
-        } catch (UnsupportedEncodingException e) {
-            Log.e(TAG, e.getMessage());
-        }
+        requestQueue.add(jsonRequest);
+
     }
 
     @Override
@@ -300,7 +305,7 @@ public class PoisFragment extends Fragment implements
                         readyPoisCounter++;
 
                         // waiting for finishing of all asyncTasks
-                        if(readyPoisCounter >= pois.size() * 2) {
+                        if (readyPoisCounter >= pois.size() * 2) {
 
 //                            poiAdapter.notifyDataSetChanged(); // update recycler
                             // Initialising Pois Recycler View.
@@ -358,7 +363,7 @@ public class PoisFragment extends Fragment implements
                         readyPoisCounter++;
 
                         // waiting for finishing of all asyncTasks
-                        if(readyPoisCounter >= pois.size() * 2) {
+                        if (readyPoisCounter >= pois.size() * 2) {
 
 //                            poiAdapter.notifyDataSetChanged(); // update recycler
                             // Initialising Pois Recycler View.
@@ -432,5 +437,10 @@ public class PoisFragment extends Fragment implements
     public void setType(String type) {
         this.type = type;
         Log.i(TAG, type);
+
+        url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
+                clientLatitude + "," + clientLongitude + "&type=" + type +
+                "&rankby=distance&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
+        findPois();
     }
 }
