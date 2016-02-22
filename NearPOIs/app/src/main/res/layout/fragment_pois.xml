@@ -20,7 +20,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:hint="Enter name or type of wanted place."
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:layout_gravity="bottom"/>
 
         <android.support.v7.widget.CardView
             android:layout_width="0dp"

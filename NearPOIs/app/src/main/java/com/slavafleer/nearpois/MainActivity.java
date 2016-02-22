@@ -1,11 +1,15 @@
 package com.slavafleer.nearpois;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.slavafleer.nearpois.recyclerView.PoiHolder;
 import com.slavafleer.nearpois.recyclerView.QuickSearchHolder;
 
@@ -13,13 +17,15 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements
         PoiHolder.OnClickListener
-        , QuickSearchHolder.OnClickListener {
+        , QuickSearchHolder.OnClickListener, OnMapReadyCallback {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private PoisFragment poisFragment;
+    private static PoisFragment poisFragment;
 
     private String deviceType;
+
+    private GoogleMap googleMap;
 
 
 //    private ResultsLogic resultsLogic; // db business logic
@@ -37,7 +43,10 @@ public class MainActivity extends AppCompatActivity implements
 
         deviceType = (String) findViewById(R.id.linearLayoutMainRoot).getTag();
 
-        poisFragment = new PoisFragment();
+        // Don't recreate fragments on rotations
+        if(poisFragment == null) {
+            poisFragment = new PoisFragment();
+        }
 
         getFragmentManager()
                 .beginTransaction()
@@ -45,10 +54,15 @@ public class MainActivity extends AppCompatActivity implements
                 .commit();
 
         if (deviceType.equals("tablet")) {
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.mapContainer, new PoisFragment())
-                    .commit();
+//            getFragmentManager()
+//                    .beginTransaction()
+//                    .replace(R.id.mapContainer, new PoisFragment())
+//                    .commit();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+
+            SupportMapFragment fragmentMap = (SupportMapFragment) fragmentManager.findFragmentById(R.id.mapContainer);
+
+            fragmentMap.getMapAsync(this);
         }
 
         // Hide soft keyboard on start.
@@ -102,5 +116,11 @@ public class MainActivity extends AppCompatActivity implements
         poisFragment.setType(type);
         Toast.makeText(this, "Searched by type: " + type, Toast.LENGTH_SHORT).show();
         Log.i(TAG, type);
+    }
+
+    // Runs when map is ready
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
     }
 }

@@ -14,6 +14,10 @@
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="stateHidden">
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBqZywUvsonHXo6gVpiI0p-ABQ9oRuYdJw" />
+
         <activity
             android:name=".MainActivity">
 
