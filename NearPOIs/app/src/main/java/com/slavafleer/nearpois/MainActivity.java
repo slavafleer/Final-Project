@@ -4,14 +4,20 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.slavafleer.nearpois.recyclerView.PoiHolder;
+import com.slavafleer.nearpois.recyclerView.QuickSearchHolder;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements PoiHolder.ClickListener {
+public class MainActivity extends AppCompatActivity implements
+        PoiHolder.OnClickListener
+        , QuickSearchHolder.OnClickListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+
+    private PoisFragment poisFragment;
 
 //    private ResultsLogic resultsLogic; // db business logic
 
@@ -25,9 +31,11 @@ public class MainActivity extends AppCompatActivity implements PoiHolder.ClickLi
         // TODO: for testing only, need to delete.
         //initTestResults();
 
+        poisFragment = new PoisFragment();
+
         getFragmentManager()
                 .beginTransaction()
-                .add(R.id.poisContainer, new PoisFragment())
+                .add(R.id.poisContainer, poisFragment)
                 .commit();
 
         // Hide soft keyboard on start.
@@ -72,5 +80,14 @@ public class MainActivity extends AppCompatActivity implements PoiHolder.ClickLi
     public void onPhotoClick(String name) {
 
         Log.i(TAG, "Photo of " + name);
+    }
+
+    // Runs when quick search was clicked and give type of search
+    @Override
+    public void onQuickSearchClick(String type) {
+
+        poisFragment.setType(type);
+        Toast.makeText(this, "Chosen " + type, Toast.LENGTH_SHORT).show();
+        Log.i(TAG, type);
     }
 }

@@ -38,7 +38,7 @@ public class QuickSearchAdapter extends RecyclerView.Adapter<QuickSearchHolder> 
 
         View view = layoutInflater.inflate(R.layout.item_quick_search, parent, false);
 
-        return new QuickSearchHolder(view);
+        return new QuickSearchHolder(context, view);
     }
 
     // Will be invoked for each item presented.

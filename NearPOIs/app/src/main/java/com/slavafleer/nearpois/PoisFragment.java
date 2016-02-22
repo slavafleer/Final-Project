@@ -428,4 +428,9 @@ public class PoisFragment extends Fragment implements
         // might be returned in onConnectionFailed.
         Log.i(TAG, "Connection failed: ErrorCode: " + connectionResult.getErrorCode());
     }
+
+    public void setType(String type) {
+        this.type = type;
+        Log.i(TAG, type);
+    }
 }

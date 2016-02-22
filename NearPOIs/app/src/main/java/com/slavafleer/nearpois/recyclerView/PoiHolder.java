@@ -25,7 +25,7 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
 
     private Context context;
 
-    private ClickListener clickListener;
+    private OnClickListener onClickListener;
 
     private LinearLayout linearLayoutPoiData;
     private TextView textViewName;
@@ -60,7 +60,7 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
 
         imageViewPhoto.setOnClickListener(this);
 
-        clickListener = (ClickListener) context;
+        onClickListener = (OnClickListener) context;
     }
 
     // Bind Data Object to the Views.
@@ -150,10 +150,10 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
 
         if (v instanceof LinearLayout) { // data part
 //            Log.i(TAG, textViewName.getText().toString());
-            clickListener.onDataClick(textViewName.getText().toString());
+            onClickListener.onDataClick(textViewName.getText().toString());
         } else { // photo part
 //            Log.i(TAG, "Photo of " + textViewName.getText().toString());
-            clickListener.onPhotoClick(textViewName.getText().toString());
+            onClickListener.onPhotoClick(textViewName.getText().toString());
         }
     }
 
@@ -162,12 +162,12 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
     public boolean onLongClick(View v) {
 
 //        Log.i(TAG, textViewName.getText().toString() + " long touched.");
-        clickListener.onDataLongClick(textViewName.getText().toString());
+        onClickListener.onDataLongClick(textViewName.getText().toString());
 
-        return true; //  don't do onClick too.
+        return true; //  don't do onQuickSearchClick too.
     }
 
-    public interface ClickListener {
+    public interface OnClickListener {
 
         void onDataClick(String name);
 
