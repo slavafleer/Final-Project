@@ -28,6 +28,12 @@ public class Poi {
         this.name = name;
     }
 
+    public Poi(String name, double latitude, double longitude) {
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     public Poi(String name, String vicinity, String place_id, double latitude,
                double longitude, String photoReference, String iconUrl, String isOpen,
                double rating) {

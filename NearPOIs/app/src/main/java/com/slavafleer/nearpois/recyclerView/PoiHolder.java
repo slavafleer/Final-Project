@@ -25,6 +25,8 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
 
     private Context context;
 
+    private Poi poi;
+
     private OnClickListener onClickListener;
 
     private LinearLayout linearLayoutPoiData;
@@ -65,6 +67,8 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
 
     // Bind Data Object to the Views.
     public void bindPoi(Poi poi) {
+
+        this.poi = poi;
 
         String name = poi.getName();
         String vicinity = poi.getVicinity();
@@ -150,7 +154,7 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
 
         if (v instanceof LinearLayout) { // data part
 //            Log.i(TAG, textViewName.getText().toString());
-            onClickListener.onDataClick(textViewName.getText().toString());
+            onClickListener.onDataClick(poi);
         } else { // photo part
 //            Log.i(TAG, "Photo of " + textViewName.getText().toString());
             onClickListener.onPhotoClick(textViewName.getText().toString());
@@ -169,7 +173,7 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
 
     public interface OnClickListener {
 
-        void onDataClick(String name);
+        void onDataClick(Poi poi);
 
         void onDataLongClick(String name);
 

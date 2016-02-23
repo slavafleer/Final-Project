@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="com.slavafleer.nearpois"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest package="com.slavafleer.nearpois"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -17,16 +16,16 @@
         <!-- Gor Google Maps API -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBqZywUvsonHXo6gVpiI0p-ABQ9oRuYdJw" />
+            android:value="AIzaSyBqZywUvsonHXo6gVpiI0p-ABQ9oRuYdJw"/>
 
-        <activity
-            android:name=".MainActivity">
-
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".MapActivity">
         </activity>
     </application>
 
