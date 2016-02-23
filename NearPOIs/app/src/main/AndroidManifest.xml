@@ -14,6 +14,7 @@
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="stateHidden">
 
+        <!-- Gor Google Maps API -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBqZywUvsonHXo6gVpiI0p-ABQ9oRuYdJw" />
