@@ -4,6 +4,7 @@ package com.slavafleer.nearpois;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -75,6 +76,8 @@ public class PoisFragment extends Fragment implements
 
     private String type;
     private String url;
+
+//    private ProgressDialog dialog;
 
     public PoisFragment() {
         // Required empty public constructor
@@ -178,6 +181,14 @@ public class PoisFragment extends Fragment implements
 
         Log.i(TAG, url.toString());
 
+        // Show dialog to user
+        final ProgressDialog dialog = new ProgressDialog(activity);
+        dialog.setTitle("Connecting...");
+        dialog.setMessage("Please Wait...");
+        dialog.setCancelable(false);
+        dialog.show();
+
+        //TODO: check for all possible ways that some data is not found in json
         JsonObjectRequest jsonRequest = new JsonObjectRequest(
                 Request.Method.GET, url, (String) null, new Response.Listener<JSONObject>() {
 
@@ -233,11 +244,15 @@ public class PoisFragment extends Fragment implements
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
                 }
+
+                dialog.dismiss();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e(TAG, error.getMessage());
+
+                dialog.dismiss();
             }
         });
 
