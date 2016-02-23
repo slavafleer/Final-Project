@@ -1,7 +1,6 @@
 package com.slavafleer.nearpois;
 
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +16,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.slavafleer.nearpois.helper.BroadCastReceiverHelper;
 import com.slavafleer.nearpois.recyclerView.PoiHolder;
 import com.slavafleer.nearpois.recyclerView.QuickSearchHolder;
 
@@ -33,9 +33,6 @@ public class MainActivity extends AppCompatActivity implements
     private String deviceType;
 
     private GoogleMap googleMap;
-
-    private ChargerReceiver chargerReceiver;
-
 
 //    private ResultsLogic resultsLogic; // db business logic
 
@@ -80,14 +77,16 @@ public class MainActivity extends AppCompatActivity implements
     protected void onResume() {
         super.onResume();
 
-        toggleChargerReceiver();
+        // Turning on ChargerReceiver
+        BroadCastReceiverHelper.toggleChargerReceiver(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
-        toggleChargerReceiver();
+        // Turning off ChargerReceiver
+        BroadCastReceiverHelper.toggleChargerReceiver(this);
     }
 
     // TODO: for testing only, need to delete.
@@ -188,28 +187,6 @@ public class MainActivity extends AppCompatActivity implements
 
         if(lastSelectedPoi != null) {
             showOnMap(lastSelectedPoi);
-        }
-    }
-
-    public void toggleChargerReceiver() {
-
-        // Register the broadcast receiver:
-        if (chargerReceiver == null) {
-
-            // Create an intent filter for describing the needed broadcast receiver:
-            IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction(Intent.ACTION_POWER_CONNECTED);
-            intentFilter.addAction(Intent.ACTION_POWER_DISCONNECTED);
-
-            // Create the broadcast receiver object:
-            chargerReceiver = new ChargerReceiver();
-
-            // Register the broadcast receiver:
-            registerReceiver(chargerReceiver, intentFilter);
-
-        } else { // Un register the broadcast receiver.
-            unregisterReceiver(chargerReceiver);
-            chargerReceiver = null;
         }
     }
 }

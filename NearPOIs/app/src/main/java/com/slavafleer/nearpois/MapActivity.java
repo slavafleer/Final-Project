@@ -14,6 +14,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.slavafleer.nearpois.helper.BroadCastReceiverHelper;
 
 // Show POI on the map in activity on phone
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -41,6 +42,22 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 (SupportMapFragment) fragmentManager.findFragmentById(R.id.mapContainer);
 
         fragmentMap.getMapAsync(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Turning on ChargerReceiver
+        BroadCastReceiverHelper.toggleChargerReceiver(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // Turning off ChargerReceiver
+        BroadCastReceiverHelper.toggleChargerReceiver(this);
     }
 
     @Override

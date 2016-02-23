@@ -17,10 +17,10 @@ public class ChargerReceiver extends BroadcastReceiver {
         String action = intent.getAction();
 
         if(action.equals(Intent.ACTION_POWER_CONNECTED)) {
-            Toast.makeText(context, "Power is connected.", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Power is connected.", Toast.LENGTH_SHORT).show();
 
         } else if(action.equals(Intent.ACTION_POWER_DISCONNECTED)) {
-            Toast.makeText(context, "Power is disconnected.", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Power is disconnected.", Toast.LENGTH_SHORT).show();
         }
     }
 }
