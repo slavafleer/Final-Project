@@ -50,15 +50,17 @@ public class Poi {
         this.rating = rating;
     }
 
-    public Poi(long id, String name, String address, String vicinity,
-               int distance, String place_id, double latitude,
-               double longitude, String photoReference, String iconUrl, String isOpen,
-               double rating) {
+    public Poi(long id, String name, String address, String vicinity, String distanceText,
+               int distanceValue, String place_id, double latitude, double longitude,
+               String photoReference, String iconUrl, String isOpen, double rating,
+               String walkingDurationText, long walkingDurationValue, String drivingDurationText,
+               long drivingDurationValue) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.vicinity = vicinity;
-        this.distanceValue = distance;
+        this.distanceText = distanceText;
+        this.distanceValue = distanceValue;
         this.place_id = place_id;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -66,6 +68,10 @@ public class Poi {
         this.iconUrl = iconUrl;
         this.isOpen = isOpen;
         this.rating = rating;
+        this.walkingDurationText = walkingDurationText;
+        this.walkingDurationValue = walkingDurationValue;
+        this.drivingDurationText = drivingDurationText;
+        this.drivingDurationValue = drivingDurationValue;
     }
 
     public long getId() {

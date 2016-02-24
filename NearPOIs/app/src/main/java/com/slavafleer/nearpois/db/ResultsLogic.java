@@ -23,7 +23,8 @@ public class ResultsLogic extends BaseLogic {
         contentValues.put(DB.Results.NAME, poi.getName());
         contentValues.put(DB.Results.ADDRESS, poi.getAddress());
         contentValues.put(DB.Results.VICINITY, poi.getVicinity());
-        contentValues.put(DB.Results.DISTANCE, poi.getDistanceValue());
+        contentValues.put(DB.Results.DISTANCE_TEXT, poi.getDistanceText());
+        contentValues.put(DB.Results.DISTANCE_VALUE, poi.getDistanceValue());
         contentValues.put(DB.Results.PLACE_ID, poi.getPlace_id());
         contentValues.put(DB.Results.LATITUDE, poi.getLatitude());
         contentValues.put(DB.Results.LONGITUDE, poi.getLongitude());
@@ -31,6 +32,10 @@ public class ResultsLogic extends BaseLogic {
         contentValues.put(DB.Results.ICON_URL, poi.getIconUrl());
         contentValues.put(DB.Results.IS_OPEN, poi.getIsOpen());
         contentValues.put(DB.Results.RATING, poi.getRating());
+        contentValues.put(DB.Results.WALKING_DURATION_TEXT, poi.getWalkingDurationText());
+        contentValues.put(DB.Results.WALKING_DURATION_VALUE, poi.getWalkingDurationValue());
+        contentValues.put(DB.Results.DRIVING_DURATION_TEXT, poi.getDrivingDurationText());
+        contentValues.put(DB.Results.DRIVING_DURATION_VALUE, poi.getDrivingDurationValue());
 
         long createdId = dal.insert(DB.Results.TABLE_NAME, contentValues);
 
@@ -45,7 +50,8 @@ public class ResultsLogic extends BaseLogic {
         contentValues.put(DB.Results.NAME, poi.getName());
         contentValues.put(DB.Results.ADDRESS, poi.getAddress());
         contentValues.put(DB.Results.VICINITY, poi.getVicinity());
-        contentValues.put(DB.Results.DISTANCE, poi.getDistanceValue());
+        contentValues.put(DB.Results.DISTANCE_TEXT, poi.getDistanceText());
+        contentValues.put(DB.Results.DISTANCE_VALUE, poi.getDistanceValue());
         contentValues.put(DB.Results.PLACE_ID, poi.getPlace_id());
         contentValues.put(DB.Results.LATITUDE, poi.getLatitude());
         contentValues.put(DB.Results.LONGITUDE, poi.getLongitude());
@@ -53,6 +59,10 @@ public class ResultsLogic extends BaseLogic {
         contentValues.put(DB.Results.ICON_URL, poi.getIconUrl());
         contentValues.put(DB.Results.IS_OPEN, poi.getIsOpen());
         contentValues.put(DB.Results.RATING, poi.getRating());
+        contentValues.put(DB.Results.WALKING_DURATION_TEXT, poi.getWalkingDurationText());
+        contentValues.put(DB.Results.WALKING_DURATION_VALUE, poi.getWalkingDurationValue());
+        contentValues.put(DB.Results.DRIVING_DURATION_TEXT, poi.getDrivingDurationText());
+        contentValues.put(DB.Results.DRIVING_DURATION_VALUE, poi.getDrivingDurationValue());
 
         String where = DB.Results.ID + "=" + poi.getId();
 
@@ -80,12 +90,12 @@ public class ResultsLogic extends BaseLogic {
 
         while(cursor.moveToNext()) {
 
-            int idIndex = cursor.getColumnIndex(DB.Results.ID);
-            long id = cursor.getLong(idIndex);
+            long id = cursor.getLong(cursor.getColumnIndex(DB.Results.ID));
             String name = cursor.getString(cursor.getColumnIndex(DB.Results.NAME));
             String address = cursor.getString(cursor.getColumnIndex(DB.Results.ADDRESS));
             String vicinity = cursor.getString(cursor.getColumnIndex(DB.Results.VICINITY));
-            int distance = cursor.getInt(cursor.getColumnIndex(DB.Results.DISTANCE));
+            String distanceText = cursor.getString(cursor.getColumnIndex(DB.Results.DISTANCE_TEXT));
+            int distanceValue = cursor.getInt(cursor.getColumnIndex(DB.Results.DISTANCE_VALUE));
             String place_id = cursor.getString(cursor.getColumnIndex(DB.Results.PLACE_ID));
             double latitude = cursor.getDouble(cursor.getColumnIndex(DB.Results.LATITUDE));
             double longitude = cursor.getDouble(cursor.getColumnIndex(DB.Results.LONGITUDE));
@@ -93,9 +103,14 @@ public class ResultsLogic extends BaseLogic {
             String iconUrl = cursor.getString(cursor.getColumnIndex(DB.Results.ICON_URL));
             String isOpen = cursor.getString(cursor.getColumnIndex(DB.Results.IS_OPEN));
             double rating = cursor.getDouble(cursor.getColumnIndex(DB.Results.RATING));
+            String walkingDurationText = cursor.getString(cursor.getColumnIndex(DB.Results.WALKING_DURATION_TEXT));
+            long walkingDurationValue = cursor.getLong(cursor.getColumnIndex(DB.Results.WALKING_DURATION_VALUE));
+            String drivingDurationText = cursor.getString(cursor.getColumnIndex(DB.Results.DRIVING_DURATION_TEXT));
+            long drivingDurationValue = cursor.getLong(cursor.getColumnIndex(DB.Results.DRIVING_DURATION_VALUE));
 
-            Poi poi = new Poi(id, name, address, vicinity, distance, place_id, latitude,
-                    longitude, photoReference, iconUrl, isOpen, rating);
+            Poi poi = new Poi(id, name, address, vicinity, distanceText, distanceValue, place_id, latitude,
+                    longitude, photoReference, iconUrl, isOpen, rating, walkingDurationText,
+                    walkingDurationValue, drivingDurationText, drivingDurationValue);
 
             pois.add(poi);
         }
