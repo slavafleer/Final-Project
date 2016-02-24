@@ -77,8 +77,6 @@ public class PoisFragment extends Fragment implements
     private String type;
     private String url;
 
-//    private ProgressDialog dialog;
-
     public PoisFragment() {
         // Required empty public constructor
     }
@@ -99,9 +97,6 @@ public class PoisFragment extends Fragment implements
         buildGoogleApiClient();
 
         editTextSearchText = (EditText) view.findViewById(R.id.editTextSearchText);
-
-        //TODO: delete at the end
-        editTextSearchText.setText("bar");
 
         // Find Button On Click
         imageViewFind = (ImageView) view.findViewById(R.id.imageViewFind);
@@ -139,10 +134,12 @@ public class PoisFragment extends Fragment implements
         recyclerViewQuickSearches = (RecyclerView) view.findViewById(R.id.recyclerViewQuickSearches);
 
         // TODO: TESTING
-
-//        resultsLogic.open();
-//        pois = resultsLogic.getAllResults();
-//        resultsLogic.close();
+        if (pois.isEmpty()) {
+            // Load from DB last results
+            resultsLogic.open();
+            pois = resultsLogic.getAllResults();
+            resultsLogic.close();
+        }
 
 
         // Initialising Pois Recycler View.
@@ -265,6 +262,25 @@ public class PoisFragment extends Fragment implements
         super.onStart();
 
         googleApiClient.connect();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (!pois.isEmpty()) {
+            // Save to DB last results
+            resultsLogic.open();
+            resultsLogic.replaceAllResults(pois);
+            resultsLogic.close();
+        }
     }
 
     @Override

@@ -125,5 +125,30 @@ public class ResultsLogic extends BaseLogic {
         return getResults(null);
     }
 
+    // Add all pois from result to DB
+    public void addAllResults(ArrayList<Poi> pois) {
+
+        for(Poi poi : pois) {
+            addPoi(poi);
+        }
+    }
+
+    // Delete all saved results from DB
+    public void deleteAllResults() {
+
+        ArrayList<Poi> pois = getAllResults();
+
+        for(Poi poi : pois) {
+            deletePoi(poi);
+        }
+    }
+
+    // Replace all saved results from DB to new results
+    public void replaceAllResults(ArrayList<Poi> pois) {
+
+        deleteAllResults();
+
+        addAllResults(pois);
+    }
 }
 

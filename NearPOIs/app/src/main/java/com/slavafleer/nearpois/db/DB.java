@@ -28,7 +28,7 @@ public class DB {
         public static final String WALKING_DURATION_TEXT = "walkingDurationText";
         public static final String WALKING_DURATION_VALUE = "walkingDurationValue";
         public static final String DRIVING_DURATION_TEXT = "drivingDurationText";
-        public static final String DRIVING_DURATION_VALUE = "walkingDurationValue";
+        public static final String DRIVING_DURATION_VALUE = "drivingDurationValue";
 
         // Creation Statement
         public static final String CREATION_STATEMENT = "CREATE TABLE " + TABLE_NAME +
