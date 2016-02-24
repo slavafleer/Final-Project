@@ -140,10 +140,11 @@ public class MainActivity extends AppCompatActivity implements
             marker.showInfoWindow();
 
             int zoom = 15;
+            int cameraSpeedInMilliseconds = 3000;
 
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(location, zoom);
 
-            googleMap.animateCamera(cameraUpdate);
+            googleMap.animateCamera(cameraUpdate, cameraSpeedInMilliseconds, null);
 
         } else {
             // On phone device

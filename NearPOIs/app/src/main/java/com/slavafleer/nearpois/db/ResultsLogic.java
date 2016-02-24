@@ -8,6 +8,7 @@ import com.slavafleer.nearpois.Poi;
 
 import java.util.ArrayList;
 
+// Logic Class that implements DB methods
 public class ResultsLogic extends BaseLogic {
 
     public ResultsLogic(Activity activity) {
@@ -22,7 +23,7 @@ public class ResultsLogic extends BaseLogic {
         contentValues.put(DB.Results.NAME, poi.getName());
         contentValues.put(DB.Results.ADDRESS, poi.getAddress());
         contentValues.put(DB.Results.VICINITY, poi.getVicinity());
-        contentValues.put(DB.Results.DISTANCE, poi.getDistance());
+        contentValues.put(DB.Results.DISTANCE, poi.getDistanceValue());
         contentValues.put(DB.Results.PLACE_ID, poi.getPlace_id());
         contentValues.put(DB.Results.LATITUDE, poi.getLatitude());
         contentValues.put(DB.Results.LONGITUDE, poi.getLongitude());
@@ -44,7 +45,7 @@ public class ResultsLogic extends BaseLogic {
         contentValues.put(DB.Results.NAME, poi.getName());
         contentValues.put(DB.Results.ADDRESS, poi.getAddress());
         contentValues.put(DB.Results.VICINITY, poi.getVicinity());
-        contentValues.put(DB.Results.DISTANCE, poi.getDistance());
+        contentValues.put(DB.Results.DISTANCE, poi.getDistanceValue());
         contentValues.put(DB.Results.PLACE_ID, poi.getPlace_id());
         contentValues.put(DB.Results.LATITUDE, poi.getLatitude());
         contentValues.put(DB.Results.LONGITUDE, poi.getLongitude());
@@ -84,7 +85,7 @@ public class ResultsLogic extends BaseLogic {
             String name = cursor.getString(cursor.getColumnIndex(DB.Results.NAME));
             String address = cursor.getString(cursor.getColumnIndex(DB.Results.ADDRESS));
             String vicinity = cursor.getString(cursor.getColumnIndex(DB.Results.VICINITY));
-            double distance = cursor.getDouble(cursor.getColumnIndex(DB.Results.DISTANCE));
+            int distance = cursor.getInt(cursor.getColumnIndex(DB.Results.DISTANCE));
             String place_id = cursor.getString(cursor.getColumnIndex(DB.Results.PLACE_ID));
             double latitude = cursor.getDouble(cursor.getColumnIndex(DB.Results.LATITUDE));
             double longitude = cursor.getDouble(cursor.getColumnIndex(DB.Results.LONGITUDE));

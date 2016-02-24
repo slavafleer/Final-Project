@@ -9,7 +9,8 @@ public class Poi {
     private String name;
     private String address;
     private String vicinity;
-    private double distance;
+    private String distanceText;
+    private int distanceValue;
     private String place_id;
     private double latitude;
     private double longitude;
@@ -17,9 +18,10 @@ public class Poi {
     private String iconUrl;
     private String isOpen;
     private double rating;
-    private String distanceText;
     private String walkingDurationText;
+    private long walkingDurationValue;
     private String drivingDurationText;
+    private long drivingDurationValue;
 
     public Poi() {
     }
@@ -49,14 +51,14 @@ public class Poi {
     }
 
     public Poi(long id, String name, String address, String vicinity,
-               double distance, String place_id, double latitude,
+               int distance, String place_id, double latitude,
                double longitude, String photoReference, String iconUrl, String isOpen,
                double rating) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.vicinity = vicinity;
-        this.distance = distance;
+        this.distanceValue = distance;
         this.place_id = place_id;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -98,13 +100,13 @@ public class Poi {
         this.vicinity = vicinity;
     }
 
-    public double getDistance() {
-        return distance;
+    public int getDistanceValue() {
+        return distanceValue;
     }
 
-    public void setDistance(double distance) {
-        if (distance >= 0) {
-            this.distance = distance;
+    public void setDistanceValue(int distanceValue) {
+        if (distanceValue >= 0) {
+            this.distanceValue = distanceValue;
         }
     }
 
@@ -186,5 +188,21 @@ public class Poi {
 
     public void setDrivingDurationText(String drivingDurationText) {
         this.drivingDurationText = drivingDurationText;
+    }
+
+    public long getWalkingDurationValue() {
+        return walkingDurationValue;
+    }
+
+    public void setWalkingDurationValue(long walkingDurationValue) {
+        this.walkingDurationValue = walkingDurationValue;
+    }
+
+    public long getDrivingDurationValue() {
+        return drivingDurationValue;
+    }
+
+    public void setDrivingDurationValue(long drivingDurationValue) {
+        this.drivingDurationValue = drivingDurationValue;
     }
 }

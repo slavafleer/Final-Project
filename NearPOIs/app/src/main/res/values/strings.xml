@@ -55,5 +55,10 @@
         <item>train_71</item>
     </string-array>
 
+    <!--User communication-->
+    <string name="charger_connected">Charger is connected.</string>
+    <string name="charger_disconnected">Charger is disconnected.</string>
+    <string name="open">Open</string>
+    <string name="closed">Closed</string>
 
 </resources>

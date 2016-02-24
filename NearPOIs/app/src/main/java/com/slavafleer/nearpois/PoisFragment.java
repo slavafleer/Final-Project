@@ -222,7 +222,7 @@ public class PoisFragment extends Fragment implements
                             if (oneResult.has(Constants.KEY_OPENING_HOURS)) {
                                 JSONObject openingHours = oneResult.getJSONObject(Constants.KEY_OPENING_HOURS);
                                 isOpen = openingHours.getString(Constants.KEY_OPEN_NOW)
-                                        .equals("true") ? "Open" : "Closed";
+                                        .equals("true") ? activity.getString(R.string.open) : activity.getString(R.string.closed);
                             }
                             double rating = Constants.NO_RATING;
                             if (oneResult.has(Constants.KEY_RATING)) {
@@ -308,14 +308,15 @@ public class PoisFragment extends Fragment implements
                         JSONObject element = elements.getJSONObject(0);
                         JSONObject distance = element.getJSONObject(Constants.KEY_DISTANCE);
                         String distanceText = distance.getString(Constants.KEY_TEXT);
-                        double distanceValue = distance.getInt(Constants.KEY_VALUE);
+                        int distanceValue = distance.getInt(Constants.KEY_VALUE);
                         JSONObject duration = element.getJSONObject(Constants.KEY_DURATION);
                         String durationText = duration.getString(Constants.KEY_TEXT);
-                        int durationValue = duration.getInt(Constants.KEY_VALUE);
+                        long durationValue = duration.getLong(Constants.KEY_VALUE);
 
-                        pois.get(position).setDistance(distanceValue);
                         pois.get(position).setDistanceText(distanceText);
+                        pois.get(position).setDistanceValue(distanceValue);
                         pois.get(position).setWalkingDurationText(durationText);
+                        pois.get(position).setWalkingDurationValue(durationValue);
 
                         readyPoisCounter++;
 
@@ -371,9 +372,10 @@ public class PoisFragment extends Fragment implements
                         JSONObject element = elements.getJSONObject(0);
                         JSONObject duration = element.getJSONObject(Constants.KEY_DURATION);
                         String durationText = duration.getString(Constants.KEY_TEXT);
-                        int durationValue = duration.getInt(Constants.KEY_VALUE);
+                        long durationValue = duration.getInt(Constants.KEY_VALUE);
 
                         pois.get(position).setDrivingDurationText(durationText);
+                        pois.get(position).setDrivingDurationValue(durationValue);
 
                         readyPoisCounter++;
 
