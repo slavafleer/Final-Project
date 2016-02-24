@@ -157,7 +157,7 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
             onClickListener.onDataClick(poi);
         } else { // photo part
 //            Log.i(TAG, "Photo of " + textViewName.getText().toString());
-            onClickListener.onPhotoClick(textViewName.getText().toString());
+            onClickListener.onPhotoClick(poi);
         }
     }
 
@@ -166,7 +166,7 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
     public boolean onLongClick(View v) {
 
 //        Log.i(TAG, textViewName.getText().toString() + " long touched.");
-        onClickListener.onDataLongClick(textViewName.getText().toString());
+        onClickListener.onDataLongClick(poi);
 
         return true; //  don't do onQuickSearchClick too.
     }
@@ -175,8 +175,8 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
 
         void onDataClick(Poi poi);
 
-        void onDataLongClick(String name);
+        void onDataLongClick(Poi poi);
 
-        void onPhotoClick(String name);
+        void onPhotoClick(Poi poi);
     }
 }

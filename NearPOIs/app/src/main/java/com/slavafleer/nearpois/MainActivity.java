@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -16,11 +18,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.slavafleer.nearpois.db.FavoritesLogic;
 import com.slavafleer.nearpois.helper.BroadCastReceiverHelper;
 import com.slavafleer.nearpois.recyclerView.PoiHolder;
 import com.slavafleer.nearpois.recyclerView.QuickSearchHolder;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements
         PoiHolder.OnClickListener, QuickSearchHolder.OnClickListener, OnMapReadyCallback {
@@ -34,18 +35,10 @@ public class MainActivity extends AppCompatActivity implements
 
     private GoogleMap googleMap;
 
-//    private ResultsLogic resultsLogic; // db business logic
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        resultsLogic = new ResultsLogic(this);
-
-        // TODO: for testing only, need to delete.
-        //initTestResults();
-
 
         deviceType = (String) findViewById(R.id.linearLayoutMainRoot).getTag();
 
@@ -87,25 +80,6 @@ public class MainActivity extends AppCompatActivity implements
 
         // Turning off ChargerReceiver
         BroadCastReceiverHelper.toggleChargerReceiver(this);
-    }
-
-    // TODO: for testing only, need to delete.
-    private void initTestResults() {
-
-        ArrayList<Poi> pois = new ArrayList<>();
-        pois.add(new Poi("Place 1"));
-        pois.add(new Poi("Place 2"));
-        pois.add(new Poi("Place 3"));
-        pois.add(new Poi("Place 4"));
-        pois.add(new Poi("Place 5"));
-        pois.add(new Poi("Place 6"));
-        pois.add(new Poi("Place 7"));
-
-//        resultsLogic.open();
-//        for(Poi poi : pois) {
-//            resultsLogic.addPoi(poi);
-//        }
-//        resultsLogic.close();
     }
 
     // Do it on poi item data part clicked.
@@ -160,16 +134,25 @@ public class MainActivity extends AppCompatActivity implements
 
     // Runs when poi item data part is long clicked.
     @Override
-    public void onDataLongClick(String name) {
+    public void onDataLongClick(Poi poi) {
 
-        Log.i(TAG, name + " long touched.");
+        //TODO: need to check if this favorite is already saved
+        Log.i(TAG, poi.getName() + " long touched.");
+
+        // Save selected poi in favorites
+        FavoritesLogic favoritesLogic = new FavoritesLogic(this);
+
+        favoritesLogic.open();
+        poi.setIsOpen("");
+        favoritesLogic.addPoi(poi);
+        favoritesLogic.close();
     }
 
     // Runs when poi item photo part is clicked.
     @Override
-    public void onPhotoClick(String name) {
+    public void onPhotoClick(Poi poi) {
 
-        Log.i(TAG, "Photo of " + name);
+        Log.i(TAG, "Photo of " + poi.getName());
     }
 
     // Runs when quick search is clicked and give type of search
@@ -188,6 +171,42 @@ public class MainActivity extends AppCompatActivity implements
 
         if(lastSelectedPoi != null) {
             showOnMap(lastSelectedPoi);
+        }
+    }
+
+    // Create Action Bar Menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    // Action Bar Menu Actions
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.menu_item_favorites:
+                Toast.makeText(this, "Favorites", Toast.LENGTH_SHORT).show();
+
+                if(poisFragment != null) {
+                    poisFragment.showFavorites();
+                }
+                return true;
+
+            case R.id.menu_item_settings:
+
+
+                return true;
+
+            case R.id.menu_item_exit:
+
+                finish();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

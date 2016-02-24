@@ -27,6 +27,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.slavafleer.nearpois.db.FavoritesLogic;
 import com.slavafleer.nearpois.db.ResultsLogic;
 import com.slavafleer.nearpois.recyclerView.PoiAdapter;
 import com.slavafleer.nearpois.recyclerView.QuickSearchAdapter;
@@ -60,6 +61,8 @@ public class PoisFragment extends Fragment implements
     private ResultsLogic resultsLogic; // db business logic
 
     private ArrayList<Poi> pois = new ArrayList<>();
+
+    private ArrayList<Poi> lastResult; // for saving last result
 
     private GoogleApiClient googleApiClient;
     private Location lastLocation;
@@ -230,8 +233,8 @@ public class PoisFragment extends Fragment implements
                                     Double.parseDouble(longitude), photo_reference, iconUrl, isOpen,
                                     rating));
 
-                            getDistanceAndWalkingDuration(i);
-                            getDrivingDuration(i);
+                            getDistanceAndWalkingDuration(i, false);
+                            getDrivingDuration(i, false);
                         }
 
                     } else {
@@ -265,20 +268,13 @@ public class PoisFragment extends Fragment implements
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-
-    }
-
-    @Override
     public void onPause() {
         super.onPause();
 
-        if (!pois.isEmpty()) {
+        if (lastResult != null && !lastResult.isEmpty()) {
             // Save to DB last results
             resultsLogic.open();
-            resultsLogic.replaceAllResults(pois);
+            resultsLogic.replaceAllResults(lastResult);
             resultsLogic.close();
         }
     }
@@ -302,7 +298,7 @@ public class PoisFragment extends Fragment implements
     }
 
     // Send queries to Google Distance Matrix API
-    private void getDistanceAndWalkingDuration(final int position) {
+    private void getDistanceAndWalkingDuration(final int position, final boolean isFavorites) {
 
         String mode = "walking";
         String urlDistance = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" +
@@ -336,16 +332,7 @@ public class PoisFragment extends Fragment implements
 
                         readyPoisCounter++;
 
-                        // waiting for finishing of all asyncTasks
-                        if (readyPoisCounter >= pois.size() * 2) {
-
-//                            poiAdapter.notifyDataSetChanged(); // update recycler
-                            // Initialising Pois Recycler View.
-                            //TODO: to check if we have location
-                            poiAdapter = new PoiAdapter(activity, pois);
-                            recyclerViewPois.setLayoutManager(new LinearLayoutManager(activity));
-                            recyclerViewPois.setAdapter(poiAdapter);
-                        }
+                        initPoisRecyclerView(isFavorites);
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
@@ -365,8 +352,33 @@ public class PoisFragment extends Fragment implements
         requestQueue.add(jsonRequest);
     }
 
+    // For saving last result
+    private void copyLastResult() {
+        lastResult = new ArrayList<>();
+        for(Poi poi : pois) {
+            lastResult.add(poi);
+        }
+    }
+
+    // Initialising Pois Recycler View.
+    private void initPoisRecyclerView(boolean isFavorites) {
+        // waiting for finishing of all asyncTasks
+        if (readyPoisCounter >= pois.size() * 2) {
+
+            // Initialising Pois Recycler View.
+            //TODO: to check if we have location
+            poiAdapter = new PoiAdapter(activity, pois);
+            recyclerViewPois.setLayoutManager(new LinearLayoutManager(activity));
+            recyclerViewPois.setAdapter(poiAdapter);
+        }
+
+        if(!isFavorites) {
+            copyLastResult();
+        }
+    }
+
     // Send queries to Google Distance Matrix API
-    private void getDrivingDuration(final int position) {
+    private void getDrivingDuration(final int position, final boolean isFavorites) {
 
         String mode = "driving";
         String urlDistance = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" +
@@ -395,16 +407,7 @@ public class PoisFragment extends Fragment implements
 
                         readyPoisCounter++;
 
-                        // waiting for finishing of all asyncTasks
-                        if (readyPoisCounter >= pois.size() * 2) {
-
-//                            poiAdapter.notifyDataSetChanged(); // update recycler
-                            // Initialising Pois Recycler View.
-                            //TODO: to check if we have location
-                            poiAdapter = new PoiAdapter(activity, pois);
-                            recyclerViewPois.setLayoutManager(new LinearLayoutManager(activity));
-                            recyclerViewPois.setAdapter(poiAdapter);
-                        }
+                        initPoisRecyclerView(isFavorites);
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
@@ -475,5 +478,23 @@ public class PoisFragment extends Fragment implements
                 clientLatitude + "," + clientLongitude + "&type=" + type +
                 "&rankby=distance&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
         findPois();
+    }
+
+    public void showFavorites() {
+
+        FavoritesLogic favoritesLogic = new FavoritesLogic(activity);
+
+        readyPoisCounter = 0; // Show completed data of Pois
+
+        // Load from DB last results
+        favoritesLogic.open();
+        pois = favoritesLogic.getAllPois();
+        favoritesLogic.close();
+
+        for(int i = 0; i < pois.size(); i++) {
+            getDistanceAndWalkingDuration(i, true);
+            getDrivingDuration(i, true);
+        }
+
     }
 }

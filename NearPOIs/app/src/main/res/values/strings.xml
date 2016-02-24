@@ -61,4 +61,9 @@
     <string name="open">Open</string>
     <string name="closed">Closed</string>
 
+    <!-- Menu -->
+    <string name="favorites">Favorites</string>
+    <string name="settings">Settings</string>
+    <string name="exit">Exit</string>
+
 </resources>
