@@ -146,6 +146,11 @@ public class PoisFragment extends Fragment implements
             resultsLogic.open();
             pois = resultsLogic.getAllResults();
             resultsLogic.close();
+
+            isListOfFavorites = false;
+
+            SharedPreferences sharedPreferences = activity.getSharedPreferences("MainActivity", Context.MODE_PRIVATE);
+            sharedPreferences.edit().putBoolean("isListOfFavorites", isListOfFavorites).commit();
         }
 
 
@@ -513,6 +518,7 @@ public class PoisFragment extends Fragment implements
     }
 
     public void updateRecylerView() {
+        // TODO: not works
         poiAdapter.notifyDataSetChanged();
     }
 }
