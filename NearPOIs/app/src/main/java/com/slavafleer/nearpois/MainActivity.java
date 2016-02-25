@@ -1,6 +1,7 @@
 package com.slavafleer.nearpois;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -139,12 +140,24 @@ public class MainActivity extends AppCompatActivity implements
         //TODO: need to check if this favorite is already saved
         Log.i(TAG, poi.getName() + " long touched.");
 
-        // Save selected poi in favorites
-        FavoritesLogic favoritesLogic = new FavoritesLogic(this);
+        SharedPreferences sharedPreferences = getSharedPreferences("MainActivity", MODE_PRIVATE);
+        boolean isListOfFavorites = sharedPreferences.getBoolean("isListOfFavorites", false);
 
+        FavoritesLogic favoritesLogic = new FavoritesLogic(this);
         favoritesLogic.open();
-        poi.setIsOpen("");
-        favoritesLogic.addPoi(poi);
+
+        if (isListOfFavorites) {
+            favoritesLogic.deletePoi(poi);
+            poisFragment.updateRecylerView();
+            Toast.makeText(this, "The POI was deleted from Favorites.", Toast.LENGTH_SHORT).show();
+        } else {
+            // Save selected poi in favorites
+
+            poi.setIsOpen("");
+            favoritesLogic.addPoi(poi);
+            Toast.makeText(this, "The POI was added to Favorites.", Toast.LENGTH_SHORT).show();
+        }
+
         favoritesLogic.close();
     }
 

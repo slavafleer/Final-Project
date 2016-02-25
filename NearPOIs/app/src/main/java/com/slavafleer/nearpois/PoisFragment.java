@@ -511,4 +511,8 @@ public class PoisFragment extends Fragment implements
         }
 
     }
+
+    public void updateRecylerView() {
+        poiAdapter.notifyDataSetChanged();
+    }
 }
