@@ -14,18 +14,14 @@ import java.util.ArrayList;
 /**
  * Poi Adapter for Poi Recycler View
  */
-public class PoiAdapter extends RecyclerView.Adapter<PoiHolder> implements
-        PoiHolder.OnClickListener {
+public class PoiAdapter extends RecyclerView.Adapter<PoiHolder> {
 
     private Context context;
     private ArrayList<Poi> pois;
 
-    private OnClickListener onClickListener;
-
-    public PoiAdapter(Context context, ArrayList<Poi> pois, PoiHolder.OnClickListener onClickListener) {
+    public PoiAdapter(Context context, ArrayList<Poi> pois) {
         this.context = context;
         this.pois = pois;
-        this.onClickListener = (OnClickListener)onClickListener;
     }
 
     // Will be invoked only for the first shown items!
@@ -68,30 +64,5 @@ public class PoiAdapter extends RecyclerView.Adapter<PoiHolder> implements
     @Override
     public int getItemViewType(int position) {
         return position % 2;
-    }
-
-    // PoiHolder interface
-    @Override
-    public void onDataClick(Poi poi) {
-        onClickListener.onDataClick(poi);
-    }
-
-    @Override
-    public void onDataLongClick(Poi poi) {
-        onClickListener.onDataLongClick(poi);
-    }
-
-    @Override
-    public void onPhotoClick(Poi poi) {
-        onClickListener.onPhotoClick(poi);
-    }
-
-    public interface OnClickListener {
-
-        void onDataClick(Poi poi);
-
-        void onDataLongClick(Poi poi);
-
-        void onPhotoClick(Poi poi);
     }
 }

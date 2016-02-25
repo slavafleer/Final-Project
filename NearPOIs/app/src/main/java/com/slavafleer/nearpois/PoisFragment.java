@@ -30,7 +30,6 @@ import com.google.android.gms.location.LocationServices;
 import com.slavafleer.nearpois.db.FavoritesLogic;
 import com.slavafleer.nearpois.db.ResultsLogic;
 import com.slavafleer.nearpois.recyclerView.PoiAdapter;
-import com.slavafleer.nearpois.recyclerView.PoiHolder;
 import com.slavafleer.nearpois.recyclerView.QuickSearchAdapter;
 
 import org.json.JSONArray;
@@ -48,8 +47,7 @@ import java.util.ArrayList;
  */
 public class PoisFragment extends Fragment implements
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,
-        PoiHolder.OnClickListener {
+        GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = PoisFragment.class.getSimpleName();
 
@@ -82,9 +80,6 @@ public class PoisFragment extends Fragment implements
     private String type;
     private String url;
 
-    private OnClickListener onClickListener;
-    private boolean isFavorites;
-
     public PoisFragment() {
         // Required empty public constructor
     }
@@ -97,8 +92,6 @@ public class PoisFragment extends Fragment implements
         View view = inflater.inflate(R.layout.fragment_pois, container, false);
 
         activity = getActivity();
-
-        onClickListener = (OnClickListener) activity;
 
         requestQueue = Volley.newRequestQueue(activity);
 
@@ -240,10 +233,8 @@ public class PoisFragment extends Fragment implements
                                     Double.parseDouble(longitude), photo_reference, iconUrl, isOpen,
                                     rating));
 
-                            isFavorites = false;
-
-                            getDistanceAndWalkingDuration(i, isFavorites);
-                            getDrivingDuration(i, isFavorites);
+                            getDistanceAndWalkingDuration(i, false);
+                            getDrivingDuration(i, false);
                         }
 
                     } else {
@@ -381,7 +372,6 @@ public class PoisFragment extends Fragment implements
             recyclerViewPois.setAdapter(poiAdapter);
         }
 
-        // Copy last poi list just if it is not favorites
         if(!isFavorites) {
             copyLastResult();
         }
@@ -501,37 +491,10 @@ public class PoisFragment extends Fragment implements
         pois = favoritesLogic.getAllPois();
         favoritesLogic.close();
 
-        isFavorites = true;
-
         for(int i = 0; i < pois.size(); i++) {
-            getDistanceAndWalkingDuration(i, isFavorites);
-            getDrivingDuration(i, isFavorites);
+            getDistanceAndWalkingDuration(i, true);
+            getDrivingDuration(i, true);
         }
 
-    }
-
-    // PoiAdapter interface (PoiHolder interface)
-    @Override
-    public void onDataClick(Poi poi) {
-        onClickListener.onDataClick(poi);
-    }
-
-    @Override
-    public void onDataLongClick(Poi poi) {
-        onClickListener.onDataLongClick(poi, isFavorites);
-    }
-
-    @Override
-    public void onPhotoClick(Poi poi) {
-        onClickListener.onPhotoClick(poi);
-    }
-
-    public interface OnClickListener {
-
-        void onDataClick(Poi poi);
-
-        void onDataLongClick(Poi poi, boolean isFavorites);
-
-        void onPhotoClick(Poi poi);
     }
 }
