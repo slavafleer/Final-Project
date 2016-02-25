@@ -20,11 +20,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.slavafleer.nearpois.db.FavoritesLogic;
 import com.slavafleer.nearpois.helper.BroadCastReceiverHelper;
-import com.slavafleer.nearpois.recyclerView.PoiHolder;
 import com.slavafleer.nearpois.recyclerView.QuickSearchHolder;
 
 public class MainActivity extends AppCompatActivity implements
-        PoiHolder.OnClickListener, QuickSearchHolder.OnClickListener, OnMapReadyCallback {
+        PoisFragment.OnClickListener, QuickSearchHolder.OnClickListener, OnMapReadyCallback {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
