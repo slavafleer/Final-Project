@@ -5,6 +5,8 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -79,6 +81,8 @@ public class PoisFragment extends Fragment implements
 
     private String type;
     private String url;
+
+    private boolean isListOfFavorites;
 
     public PoisFragment() {
         // Required empty public constructor
@@ -233,8 +237,13 @@ public class PoisFragment extends Fragment implements
                                     Double.parseDouble(longitude), photo_reference, iconUrl, isOpen,
                                     rating));
 
-                            getDistanceAndWalkingDuration(i, false);
-                            getDrivingDuration(i, false);
+                            isListOfFavorites = false;
+
+                            SharedPreferences sharedPreferences = activity.getSharedPreferences("MainActivity", Context.MODE_PRIVATE);
+                            sharedPreferences.edit().putBoolean("isListOfFavorites", isListOfFavorites).commit();
+
+                            getDistanceAndWalkingDuration(i, isListOfFavorites);
+                            getDrivingDuration(i, isListOfFavorites);
                         }
 
                     } else {
@@ -491,9 +500,14 @@ public class PoisFragment extends Fragment implements
         pois = favoritesLogic.getAllPois();
         favoritesLogic.close();
 
+        isListOfFavorites = true;
+
+        SharedPreferences sharedPreferences = activity.getSharedPreferences("MainActivity", Context.MODE_PRIVATE);
+        sharedPreferences.edit().putBoolean("isListOfFavorites", isListOfFavorites).commit();
+
         for(int i = 0; i < pois.size(); i++) {
-            getDistanceAndWalkingDuration(i, true);
-            getDrivingDuration(i, true);
+            getDistanceAndWalkingDuration(i, isListOfFavorites);
+            getDrivingDuration(i, isListOfFavorites);
         }
 
     }
