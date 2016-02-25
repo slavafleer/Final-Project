@@ -20,11 +20,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.slavafleer.nearpois.db.FavoritesLogic;
 import com.slavafleer.nearpois.helper.BroadCastReceiverHelper;
-import com.slavafleer.nearpois.recyclerView.PoiHolder;
 import com.slavafleer.nearpois.recyclerView.QuickSearchHolder;
 
 public class MainActivity extends AppCompatActivity implements
-        PoiHolder.OnClickListener, QuickSearchHolder.OnClickListener, OnMapReadyCallback {
+        PoisFragment.OnClickListener, QuickSearchHolder.OnClickListener, OnMapReadyCallback {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -134,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements
 
     // Runs when poi item data part is long clicked.
     @Override
-    public void onDataLongClick(Poi poi) {
+    public void onDataLongClick(Poi poi, boolean isFavorites) {
 
         //TODO: need to check if this favorite is already saved
         Log.i(TAG, poi.getName() + " long touched.");
