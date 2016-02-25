@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -135,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements
 
     // Runs when poi item data part is long clicked.
     @Override
-    public void onDataLongClick(Poi poi) {
+    public void onDataLongClick(Poi poi, LinearLayout linearLayoutPoiData) {
 
         //TODO: need to check if this favorite is already saved
         Log.i(TAG, poi.getName() + " long touched.");
@@ -146,19 +148,81 @@ public class MainActivity extends AppCompatActivity implements
         FavoritesLogic favoritesLogic = new FavoritesLogic(this);
         favoritesLogic.open();
 
+        // Do on Favorite list
         if (isListOfFavorites) {
-            favoritesLogic.deletePoi(poi);
-            poisFragment.updateRecylerView();
-            Toast.makeText(this, "The POI was deleted from Favorites.", Toast.LENGTH_SHORT).show();
-        } else {
-            // Save selected poi in favorites
 
-            poi.setIsOpen("");
-            favoritesLogic.addPoi(poi);
-            Toast.makeText(this, "The POI was added to Favorites.", Toast.LENGTH_SHORT).show();
+            PopupMenu popupMenu = new PopupMenu(this, linearLayoutPoiData);
+            popupMenu.getMenuInflater().inflate(R.menu.menu_item_favorites, popupMenu.getMenu());
+
+            final Poi tmpPoi = poi;
+            final FavoritesLogic tmpFavoritesLogic = favoritesLogic;
+
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+
+                    switch (item.getItemId()) {
+                        case R.id.menu_item_poi_show_on_map:
+                            onDataClick(tmpPoi);
+                            break;
+
+                        case R.id.menu_item_favorites_remove_from_favorites:
+
+                            // Delete from Favorites
+                            tmpFavoritesLogic.deletePoi(tmpPoi);
+                            poisFragment.updateRecylerView();
+                            Toast.makeText(MainActivity.this, "The POI was deleted from Favorites.", Toast.LENGTH_SHORT).show();
+                            break;
+
+                        case R.id.menu_item_poi_share:
+                            //TODO: need to do
+                            break;
+                    }
+
+                    return false;
+                }
+            });
+
+            popupMenu.show();
+
+            // Do on result list
+         } else {
+
+            PopupMenu popupMenu = new PopupMenu(this, linearLayoutPoiData);
+            popupMenu.getMenuInflater().inflate(R.menu.menu_item_poi, popupMenu.getMenu());
+
+            final Poi tmpPoi = poi;
+            final FavoritesLogic tmpFavoritesLogic = favoritesLogic;
+
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+
+                    switch(item.getItemId()) {
+                        case R.id.menu_item_poi_show_on_map:
+                            onDataClick(tmpPoi);
+                            break;
+
+                        case R.id.menu_item_poi_add_to_favorites:
+
+                            // Save selected poi to Favorites
+                            tmpPoi.setIsOpen("");
+                            tmpFavoritesLogic.addPoi(tmpPoi);
+
+                            Toast.makeText(MainActivity.this, "The POI was added to Favorites.", Toast.LENGTH_SHORT).show();
+                            break;
+
+                        case R.id.menu_item_poi_share:
+                            //TODO: need to do
+                            break;
+                    }
+
+                    return false;
+                }
+            });
+
+            popupMenu.show();
         }
-
-        favoritesLogic.close();
     }
 
     // Runs when poi item photo part is clicked.
