@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements
 
     // Runs when poi item data part is long clicked.
     @Override
-    public void onDataLongClick(Poi poi, LinearLayout linearLayoutPoiData) {
+    public void onDataLongClick(Poi poi, LinearLayout linearLayoutPoiData, final int position) {
 
         //TODO: need to check if this favorite is already saved
         Log.i(TAG, poi.getName() + " long touched.");
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements
         FavoritesLogic favoritesLogic = new FavoritesLogic(this);
         favoritesLogic.open();
 
-        // Do on Favorite list
+        // Open popup menu on Favorites list item long click
         if (isListOfFavorites) {
 
             PopupMenu popupMenu = new PopupMenu(this, linearLayoutPoiData);
@@ -170,8 +170,8 @@ public class MainActivity extends AppCompatActivity implements
 
                             // Delete from Favorites
                             tmpFavoritesLogic.deletePoi(tmpPoi);
-                            poisFragment.updateRecylerView();
-                            Toast.makeText(MainActivity.this, "The POI was deleted from Favorites.", Toast.LENGTH_SHORT).show();
+                            poisFragment.updateRecyclerView(position);
+                            Toast.makeText(MainActivity.this, R.string.poi_deleted_from_favorites, Toast.LENGTH_SHORT).show();
                             break;
 
                         case R.id.menu_item_poi_share:
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements
 
             popupMenu.show();
 
-            // Do on result list
+            // Open popup menu on Results list item long click
          } else {
 
             PopupMenu popupMenu = new PopupMenu(this, linearLayoutPoiData);
@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements
                             tmpPoi.setIsOpen("");
                             tmpFavoritesLogic.addPoi(tmpPoi);
 
-                            Toast.makeText(MainActivity.this, "The POI was added to Favorites.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, R.string.poi_added_to_favorites, Toast.LENGTH_SHORT).show();
                             break;
 
                         case R.id.menu_item_poi_share:

@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -56,6 +57,11 @@ public class PoisFragment extends Fragment implements
     private RecyclerView recyclerViewPois;
     private RecyclerView recyclerViewQuickSearches;
 
+    private EditText editTextSearchText;
+    private ImageView imageViewFind;
+    private ImageView imageViewFindAll;
+    private TextView textViewEmptyRecyclerView;
+
     private PoiAdapter poiAdapter;
 
     private Activity activity;
@@ -71,9 +77,7 @@ public class PoisFragment extends Fragment implements
     private double clientLatitude;
     private double clientLongitude;
 
-    private EditText editTextSearchText;
-    private ImageView imageViewFind;
-    private ImageView imageViewFindAll;
+
 
     private int readyPoisCounter; // Show completed data of Pois
 
@@ -179,11 +183,15 @@ public class PoisFragment extends Fragment implements
         recyclerViewQuickSearches.scrollToPosition(
                 Constants.NUMBER_OF_QUICK_SEARCH_ICONS * QuickSearchAdapter.LOOPS_AMOUNT / 2);
 
+        textViewEmptyRecyclerView = (TextView) view.findViewById(R.id.emptyRecyclerView);
+
         return view;
     }
 
     // Create poi request and send it to API.
     private void findPois() {
+
+        textViewEmptyRecyclerView.setVisibility(View.INVISIBLE);
 
         readyPoisCounter = 0; // Show completed data of Pois
 
@@ -510,6 +518,20 @@ public class PoisFragment extends Fragment implements
         SharedPreferences sharedPreferences = activity.getSharedPreferences("MainActivity", Context.MODE_PRIVATE);
         sharedPreferences.edit().putBoolean("isListOfFavorites", isListOfFavorites).commit();
 
+        if(pois.isEmpty()) {
+
+            textViewEmptyRecyclerView.setText("You do not have any favorites at this moment.\n\n" +
+            "Press long click on any item and choose \"Add to Favorites\".");
+            textViewEmptyRecyclerView.setVisibility(View.VISIBLE);
+
+            poiAdapter = new PoiAdapter(activity, pois);
+            recyclerViewPois.setLayoutManager(new LinearLayoutManager(activity));
+            recyclerViewPois.setAdapter(poiAdapter);
+            return;
+        } else {
+            textViewEmptyRecyclerView.setVisibility(View.INVISIBLE);
+        }
+
         for(int i = 0; i < pois.size(); i++) {
             getDistanceAndWalkingDuration(i, isListOfFavorites);
             getDrivingDuration(i, isListOfFavorites);
@@ -517,8 +539,8 @@ public class PoisFragment extends Fragment implements
 
     }
 
-    public void updateRecylerView() {
+    public void updateRecyclerView(int position) {
         // TODO: not works
-        poiAdapter.notifyDataSetChanged();
+        showFavorites();
     }
 }

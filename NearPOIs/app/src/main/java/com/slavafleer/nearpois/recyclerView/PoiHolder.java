@@ -26,6 +26,7 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
     private Context context;
 
     private Poi poi;
+    private int position;
 
     private OnClickListener onClickListener;
 
@@ -66,9 +67,10 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
     }
 
     // Bind Data Object to the Views.
-    public void bindPoi(Poi poi) {
+    public void bindPoi(Poi poi, int position) {
 
         this.poi = poi;
+        this.position = position;
 
         String name = poi.getName();
         String vicinity = poi.getVicinity();
@@ -166,7 +168,7 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
     public boolean onLongClick(View v) {
 
 //        Log.i(TAG, textViewName.getText().toString() + " long touched.");
-        onClickListener.onDataLongClick(poi, linearLayoutPoiData);
+        onClickListener.onDataLongClick(poi, linearLayoutPoiData, position);
 
         return true; //  don't do onQuickSearchClick too.
     }
@@ -175,7 +177,7 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
 
         void onDataClick(Poi poi);
 
-        void onDataLongClick(Poi poi, LinearLayout linearLayoutPoiData);
+        void onDataLongClick(Poi poi, LinearLayout linearLayoutPoiData, int position);
 
         void onPhotoClick(Poi poi);
     }
