@@ -273,12 +273,12 @@ public class MainActivity extends AppCompatActivity implements
                 return true;
 
             case R.id.menu_item_settings:
-
+                Intent intent = new Intent(this, PreferencesActivity.class);
+                startActivity(intent);
 
                 return true;
 
             case R.id.menu_item_exit:
-
                 finish();
                 return true;
 

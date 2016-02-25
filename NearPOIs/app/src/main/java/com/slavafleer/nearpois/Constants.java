@@ -41,4 +41,8 @@ public class Constants {
 
     // Google Place API Access Key
     public static final String ACCESS_KEY_GOOGLE_PLACE_API = "AIzaSyBqZywUvsonHXo6gVpiI0p-ABQ9oRuYdJw";
+
+    // Preferences Screen Keys
+    public static final String KEY_UNITS = "units";
+    public static final String KEY_DELETING_FAVORITES = "deletingFavorites";
 }

@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -322,11 +323,14 @@ public class PoisFragment extends Fragment implements
     // Send queries to Google Distance Matrix API
     private void getDistanceAndWalkingDuration(final int position, final boolean isFavorites) {
 
+        String units = PreferenceManager.getDefaultSharedPreferences(activity.getBaseContext())
+                .getString(Constants.KEY_UNITS, "metric");
         String mode = "walking";
         String urlDistance = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" +
                 lastLocation.getLatitude() + "," + lastLocation.getLongitude() + "&destinations=" +
                 pois.get(position).getLatitude() + "," + pois.get(position).getLongitude() +
-                "&mode=" + mode + "&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
+                "&mode=" + mode + "&units=" + units +
+                "&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
         Log.i(TAG, urlDistance);
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest(
@@ -402,11 +406,14 @@ public class PoisFragment extends Fragment implements
     // Send queries to Google Distance Matrix API
     private void getDrivingDuration(final int position, final boolean isFavorites) {
 
+        String units = PreferenceManager.getDefaultSharedPreferences(activity.getBaseContext())
+                .getString(Constants.KEY_UNITS, "metric");
         String mode = "driving";
         String urlDistance = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" +
                 lastLocation.getLatitude() + "," + lastLocation.getLongitude() + "&destinations=" +
                 pois.get(position).getLatitude() + "," + pois.get(position).getLongitude() +
-                "&mode=" + mode + "&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
+                "&mode=" + mode + "&units=" + units +
+                "&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
         Log.i(TAG, urlDistance);
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest(

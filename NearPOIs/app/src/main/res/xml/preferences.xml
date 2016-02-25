@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference/>
+
+    <ListPreference
+        android:title="Units"
+        android:summary="The changes would effect on next searching."
+        android:key="units"
+        android:defaultValue="metric"
+        android:entries="@array/titleArray"
+        android:entryValues="@array/valueArray"/>
+
+    <Preference
+        android:title="Delete All Favorites"
+        android:summary="Press for deleting all favorites at once."
+        android:key="deletingFavorites"/>
+
+</PreferenceScreen>
