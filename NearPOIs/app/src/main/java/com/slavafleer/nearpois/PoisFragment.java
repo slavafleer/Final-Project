@@ -284,7 +284,13 @@ public class PoisFragment extends Fragment implements
                     Log.e(TAG, e.getMessage());
                 }
 
-                dialog.dismiss();
+                try {
+                    dialog.dismiss();
+                } catch (IllegalArgumentException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+
+                isFirstTimeRun = false;
             }
         }, new Response.ErrorListener() {
             @Override
@@ -306,12 +312,17 @@ public class PoisFragment extends Fragment implements
                     pois = resultsLogic.getAllResults();
                     resultsLogic.close();
 
+
                     poiAdapter = new PoiAdapter(activity, pois);
                     recyclerViewPois.setLayoutManager(new LinearLayoutManager(activity));
                     recyclerViewPois.setAdapter(poiAdapter);
                 }
 
-                dialog.dismiss();
+                try {
+                    dialog.dismiss();
+                } catch (IllegalArgumentException e) {
+                    Log.e(TAG, e.getMessage());
+                }
             }
         });
 
@@ -581,7 +592,9 @@ public class PoisFragment extends Fragment implements
         // Load from DB last results
         favoritesLogic.open();
         pois = favoritesLogic.getAllPois();
-        favoritesLogic.close();
+        if (favoritesLogic != null) {
+            favoritesLogic.close();
+        }
 
         isListOfFavorites = true;
 
