@@ -283,7 +283,7 @@ public class PoisFragment extends Fragment implements
             public void onErrorResponse(VolleyError error) {
                 Log.e(TAG, error.getMessage());
 
-                Toast.makeText(activity, "Connection error.\nCheck you have internet connection.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, R.string.connection_error_check_settings, Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
                 startActivity(intent);

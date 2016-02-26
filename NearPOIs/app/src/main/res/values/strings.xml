@@ -55,7 +55,7 @@
         <item>train_71</item>
     </string-array>
 
-    <!--User communication-->
+    <!--User communication (toasts) -->
     <string name="charger_connected">Charger is connected.</string>
     <string name="charger_disconnected">Charger is disconnected.</string>
     <string name="open">Open</string>
@@ -71,5 +71,12 @@
     <string name="settings">Settings</string>
     <string name="exit">Exit</string>
     <string name="connection_error_plus_error_code">"Connection failed: ErrorCode: "</string>
+    <string name="connection_error_check_settings">Connection error.\nCheck you have internet connection.</string>
+
+    <!-- Dialog -->
+    <string name="deleting_all_favorites">Deleting All Favorites!!!</string>
+    <string name="are_you_sure">Are you sure?\nThis can not be undone.</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 </resources>

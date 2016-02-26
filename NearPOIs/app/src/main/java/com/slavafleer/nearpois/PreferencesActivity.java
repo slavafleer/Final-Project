@@ -41,10 +41,10 @@ public class PreferencesActivity extends PreferenceActivity {
                         Activity activity = getActivity();
 
                         AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
-                        alertDialog.setTitle("Deleting All Favorites!!!");
-                        alertDialog.setMessage("Are you sure?\nThis can not be undo.");
-                        alertDialog.setButton(Dialog.BUTTON_POSITIVE, "Yes", AppPreferenceFragment.this);
-                        alertDialog.setButton(Dialog.BUTTON_NEGATIVE, "No", AppPreferenceFragment.this);
+                        alertDialog.setTitle(activity.getString(R.string.deleting_all_favorites));
+                        alertDialog.setMessage(activity.getString(R.string.are_you_sure));
+                        alertDialog.setButton(Dialog.BUTTON_POSITIVE, activity.getString(R.string.yes), AppPreferenceFragment.this);
+                        alertDialog.setButton(Dialog.BUTTON_NEGATIVE, activity.getString(R.string.no), AppPreferenceFragment.this);
                         alertDialog.setCancelable(false);
                         alertDialog.show();
 
