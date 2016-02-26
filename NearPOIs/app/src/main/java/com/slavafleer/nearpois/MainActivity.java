@@ -2,6 +2,7 @@ package com.slavafleer.nearpois;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -27,7 +28,8 @@ import com.slavafleer.nearpois.recyclerView.PoiHolder;
 import com.slavafleer.nearpois.recyclerView.QuickSearchHolder;
 
 public class MainActivity extends AppCompatActivity implements
-        PoiHolder.OnClickListener, QuickSearchHolder.OnClickListener, OnMapReadyCallback {
+        PoiHolder.OnClickListener, QuickSearchHolder.OnClickListener,
+        OnMapReadyCallback, PoisFragment.LocationCallbacks {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -37,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements
     private String deviceType;
 
     private GoogleMap googleMap;
+
+    private static boolean isFirstTimeRun = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -284,6 +288,18 @@ public class MainActivity extends AppCompatActivity implements
 
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    // Run as device get its location
+    @Override
+    public void onLocationGet(Location lastLocation) {
+
+        if(isFirstTimeRun && deviceType.equals("tablet")) {
+            isFirstTimeRun = false;
+
+            lastSelectedPoi = new Poi("You", lastLocation.getLatitude(), lastLocation.getLongitude());
+            showOnMap(lastSelectedPoi);
         }
     }
 }

@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -21,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -54,6 +56,8 @@ public class PoisFragment extends Fragment implements
         GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = PoisFragment.class.getSimpleName();
+
+    private LocationCallbacks locationCallbacks;
 
     private RecyclerView recyclerViewPois;
     private RecyclerView recyclerViewQuickSearches;
@@ -102,6 +106,8 @@ public class PoisFragment extends Fragment implements
 
         activity = getActivity();
 
+        locationCallbacks = (LocationCallbacks) activity;
+
         requestQueue = Volley.newRequestQueue(activity);
 
         resultsLogic = new ResultsLogic(activity);
@@ -116,6 +122,11 @@ public class PoisFragment extends Fragment implements
             @Override
             public void onClick(View v) {
 
+                if(lastLocation == null) {
+                    Toast.makeText(activity, R.string.location_still_not_found, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 try {
                     String encodedSearchText = java.net.URLEncoder.encode(editTextSearchText.getText().toString().trim(), "UTF-8");
                     url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
@@ -125,8 +136,6 @@ public class PoisFragment extends Fragment implements
                 } catch (UnsupportedEncodingException e) {
                     Log.e(TAG, e.getMessage());
                 }
-
-
             }
         });
 
@@ -135,6 +144,12 @@ public class PoisFragment extends Fragment implements
         imageViewFindAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(lastLocation == null) {
+                    Toast.makeText(activity, R.string.location_still_not_found, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
                         clientLatitude + "," + clientLongitude +
                         "&radius=10000&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
@@ -323,6 +338,11 @@ public class PoisFragment extends Fragment implements
     // Send queries to Google Distance Matrix API
     private void getDistanceAndWalkingDuration(final int position, final boolean isFavorites) {
 
+        if(lastLocation == null) {
+            Toast.makeText(activity, R.string.location_still_not_found, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String units = PreferenceManager.getDefaultSharedPreferences(activity.getBaseContext())
                 .getString(Constants.KEY_UNITS, "metric");
         String mode = "walking";
@@ -406,6 +426,11 @@ public class PoisFragment extends Fragment implements
     // Send queries to Google Distance Matrix API
     private void getDrivingDuration(final int position, final boolean isFavorites) {
 
+        if(lastLocation == null) {
+            Toast.makeText(activity, R.string.location_still_not_found, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String units = PreferenceManager.getDefaultSharedPreferences(activity.getBaseContext())
                 .getString(Constants.KEY_UNITS, "metric");
         String mode = "driving";
@@ -469,6 +494,7 @@ public class PoisFragment extends Fragment implements
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
+
             return;
         }
         lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
@@ -477,8 +503,13 @@ public class PoisFragment extends Fragment implements
             clientLatitude = lastLocation.getLatitude();
             clientLongitude = lastLocation.getLongitude();
             Log.i(TAG, "Client location: " + clientLatitude + ", " + clientLongitude);
+            locationCallbacks.onLocationGet(lastLocation);
         } else {
             Log.i(TAG, "Client location is not found.");
+            Toast.makeText(activity, R.string.enable_location_settings, Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(intent);
         }
     }
 
@@ -497,6 +528,7 @@ public class PoisFragment extends Fragment implements
         // Refer to the javadoc for ConnectionResult to see what error codes
         // might be returned in onConnectionFailed.
         Log.i(TAG, "Connection failed: ErrorCode: " + connectionResult.getErrorCode());
+        Toast.makeText(activity, activity.getString(R.string.connection_error_plus_error_code) + connectionResult.getErrorCode(), Toast.LENGTH_SHORT).show();
     }
 
     public void setType(String type) {
@@ -527,8 +559,7 @@ public class PoisFragment extends Fragment implements
 
         if(pois.isEmpty()) {
 
-            textViewEmptyRecyclerView.setText("You do not have any favorites at this moment.\n\n" +
-            "Press long click on any item and choose \"Add to Favorites\".");
+            textViewEmptyRecyclerView.setText(R.string.no_favorites);
             textViewEmptyRecyclerView.setVisibility(View.VISIBLE);
 
             poiAdapter = new PoiAdapter(activity, pois);
@@ -547,7 +578,10 @@ public class PoisFragment extends Fragment implements
     }
 
     public void updateRecyclerView(int position) {
-        // TODO: not works
         showFavorites();
+    }
+
+    public interface LocationCallbacks {
+        void onLocationGet(Location lastLocation);
     }
 }
