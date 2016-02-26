@@ -9,12 +9,19 @@ public class Poi {
     private String name;
     private String address;
     private String vicinity;
-    private double distance;
+    private String distanceText;
+    private int distanceValue;
     private String place_id;
-    private float latitude;
-    private float longitude;
+    private double latitude;
+    private double longitude;
     private String photoReference;
     private String iconUrl;
+    private String isOpen;
+    private double rating;
+    private String walkingDurationText;
+    private long walkingDurationValue;
+    private String drivingDurationText;
+    private long drivingDurationValue;
 
     public Poi() {
     }
@@ -23,19 +30,48 @@ public class Poi {
         this.name = name;
     }
 
-    public Poi(long id, String name, String address, String vicinity,
-               double distance, String place_id, float latitude,
-               float longitude, String photoReference, String iconUrl) {
-        this.id = id;
+    public Poi(String name, double latitude, double longitude) {
         this.name = name;
-        this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    public Poi(String name, String vicinity, String place_id, double latitude,
+               double longitude, String photoReference, String iconUrl, String isOpen,
+               double rating) {
+        this.name = name;
         this.vicinity = vicinity;
-        this.distance = distance;
         this.place_id = place_id;
         this.latitude = latitude;
         this.longitude = longitude;
         this.photoReference = photoReference;
         this.iconUrl = iconUrl;
+        this.isOpen = isOpen;
+        this.rating = rating;
+    }
+
+    public Poi(long id, String name, String address, String vicinity, String distanceText,
+               int distanceValue, String place_id, double latitude, double longitude,
+               String photoReference, String iconUrl, String isOpen, double rating,
+               String walkingDurationText, long walkingDurationValue, String drivingDurationText,
+               long drivingDurationValue) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.vicinity = vicinity;
+        this.distanceText = distanceText;
+        this.distanceValue = distanceValue;
+        this.place_id = place_id;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.photoReference = photoReference;
+        this.iconUrl = iconUrl;
+        this.isOpen = isOpen;
+        this.rating = rating;
+        this.walkingDurationText = walkingDurationText;
+        this.walkingDurationValue = walkingDurationValue;
+        this.drivingDurationText = drivingDurationText;
+        this.drivingDurationValue = drivingDurationValue;
     }
 
     public long getId() {
@@ -70,13 +106,13 @@ public class Poi {
         this.vicinity = vicinity;
     }
 
-    public double getDistance() {
-        return distance;
+    public int getDistanceValue() {
+        return distanceValue;
     }
 
-    public void setDistance(double distance) {
-        if (distance >= 0) {
-            this.distance = distance;
+    public void setDistanceValue(int distanceValue) {
+        if (distanceValue >= 0) {
+            this.distanceValue = distanceValue;
         }
     }
 
@@ -88,19 +124,19 @@ public class Poi {
         this.place_id = place_id;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -118,5 +154,61 @@ public class Poi {
 
     public void setIconUrl(String iconUrl) {
         this.iconUrl = iconUrl;
+    }
+
+    public String getIsOpen() {
+        return isOpen;
+    }
+
+    public void setIsOpen(String isOpen) {
+        this.isOpen = isOpen;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public String getDistanceText() {
+        return distanceText;
+    }
+
+    public void setDistanceText(String distanceText) {
+        this.distanceText = distanceText;
+    }
+
+    public String getWalkingDurationText() {
+        return walkingDurationText;
+    }
+
+    public void setWalkingDurationText(String walkingDurationText) {
+        this.walkingDurationText = walkingDurationText;
+    }
+
+    public String getDrivingDurationText() {
+        return drivingDurationText;
+    }
+
+    public void setDrivingDurationText(String drivingDurationText) {
+        this.drivingDurationText = drivingDurationText;
+    }
+
+    public long getWalkingDurationValue() {
+        return walkingDurationValue;
+    }
+
+    public void setWalkingDurationValue(long walkingDurationValue) {
+        this.walkingDurationValue = walkingDurationValue;
+    }
+
+    public long getDrivingDurationValue() {
+        return drivingDurationValue;
+    }
+
+    public void setDrivingDurationValue(long drivingDurationValue) {
+        this.drivingDurationValue = drivingDurationValue;
     }
 }

@@ -22,6 +22,8 @@ public class DAL extends SQLiteOpenHelper {
     // Will be called when the app is first running:
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(DB.Results.CREATION_STATEMENT); // Execute sql statement
+
+        db.execSQL(DB.Favorites.CREATION_STATEMENT); // Execute sql statement
     }
 
     // Will be called when the app is being upgraded if our version will be different:
@@ -29,6 +31,9 @@ public class DAL extends SQLiteOpenHelper {
 
         db.execSQL(DB.Results.DELETION_STATEMENT);
         db.execSQL(DB.Results.CREATION_STATEMENT);
+
+        db.execSQL(DB.Favorites.DELETION_STATEMENT);
+        db.execSQL(DB.Favorites.CREATION_STATEMENT);
     }
 
     // Opening the database for any action:

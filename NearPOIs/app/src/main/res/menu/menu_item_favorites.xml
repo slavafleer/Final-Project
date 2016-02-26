@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_item_poi_show_on_map"
+        android:title="Show on map"/>
+
+    <item
+        android:id="@+id/menu_item_favorites_remove_from_favorites"
+        android:title="Remove from Favorites"/>
+
+    <item
+        android:id="@+id/menu_item_poi_share"
+        android:title="Share"/>
+
+</menu>

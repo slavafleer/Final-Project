@@ -8,20 +8,24 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="BlackFont">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
     <!-- Item POI Styles-->
-    <style name="ItemPoiName">
+    <style name="ItemPoiName" parent="BlackFont">
         <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="ItemPoiAddress">
+    <style name="ItemPoiAddress" parent="BlackFont">
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="ItemPoiVicinity">
+    <style name="ItemPoiVicinity" parent="BlackFont">
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="ItemPoiDistance">
+    <style name="ItemPoiDistance" parent="BlackFont">
         <item name="android:textSize">16sp</item>
     </style>
 
