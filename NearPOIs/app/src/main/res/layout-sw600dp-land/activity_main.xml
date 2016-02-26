@@ -25,7 +25,8 @@
         android:layout_weight="1"
         app:cardBackgroundColor="@color/colorBlue50"
         app:cardCornerRadius="@dimen/card_corner_radius"
-        app:cardElevation="@dimen/card_elevation">
+        app:cardElevation="@dimen/card_elevation"
+        app:cardUseCompatPadding="true">
 
         <fragment
             android:id="@+id/mapContainer"

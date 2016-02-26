@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.slavafleer.nearpois.Constants;
@@ -30,7 +31,7 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
 
     private OnClickListener onClickListener;
 
-    private LinearLayout linearLayoutItemRoot;
+    private RelativeLayout relativeLayoutItemRoot;
     private LinearLayout linearLayoutPoiData;
     private TextView textViewName;
     private TextView textViewVicinity;
@@ -48,7 +49,7 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
 
         this.context = context;
 
-        linearLayoutItemRoot = (LinearLayout) itemView.findViewById(R.id.linearLayoutItemRoot);
+        relativeLayoutItemRoot = (RelativeLayout) itemView.findViewById(R.id.relativeLayoutItemRoot);
         linearLayoutPoiData = (LinearLayout) itemView.findViewById(R.id.linearLayoutPoiData);
         textViewName = (TextView) linearLayoutPoiData.findViewById(R.id.textViewItemPoiName);
         textViewVicinity = (TextView) linearLayoutPoiData.findViewById(R.id.textViewItemPoiVicinity);
@@ -60,8 +61,8 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
         textViewWalkingDuration = (TextView) linearLayoutPoiData.findViewById(R.id.textViewItemPoiWalkingDuration);
         textViewDrivingDuration = (TextView) linearLayoutPoiData.findViewById(R.id.textViewItemPoiDrivingDuration);
 
-        linearLayoutItemRoot.setOnClickListener(this);
-        linearLayoutItemRoot.setOnLongClickListener(this);
+        relativeLayoutItemRoot.setOnClickListener(this);
+        relativeLayoutItemRoot.setOnLongClickListener(this);
 
         onClickListener = (OnClickListener) context;
     }
