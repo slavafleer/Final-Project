@@ -31,9 +31,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_map);
 
         Intent intent = getIntent();
-        poi = new Poi(intent.getStringExtra("name"),
-                intent.getDoubleExtra("latitude", 0),
-                intent.getDoubleExtra("longitude", 0));
+        poi = new Poi(intent.getStringExtra(Constants.KEY_MAP_NAME),
+                intent.getDoubleExtra(Constants.KEY_MAP_LATITUDE, 0),
+                intent.getDoubleExtra(Constants.KEY_MAP_LONGITUDE, 0));
 
 
         FragmentManager fragmentManager = getSupportFragmentManager();

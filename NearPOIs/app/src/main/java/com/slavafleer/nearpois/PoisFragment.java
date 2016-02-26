@@ -136,7 +136,7 @@ public class PoisFragment extends Fragment implements
             @Override
             public void onClick(View v) {
 
-                if(actionsDisabled) {
+                if (actionsDisabled) {
                     return;
                 }
 
@@ -148,7 +148,6 @@ public class PoisFragment extends Fragment implements
         recyclerViewQuickSearches = (RecyclerView) view.findViewById(R.id.recyclerViewQuickSearches);
 
         // Initialising Pois Recycler View.
-        //TODO: to check if we have location
         poiAdapter = new PoiAdapter(activity, pois);
         recyclerViewPois.setLayoutManager(new LinearLayoutManager(activity));
         recyclerViewPois.setAdapter(poiAdapter);
@@ -178,7 +177,7 @@ public class PoisFragment extends Fragment implements
         editTextSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId== EditorInfo.IME_ACTION_DONE){
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
 
                     onViewFindClick();
                 }
@@ -191,7 +190,7 @@ public class PoisFragment extends Fragment implements
 
     // Run search on FindAll or keyboard Done click
     private void onViewFindClick() {
-        if(actionsDisabled) {
+        if (actionsDisabled) {
             return;
         }
 
@@ -232,12 +231,12 @@ public class PoisFragment extends Fragment implements
     // Create poi request and send it to API.
     private void findPois() {
 
-        if(actionsDisabled) {
+        if (actionsDisabled) {
             return;
         }
 
         actionsDisabled = true;
-        Log.d("test","Actions disabled!!!");
+        Log.d("test", "Actions disabled!!!");
 
         textViewEmptyRecyclerView.setVisibility(View.INVISIBLE);
 
@@ -248,12 +247,11 @@ public class PoisFragment extends Fragment implements
 
         // Show dialog to user
         final ProgressDialog dialog = new ProgressDialog(activity);
-        dialog.setTitle("Connecting...");
-        dialog.setMessage("Please Wait...");
+        dialog.setTitle(activity.getString(R.string.connection));
+        dialog.setMessage(activity.getString(R.string.please_wait));
         dialog.setCancelable(false);
         dialog.show();
 
-        //TODO: check for all possible ways that some data is not found in json
         JsonObjectRequest jsonRequest = new JsonObjectRequest(
                 Request.Method.GET, url, (String) null, new Response.Listener<JSONObject>() {
 
@@ -300,8 +298,8 @@ public class PoisFragment extends Fragment implements
 
                             isListOfFavorites = false;
 
-                            SharedPreferences sharedPreferences = activity.getSharedPreferences("MainActivity", Context.MODE_PRIVATE);
-                            sharedPreferences.edit().putBoolean("isListOfFavorites", isListOfFavorites).commit();
+                            SharedPreferences sharedPreferences = activity.getSharedPreferences(Constants.KEY_MAIN_ACTIVITY, Context.MODE_PRIVATE);
+                            sharedPreferences.edit().putBoolean(Constants.KEY_IS_FAVORITES, isListOfFavorites).commit();
 
                             getDistanceAndWalkingDuration(i, isListOfFavorites);
                             getDrivingDuration(i, isListOfFavorites);
@@ -490,7 +488,6 @@ public class PoisFragment extends Fragment implements
         if (readyPoisCounter >= pois.size() * 2) {
 
             // Initialising Pois Recycler View.
-            //TODO: to check if we have location
             poiAdapter = new PoiAdapter(activity, pois);
             recyclerViewPois.setLayoutManager(new LinearLayoutManager(activity));
             recyclerViewPois.setAdapter(poiAdapter);
@@ -567,7 +564,7 @@ public class PoisFragment extends Fragment implements
     public void onConnected(Bundle bundle) {
 
         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
+
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
@@ -591,8 +588,8 @@ public class PoisFragment extends Fragment implements
 
                 isListOfFavorites = false;
 
-                SharedPreferences sharedPreferences = activity.getSharedPreferences("MainActivity", Context.MODE_PRIVATE);
-                sharedPreferences.edit().putBoolean("isListOfFavorites", isListOfFavorites).commit();
+                SharedPreferences sharedPreferences = activity.getSharedPreferences(Constants.KEY_MAIN_ACTIVITY, Context.MODE_PRIVATE);
+                sharedPreferences.edit().putBoolean(Constants.KEY_IS_FAVORITES, isListOfFavorites).commit();
             }
         } else {
             Log.i(TAG, "Client location is not found.");
@@ -635,7 +632,7 @@ public class PoisFragment extends Fragment implements
 
     public void showFavorites() {
 
-        if(actionsDisabled) {
+        if (actionsDisabled) {
             return;
         }
 
@@ -655,8 +652,8 @@ public class PoisFragment extends Fragment implements
 
         isListOfFavorites = true;
 
-        SharedPreferences sharedPreferences = activity.getSharedPreferences("MainActivity", Context.MODE_PRIVATE);
-        sharedPreferences.edit().putBoolean("isListOfFavorites", isListOfFavorites).commit();
+        SharedPreferences sharedPreferences = activity.getSharedPreferences(Constants.KEY_MAIN_ACTIVITY, Context.MODE_PRIVATE);
+        sharedPreferences.edit().putBoolean(Constants.KEY_IS_FAVORITES, isListOfFavorites).commit();
 
         if (pois.isEmpty()) {
 
@@ -682,6 +679,7 @@ public class PoisFragment extends Fragment implements
 
     }
 
+    // Update recycler view
     public void updateRecyclerView(int position) {
         showFavorites();
     }

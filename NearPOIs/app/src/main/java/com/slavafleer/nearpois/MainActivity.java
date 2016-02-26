@@ -53,12 +53,14 @@ public class MainActivity extends AppCompatActivity implements
             poisFragment = new PoisFragment();
         }
 
+        // Get Pois fragment
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.poisContainer, poisFragment)
                 .commit();
 
-        if (deviceType.equals("tablet")) {
+        // Get Map fragment if it is tablet
+        if (deviceType.equals(Constants.KEY_TABLET)) {
 
             FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -99,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements
     // Show POI on the map or in map fragment on tablet or as map activity on phone
     private void showOnMap(Poi poi) {
 
-        if (deviceType.equals("tablet")) {
+        if (deviceType.equals(Constants.KEY_TABLET)) {
 
             if (googleMap == null) {
                 return;
@@ -127,9 +129,9 @@ public class MainActivity extends AppCompatActivity implements
             // On phone device
             Intent intent = new Intent(this, MapActivity.class);
 
-            intent.putExtra("name", poi.getName());
-            intent.putExtra("latitude", poi.getLatitude());
-            intent.putExtra("longitude", poi.getLongitude());
+            intent.putExtra(Constants.KEY_MAP_NAME, poi.getName());
+            intent.putExtra(Constants.KEY_MAP_LATITUDE, poi.getLatitude());
+            intent.putExtra(Constants.KEY_MAP_LONGITUDE, poi.getLongitude());
 
             startActivity(intent);
         }
@@ -141,8 +143,8 @@ public class MainActivity extends AppCompatActivity implements
 
         Log.i(TAG, poi.getName() + " long touched.");
 
-        SharedPreferences sharedPreferences = getSharedPreferences("MainActivity", MODE_PRIVATE);
-        boolean isListOfFavorites = sharedPreferences.getBoolean("isListOfFavorites", false);
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.KEY_MAIN_ACTIVITY, MODE_PRIVATE);
+        boolean isListOfFavorites = sharedPreferences.getBoolean(Constants.KEY_IS_FAVORITES, false);
 
         FavoritesLogic favoritesLogic = new FavoritesLogic(this);
         favoritesLogic.open();
@@ -242,7 +244,6 @@ public class MainActivity extends AppCompatActivity implements
     public void onQuickSearchClick(String type) {
 
         poisFragment.setType(type);
-//        Toast.makeText(this, "Searched by type: " + type, Toast.LENGTH_SHORT).show();
         Log.i(TAG, type);
     }
 
@@ -270,7 +271,7 @@ public class MainActivity extends AppCompatActivity implements
         switch (item.getItemId()) {
 
             case R.id.menu_item_favorites:
-                Toast.makeText(this, "Favorites", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.favorites, Toast.LENGTH_SHORT).show();
 
                 if (poisFragment != null) {
                     poisFragment.showFavorites();
@@ -296,10 +297,10 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onLocationGet(Location lastLocation) {
 
-        if (isFirstTimeRun && deviceType.equals("tablet")) {
+        if (isFirstTimeRun && deviceType.equals(Constants.KEY_TABLET)) {
             isFirstTimeRun = false;
 
-            lastSelectedPoi = new Poi("You", lastLocation.getLatitude(), lastLocation.getLongitude());
+            lastSelectedPoi = new Poi(getString(R.string.you), lastLocation.getLatitude(), lastLocation.getLongitude());
             showOnMap(lastSelectedPoi);
         }
     }

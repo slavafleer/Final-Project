@@ -25,7 +25,7 @@ public class PreferencesActivity extends PreferenceActivity {
     }
 
     public static class AppPreferenceFragment extends PreferenceFragment
-            implements DialogInterface.OnClickListener{
+            implements DialogInterface.OnClickListener {
 
         @Override
         public void onCreate(final Bundle savedInstanceState) {

@@ -74,13 +74,18 @@
     <string name="connection_error_plus_error_code">"Connection failed: ErrorCode: "</string>
     <string name="connection_error_check_settings">Connection error.\nCheck you have internet connection.</string>
 
-    <!-- Dialog -->
+    <!-- Dialogs -->
     <string name="deleting_all_favorites">Deleting All Favorites!!!</string>
     <string name="are_you_sure">Are you sure?\nThis can not be undone.</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="connection">Connecting...</string>
+    <string name="please_wait">Please Wait...</string>
 
     <!-- Layouts -->
     <string name="search_hint">Enter a place name</string>
+
+    <!-- Map Marker -->
+    <string name="you">You</string>
 
 </resources>
