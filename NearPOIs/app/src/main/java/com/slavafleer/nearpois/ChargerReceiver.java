@@ -16,10 +16,10 @@ public class ChargerReceiver extends BroadcastReceiver {
 
         String action = intent.getAction();
 
-        if(action.equals(Intent.ACTION_POWER_CONNECTED)) {
+        if (action.equals(Intent.ACTION_POWER_CONNECTED)) {
             Toast.makeText(context, R.string.charger_connected, Toast.LENGTH_SHORT).show();
 
-        } else if(action.equals(Intent.ACTION_POWER_DISCONNECTED)) {
+        } else if (action.equals(Intent.ACTION_POWER_DISCONNECTED)) {
             Toast.makeText(context, R.string.charger_disconnected, Toast.LENGTH_SHORT).show();
         }
     }

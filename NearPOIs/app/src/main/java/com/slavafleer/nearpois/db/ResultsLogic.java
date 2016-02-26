@@ -8,7 +8,9 @@ import com.slavafleer.nearpois.Poi;
 
 import java.util.ArrayList;
 
-// Logic Class that implements DB methods
+/**
+ * Logic Class that implements DB methods
+ */
 public class ResultsLogic extends BaseLogic {
 
     public ResultsLogic(Activity activity) {
@@ -88,7 +90,7 @@ public class ResultsLogic extends BaseLogic {
 
         Cursor cursor = dal.getTable(DB.Results.TABLE_NAME, null, where);
 
-        while(cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
 
             long id = cursor.getLong(cursor.getColumnIndex(DB.Results.ID));
             String name = cursor.getString(cursor.getColumnIndex(DB.Results.NAME));
@@ -128,7 +130,7 @@ public class ResultsLogic extends BaseLogic {
     // Add all pois from result to DB
     public void addAllResults(ArrayList<Poi> pois) {
 
-        for(Poi poi : pois) {
+        for (Poi poi : pois) {
             addPoi(poi);
         }
     }
@@ -138,7 +140,7 @@ public class ResultsLogic extends BaseLogic {
 
         ArrayList<Poi> pois = getAllResults();
 
-        for(Poi poi : pois) {
+        for (Poi poi : pois) {
             deletePoi(poi);
         }
     }

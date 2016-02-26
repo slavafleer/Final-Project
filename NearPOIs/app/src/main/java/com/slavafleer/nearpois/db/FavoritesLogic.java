@@ -8,7 +8,9 @@ import com.slavafleer.nearpois.Poi;
 
 import java.util.ArrayList;
 
-// Logic Class that implements DB methods
+/**
+ * Logic Class that implements DB methods
+ */
 public class FavoritesLogic extends BaseLogic {
 
     public FavoritesLogic(Activity activity) {
@@ -88,7 +90,7 @@ public class FavoritesLogic extends BaseLogic {
 
         Cursor cursor = dal.getTable(DB.Favorites.TABLE_NAME, null, where);
 
-        while(cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
 
             long id = cursor.getLong(cursor.getColumnIndex(DB.Favorites.ID));
             String name = cursor.getString(cursor.getColumnIndex(DB.Favorites.NAME));
@@ -130,7 +132,7 @@ public class FavoritesLogic extends BaseLogic {
 
         ArrayList<Poi> pois = getAllPois();
 
-        for(Poi poi : pois) {
+        for (Poi poi : pois) {
             deletePoi(poi);
         }
     }

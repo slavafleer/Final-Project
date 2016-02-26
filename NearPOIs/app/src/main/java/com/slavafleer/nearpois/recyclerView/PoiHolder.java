@@ -126,12 +126,11 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
         // Show image in item.
         String photoReference = poi.getPhotoReference();
 
-//        imageViewPhoto.setImageDrawable(null);
         String urlPhoto = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&photoreference="
                 + photoReference + "&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
         Picasso.with(context)
                 .load(urlPhoto)
-                .transform(new RoundedTransformation(16, 0)) // used 3rd side class
+                .transform(new RoundedTransformation(16, 0)) // used 3rd side class RoundedTransformation
                 .into(imageViewPhoto, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -145,14 +144,14 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
                 });
     }
 
-    // Do it on poi item clicked.
+    // Run on poi item clicked.
     @Override
     public void onClick(View v) {
 
-            onClickListener.onDataClick(poi);
+        onClickListener.onDataClick(poi);
     }
 
-    // Do it on poi data long click.
+    // Run on poi data long click.
     @Override
     public boolean onLongClick(View v) {
 

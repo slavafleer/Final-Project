@@ -46,5 +46,4 @@ public class Constants {
 
     // Preferences Screen Keys
     public static final String KEY_UNITS = "units";
-    public static final String KEY_DELETING_FAVORITES = "deletingFavorites";
 }

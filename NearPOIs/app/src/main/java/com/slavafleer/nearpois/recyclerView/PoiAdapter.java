@@ -35,11 +35,11 @@ public class PoiAdapter extends RecyclerView.Adapter<PoiHolder> {
         View view;
         switch (viewType) {
             case 1:
-                view = layoutInflater.inflate(R.layout.item_poi_light, parent, false); // Not null, cause it make problem with weight.
+                view = layoutInflater.inflate(R.layout.item_poi_light, parent, false);
                 break;
 
             default:
-                view = layoutInflater.inflate(R.layout.item_poi_dark, parent, false); // Not null, cause it make problem with weight.
+                view = layoutInflater.inflate(R.layout.item_poi_dark, parent, false);
                 break;
         }
         return new PoiHolder(context, view);
@@ -61,6 +61,7 @@ public class PoiAdapter extends RecyclerView.Adapter<PoiHolder> {
         return pois.size();
     }
 
+    // Change viewType due to position
     @Override
     public int getItemViewType(int position) {
         return position % 2;

@@ -1,13 +1,14 @@
 package com.slavafleer.nearpois.db;
 
 /**
- *  Database schema
+ * Database schema
  */
 public class DB {
 
     public static final String NAME = "nearpois.db";
     public static final int VERSION = 1;
 
+    // Table for last search results.
     public static class Results {
 
         public static final String TABLE_NAME = "Results";
@@ -55,6 +56,7 @@ public class DB {
 
     }
 
+    // Table for favorites.
     public static class Favorites {
 
         public static final String TABLE_NAME = "Favorites";
