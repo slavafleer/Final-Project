@@ -217,7 +217,14 @@ public class MainActivity extends AppCompatActivity implements
                             break;
 
                         case R.id.menu_item_poi_share:
-                            //TODO: need to do
+                            // Share the poi name and address
+                            Intent intent = new Intent();
+                            intent.setAction(Intent.ACTION_SEND);
+                            intent.putExtra(Intent.EXTRA_TEXT,
+                                    tmpPoi.getName() + "\n\n" +
+                                    tmpPoi.getVicinity());
+                            intent.setType("text/plain");
+                            startActivity(intent);
                             break;
                     }
 
