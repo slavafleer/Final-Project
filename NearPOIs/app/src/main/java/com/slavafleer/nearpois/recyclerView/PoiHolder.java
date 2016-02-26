@@ -126,7 +126,7 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
         String photoReference = poi.getPhotoReference();
 
 //        imageViewPhoto.setImageDrawable(null);
-        String urlPhoto = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="
+        String urlPhoto = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&photoreference="
                 + photoReference + "&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
         Picasso.with(context)
                 .load(urlPhoto)
