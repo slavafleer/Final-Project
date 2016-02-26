@@ -167,6 +167,12 @@ public class PoisFragment extends Fragment implements
         recyclerViewPois = (RecyclerView) view.findViewById(R.id.recyclerViewPois);
         recyclerViewQuickSearches = (RecyclerView) view.findViewById(R.id.recyclerViewQuickSearches);
 
+        // Initialising Pois Recycler View.
+        //TODO: to check if we have location
+        poiAdapter = new PoiAdapter(activity, pois);
+        recyclerViewPois.setLayoutManager(new LinearLayoutManager(activity));
+        recyclerViewPois.setAdapter(poiAdapter);
+
         // Initialising Quick Search Array;
         String[] searchTypes = getResources().getStringArray(R.array.searchTypes);
         String[] imageNames = getResources().getStringArray(R.array.imageNames);
