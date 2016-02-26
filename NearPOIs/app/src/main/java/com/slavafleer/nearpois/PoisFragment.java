@@ -124,8 +124,13 @@ public class PoisFragment extends Fragment implements
             @Override
             public void onClick(View v) {
 
-                if(lastLocation == null) {
+                if (lastLocation == null) {
                     Toast.makeText(activity, R.string.location_still_not_found, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (editTextSearchText.getText().toString().trim().equals("")) {
+                    Toast.makeText(activity, R.string.search_hint, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -186,7 +191,7 @@ public class PoisFragment extends Fragment implements
 
     // Find all POIs
     private void findAllPois() {
-        if(lastLocation == null) {
+        if (lastLocation == null) {
             Toast.makeText(activity, R.string.location_still_not_found, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -268,6 +273,9 @@ public class PoisFragment extends Fragment implements
                             getDrivingDuration(i, isListOfFavorites);
                         }
 
+                    } else if (status.equals(Constants.VALUE_ZERO_RESULTS)) {
+
+                        Toast.makeText(activity, R.string.no_results_found, Toast.LENGTH_SHORT).show();
                     } else {
                         Log.e(TAG, status);
                     }
@@ -351,7 +359,7 @@ public class PoisFragment extends Fragment implements
     // Send queries to Google Distance Matrix API
     private void getDistanceAndWalkingDuration(final int position, final boolean isFavorites) {
 
-        if(lastLocation == null) {
+        if (lastLocation == null) {
             Toast.makeText(activity, R.string.location_still_not_found, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -414,7 +422,7 @@ public class PoisFragment extends Fragment implements
     // For saving last result
     private void copyLastResult() {
         lastResult = new ArrayList<>();
-        for(Poi poi : pois) {
+        for (Poi poi : pois) {
             lastResult.add(poi);
         }
     }
@@ -431,7 +439,7 @@ public class PoisFragment extends Fragment implements
             recyclerViewPois.setAdapter(poiAdapter);
         }
 
-        if(!isFavorites) {
+        if (!isFavorites) {
             copyLastResult();
         }
     }
@@ -439,7 +447,7 @@ public class PoisFragment extends Fragment implements
     // Send queries to Google Distance Matrix API
     private void getDrivingDuration(final int position, final boolean isFavorites) {
 
-        if(lastLocation == null) {
+        if (lastLocation == null) {
             Toast.makeText(activity, R.string.location_still_not_found, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -580,7 +588,7 @@ public class PoisFragment extends Fragment implements
         SharedPreferences sharedPreferences = activity.getSharedPreferences("MainActivity", Context.MODE_PRIVATE);
         sharedPreferences.edit().putBoolean("isListOfFavorites", isListOfFavorites).commit();
 
-        if(pois.isEmpty()) {
+        if (pois.isEmpty()) {
 
             textViewEmptyRecyclerView.setText(R.string.no_favorites);
             textViewEmptyRecyclerView.setVisibility(View.VISIBLE);
@@ -593,7 +601,7 @@ public class PoisFragment extends Fragment implements
             textViewEmptyRecyclerView.setVisibility(View.INVISIBLE);
         }
 
-        for(int i = 0; i < pois.size(); i++) {
+        for (int i = 0; i < pois.size(); i++) {
             getDistanceAndWalkingDuration(i, isListOfFavorites);
             getDrivingDuration(i, isListOfFavorites);
         }
