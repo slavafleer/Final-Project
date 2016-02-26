@@ -17,9 +17,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -124,33 +126,11 @@ public class PoisFragment extends Fragment implements
             @Override
             public void onClick(View v) {
 
-                if(actionsDisabled) {
-                    return;
-                }
-
-                if (lastLocation == null) {
-                    Toast.makeText(activity, R.string.location_still_not_found, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (editTextSearchText.getText().toString().trim().equals("")) {
-                    Toast.makeText(activity, R.string.search_hint, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                try {
-                    String encodedSearchText = java.net.URLEncoder.encode(editTextSearchText.getText().toString().trim(), "UTF-8");
-                    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
-                            clientLatitude + "," + clientLongitude + "&name=" + encodedSearchText +
-                            "&rankby=distance&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
-                    findPois();
-                } catch (UnsupportedEncodingException e) {
-                    Log.e(TAG, e.getMessage());
-                }
+                onViewFindClick();
             }
         });
 
-        // FindAll Button On Click
+        // Run search on FindAll click
         imageViewFindAll = (ImageView) view.findViewById(R.id.imageViewFindAll);
         imageViewFindAll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,7 +174,46 @@ public class PoisFragment extends Fragment implements
 
         textViewEmptyRecyclerView = (TextView) view.findViewById(R.id.emptyRecyclerView);
 
+        // Run search when clicked on Done in keyboard
+        editTextSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId== EditorInfo.IME_ACTION_DONE){
+
+                    onViewFindClick();
+                }
+                return false;
+            }
+        });
+
         return view;
+    }
+
+    // Run search on FindAll or keyboard Done click
+    private void onViewFindClick() {
+        if(actionsDisabled) {
+            return;
+        }
+
+        if (lastLocation == null) {
+            Toast.makeText(activity, R.string.location_still_not_found, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (editTextSearchText.getText().toString().trim().equals("")) {
+            Toast.makeText(activity, R.string.search_hint, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try {
+            String encodedSearchText = java.net.URLEncoder.encode(editTextSearchText.getText().toString().trim(), "UTF-8");
+            url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
+                    clientLatitude + "," + clientLongitude + "&name=" + encodedSearchText +
+                    "&rankby=distance&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
+            findPois();
+        } catch (UnsupportedEncodingException e) {
+            Log.e(TAG, e.getMessage());
+        }
     }
 
     // Find all POIs
@@ -291,12 +310,21 @@ public class PoisFragment extends Fragment implements
                     } else if (status.equals(Constants.VALUE_ZERO_RESULTS)) {
 
                         Toast.makeText(activity, R.string.no_results_found, Toast.LENGTH_SHORT).show();
+
+                        actionsDisabled = false;
+                        Log.d("test", "Actions enabled.");
                     } else {
                         Log.e(TAG, status);
+
+                        actionsDisabled = false;
+                        Log.d("test", "Actions enabled.");
                     }
 
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
+
+                    actionsDisabled = false;
+                    Log.d("test", "Actions enabled.");
                 }
 
                 try {
