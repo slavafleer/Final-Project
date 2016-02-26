@@ -24,7 +24,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.slavafleer.nearpois.db.FavoritesLogic;
 import com.slavafleer.nearpois.helper.BroadCastReceiverHelper;
-import com.slavafleer.nearpois.helper.ConnectionHelper;
 import com.slavafleer.nearpois.recyclerView.PoiHolder;
 import com.slavafleer.nearpois.recyclerView.QuickSearchHolder;
 
@@ -80,10 +79,6 @@ public class MainActivity extends AppCompatActivity implements
 
         // Turning on ChargerReceiver
         BroadCastReceiverHelper.toggleChargerReceiver(this);
-
-        if(!ConnectionHelper.isNetworkAvailable(this)) {
-
-        }
     }
 
     @Override
