@@ -84,7 +84,7 @@ public class PoisFragment extends Fragment implements
     private double clientLongitude;
 
     private static boolean isFirstTimeRun = true;
-    private static boolean wasErrorOnConnection = false;
+    private static boolean actionsDisabled;
 
     private int readyPoisCounter; // Show completed data of Pois
 
@@ -124,6 +124,10 @@ public class PoisFragment extends Fragment implements
             @Override
             public void onClick(View v) {
 
+                if(actionsDisabled) {
+                    return;
+                }
+
                 if (lastLocation == null) {
                     Toast.makeText(activity, R.string.location_still_not_found, Toast.LENGTH_SHORT).show();
                     return;
@@ -152,18 +156,16 @@ public class PoisFragment extends Fragment implements
             @Override
             public void onClick(View v) {
 
+                if(actionsDisabled) {
+                    return;
+                }
+
                 findAllPois();
             }
         });
 
         recyclerViewPois = (RecyclerView) view.findViewById(R.id.recyclerViewPois);
         recyclerViewQuickSearches = (RecyclerView) view.findViewById(R.id.recyclerViewQuickSearches);
-
-        // Initialising Pois Recycler View.
-        //TODO: to check if we have location
-        poiAdapter = new PoiAdapter(activity, pois);
-        recyclerViewPois.setLayoutManager(new LinearLayoutManager(activity));
-        recyclerViewPois.setAdapter(poiAdapter);
 
         // Initialising Quick Search Array;
         String[] searchTypes = getResources().getStringArray(R.array.searchTypes);
@@ -204,6 +206,13 @@ public class PoisFragment extends Fragment implements
 
     // Create poi request and send it to API.
     private void findPois() {
+
+        if(actionsDisabled) {
+            return;
+        }
+
+        actionsDisabled = true;
+        Log.d("test","Actions disabled!!!");
 
         textViewEmptyRecyclerView.setVisibility(View.INVISIBLE);
 
@@ -302,8 +311,6 @@ public class PoisFragment extends Fragment implements
                 Intent intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
                 startActivity(intent);
 
-                wasErrorOnConnection = true;
-
                 if (isFirstTimeRun) {
                     isFirstTimeRun = false;
 
@@ -316,6 +323,10 @@ public class PoisFragment extends Fragment implements
                     poiAdapter = new PoiAdapter(activity, pois);
                     recyclerViewPois.setLayoutManager(new LinearLayoutManager(activity));
                     recyclerViewPois.setAdapter(poiAdapter);
+
+                    actionsDisabled = false;
+                    Log.d("test", "Actions enabled.");
+
                 }
 
                 try {
@@ -409,14 +420,14 @@ public class PoisFragment extends Fragment implements
                         pois.get(position).setWalkingDurationValue(durationValue);
 
                         readyPoisCounter++;
-
                         initPoisRecyclerView(isFavorites);
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
+                    readyPoisCounter++;
                 }
 
-                readyPoisCounter++;
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -448,10 +459,13 @@ public class PoisFragment extends Fragment implements
             poiAdapter = new PoiAdapter(activity, pois);
             recyclerViewPois.setLayoutManager(new LinearLayoutManager(activity));
             recyclerViewPois.setAdapter(poiAdapter);
-        }
 
-        if (!isFavorites) {
-            copyLastResult();
+            if (!isFavorites) {
+                copyLastResult();
+            }
+
+            actionsDisabled = false;
+            Log.d("test", "Actions enabled after first search.");
         }
     }
 
@@ -492,14 +506,12 @@ public class PoisFragment extends Fragment implements
                         pois.get(position).setDrivingDurationValue(durationValue);
 
                         readyPoisCounter++;
-
                         initPoisRecyclerView(isFavorites);
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
+                    readyPoisCounter++;
                 }
-
-                readyPoisCounter++;
             }
         }, new Response.ErrorListener() {
             @Override
@@ -573,7 +585,9 @@ public class PoisFragment extends Fragment implements
         Toast.makeText(activity, activity.getString(R.string.connection_error_plus_error_code) + connectionResult.getErrorCode(), Toast.LENGTH_SHORT).show();
     }
 
+    // Runs as quick search was clicked
     public void setType(String type) {
+
         this.type = type;
         Log.i(TAG, type);
 
@@ -584,6 +598,13 @@ public class PoisFragment extends Fragment implements
     }
 
     public void showFavorites() {
+
+        if(actionsDisabled) {
+            return;
+        }
+
+        actionsDisabled = true;
+        Log.d("test", "Actions disabled!!!");
 
         FavoritesLogic favoritesLogic = new FavoritesLogic(activity);
 
@@ -609,6 +630,10 @@ public class PoisFragment extends Fragment implements
             poiAdapter = new PoiAdapter(activity, pois);
             recyclerViewPois.setLayoutManager(new LinearLayoutManager(activity));
             recyclerViewPois.setAdapter(poiAdapter);
+
+            actionsDisabled = false;
+            Log.d("test", "Actions enabled.");
+
             return;
         } else {
             textViewEmptyRecyclerView.setVisibility(View.INVISIBLE);
