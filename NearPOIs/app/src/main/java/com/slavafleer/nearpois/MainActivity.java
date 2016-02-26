@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.Toast;
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements
         deviceType = (String) findViewById(R.id.linearLayoutMainRoot).getTag();
 
         // Don't recreate fragments on rotations
-        if(poisFragment == null) {
+        if (poisFragment == null) {
             poisFragment = new PoisFragment();
         }
 
@@ -68,9 +67,6 @@ public class MainActivity extends AppCompatActivity implements
 
             fragmentMap.getMapAsync(this);
         }
-
-        // Hide soft keyboard on start.
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     @Override
@@ -103,9 +99,9 @@ public class MainActivity extends AppCompatActivity implements
     // Show POI on the map or in map fragment on tablet or as map activity on phone
     private void showOnMap(Poi poi) {
 
-        if(deviceType.equals("tablet")) {
+        if (deviceType.equals("tablet")) {
 
-            if(googleMap == null) {
+            if (googleMap == null) {
                 return;
             }
 
@@ -143,7 +139,6 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onDataLongClick(Poi poi, LinearLayout linearLayoutPoiData, final int position) {
 
-        //TODO: need to check if this favorite is already saved
         Log.i(TAG, poi.getName() + " long touched.");
 
         SharedPreferences sharedPreferences = getSharedPreferences("MainActivity", MODE_PRIVATE);
@@ -179,7 +174,8 @@ public class MainActivity extends AppCompatActivity implements
                             break;
 
                         case R.id.menu_item_poi_share:
-                            //TODO: need to do
+                            // Share the poi name and address
+                            share(tmpPoi);
                             break;
                     }
 
@@ -190,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements
             popupMenu.show();
 
             // Open popup menu on Results list item long click
-         } else {
+        } else {
 
             PopupMenu popupMenu = new PopupMenu(this, linearLayoutPoiData);
             popupMenu.getMenuInflater().inflate(R.menu.menu_item_poi, popupMenu.getMenu());
@@ -202,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
 
-                    switch(item.getItemId()) {
+                    switch (item.getItemId()) {
                         case R.id.menu_item_poi_show_on_map:
                             onDataClick(tmpPoi);
                             break;
@@ -218,13 +214,7 @@ public class MainActivity extends AppCompatActivity implements
 
                         case R.id.menu_item_poi_share:
                             // Share the poi name and address
-                            Intent intent = new Intent();
-                            intent.setAction(Intent.ACTION_SEND);
-                            intent.putExtra(Intent.EXTRA_TEXT,
-                                    tmpPoi.getName() + "\n\n" +
-                                    tmpPoi.getVicinity());
-                            intent.setType("text/plain");
-                            startActivity(intent);
+                            share(tmpPoi);
                             break;
                     }
 
@@ -236,12 +226,23 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
+    // Share the poi name and address
+    private void share(Poi tmpPoi) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT,
+                tmpPoi.getName() + "\n\n" +
+                        tmpPoi.getVicinity());
+        intent.setType("text/plain");
+        startActivity(intent);
+    }
+
     // Runs when quick search is clicked and give type of search
     @Override
     public void onQuickSearchClick(String type) {
 
         poisFragment.setType(type);
-        Toast.makeText(this, "Searched by type: " + type, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Searched by type: " + type, Toast.LENGTH_SHORT).show();
         Log.i(TAG, type);
     }
 
@@ -250,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
 
-        if(lastSelectedPoi != null) {
+        if (lastSelectedPoi != null) {
             showOnMap(lastSelectedPoi);
         }
     }
@@ -271,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.menu_item_favorites:
                 Toast.makeText(this, "Favorites", Toast.LENGTH_SHORT).show();
 
-                if(poisFragment != null) {
+                if (poisFragment != null) {
                     poisFragment.showFavorites();
                 }
                 return true;
@@ -295,7 +296,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onLocationGet(Location lastLocation) {
 
-        if(isFirstTimeRun && deviceType.equals("tablet")) {
+        if (isFirstTimeRun && deviceType.equals("tablet")) {
             isFirstTimeRun = false;
 
             lastSelectedPoi = new Poi("You", lastLocation.getLatitude(), lastLocation.getLongitude());

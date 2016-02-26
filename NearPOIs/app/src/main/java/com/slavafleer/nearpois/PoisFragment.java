@@ -431,6 +431,7 @@ public class PoisFragment extends Fragment implements
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
                     readyPoisCounter++;
+                    initPoisRecyclerView(isFavorites);
                 }
 
 
@@ -517,6 +518,7 @@ public class PoisFragment extends Fragment implements
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
                     readyPoisCounter++;
+                    initPoisRecyclerView(isFavorites);
                 }
             }
         }, new Response.ErrorListener() {
