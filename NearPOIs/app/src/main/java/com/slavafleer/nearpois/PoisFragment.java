@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -82,7 +83,8 @@ public class PoisFragment extends Fragment implements
     private double clientLatitude;
     private double clientLongitude;
 
-
+    private static boolean isFirstTimeRun = true;
+    private static boolean wasErrorOnConnection = false;
 
     private int readyPoisCounter; // Show completed data of Pois
 
@@ -145,34 +147,12 @@ public class PoisFragment extends Fragment implements
             @Override
             public void onClick(View v) {
 
-                if(lastLocation == null) {
-                    Toast.makeText(activity, R.string.location_still_not_found, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
-                        clientLatitude + "," + clientLongitude +
-                        "&radius=10000&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
-                findPois();
+                findAllPois();
             }
         });
 
         recyclerViewPois = (RecyclerView) view.findViewById(R.id.recyclerViewPois);
         recyclerViewQuickSearches = (RecyclerView) view.findViewById(R.id.recyclerViewQuickSearches);
-
-        // TODO: TESTING
-        if (pois.isEmpty()) {
-            // Load from DB last results
-            resultsLogic.open();
-            pois = resultsLogic.getAllResults();
-            resultsLogic.close();
-
-            isListOfFavorites = false;
-
-            SharedPreferences sharedPreferences = activity.getSharedPreferences("MainActivity", Context.MODE_PRIVATE);
-            sharedPreferences.edit().putBoolean("isListOfFavorites", isListOfFavorites).commit();
-        }
-
 
         // Initialising Pois Recycler View.
         //TODO: to check if we have location
@@ -202,6 +182,19 @@ public class PoisFragment extends Fragment implements
         textViewEmptyRecyclerView = (TextView) view.findViewById(R.id.emptyRecyclerView);
 
         return view;
+    }
+
+    // Find all POIs
+    private void findAllPois() {
+        if(lastLocation == null) {
+            Toast.makeText(activity, R.string.location_still_not_found, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
+                clientLatitude + "," + clientLongitude +
+                "&radius=10000&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
+        findPois();
     }
 
     // Create poi request and send it to API.
@@ -289,6 +282,26 @@ public class PoisFragment extends Fragment implements
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e(TAG, error.getMessage());
+
+                Toast.makeText(activity, "Connection error.\nCheck you have internet connection.", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+                startActivity(intent);
+
+                wasErrorOnConnection = true;
+
+                if (isFirstTimeRun) {
+                    isFirstTimeRun = false;
+
+                    // Load from DB last results if were any connection error
+                    resultsLogic.open();
+                    pois = resultsLogic.getAllResults();
+                    resultsLogic.close();
+
+                    poiAdapter = new PoiAdapter(activity, pois);
+                    recyclerViewPois.setLayoutManager(new LinearLayoutManager(activity));
+                    recyclerViewPois.setAdapter(poiAdapter);
+                }
 
                 dialog.dismiss();
             }
@@ -504,6 +517,16 @@ public class PoisFragment extends Fragment implements
             clientLongitude = lastLocation.getLongitude();
             Log.i(TAG, "Client location: " + clientLatitude + ", " + clientLongitude);
             locationCallbacks.onLocationGet(lastLocation);
+
+            if (isFirstTimeRun) {
+
+                findAllPois();
+
+                isListOfFavorites = false;
+
+                SharedPreferences sharedPreferences = activity.getSharedPreferences("MainActivity", Context.MODE_PRIVATE);
+                sharedPreferences.edit().putBoolean("isListOfFavorites", isListOfFavorites).commit();
+            }
         } else {
             Log.i(TAG, "Client location is not found.");
             Toast.makeText(activity, R.string.enable_location_settings, Toast.LENGTH_SHORT).show();
