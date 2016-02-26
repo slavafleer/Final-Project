@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     android:id="@+id/linearLayoutMainRoot"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -16,38 +16,26 @@
     <FrameLayout
         android:id="@+id/poisContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:layout_alignParentTop="true"
-        android:layout_above="@+id/frameLayoutAnchor"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="-8dp"
         android:layout_weight="1"
         app:cardBackgroundColor="@color/colorBlue50"
         app:cardCornerRadius="@dimen/card_corner_radius"
         app:cardElevation="@dimen/card_elevation"
-        app:cardUseCompatPadding="true"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/frameLayoutAnchor">
+        app:cardUseCompatPadding="true">
 
         <fragment
             android:id="@+id/mapContainer"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="4dp"
-            tools:layout="@layout/activity_map"/>
+            android:layout_margin="4dp"/>
     </android.support.v7.widget.CardView>
 
-    <FrameLayout
-        android:id="@+id/frameLayoutAnchor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true">
-    </FrameLayout>
 
-
-</RelativeLayout>
+</LinearLayout>
