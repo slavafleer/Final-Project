@@ -229,13 +229,6 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    // Runs when poi item photo part is clicked.
-    @Override
-    public void onPhotoClick(Poi poi) {
-
-        Log.i(TAG, "Photo of " + poi.getName());
-    }
-
     // Runs when quick search is clicked and give type of search
     @Override
     public void onQuickSearchClick(String type) {

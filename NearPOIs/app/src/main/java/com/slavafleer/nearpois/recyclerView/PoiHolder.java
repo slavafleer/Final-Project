@@ -30,6 +30,7 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
 
     private OnClickListener onClickListener;
 
+    private LinearLayout linearLayoutItemRoot;
     private LinearLayout linearLayoutPoiData;
     private TextView textViewName;
     private TextView textViewVicinity;
@@ -47,6 +48,7 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
 
         this.context = context;
 
+        linearLayoutItemRoot = (LinearLayout) itemView.findViewById(R.id.linearLayoutItemRoot);
         linearLayoutPoiData = (LinearLayout) itemView.findViewById(R.id.linearLayoutPoiData);
         textViewName = (TextView) linearLayoutPoiData.findViewById(R.id.textViewItemPoiName);
         textViewVicinity = (TextView) linearLayoutPoiData.findViewById(R.id.textViewItemPoiVicinity);
@@ -58,10 +60,8 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
         textViewWalkingDuration = (TextView) linearLayoutPoiData.findViewById(R.id.textViewItemPoiWalkingDuration);
         textViewDrivingDuration = (TextView) linearLayoutPoiData.findViewById(R.id.textViewItemPoiDrivingDuration);
 
-        linearLayoutPoiData.setOnClickListener(this);
-        linearLayoutPoiData.setOnLongClickListener(this);
-
-        imageViewPhoto.setOnClickListener(this);
+        linearLayoutItemRoot.setOnClickListener(this);
+        linearLayoutItemRoot.setOnLongClickListener(this);
 
         onClickListener = (OnClickListener) context;
     }
@@ -92,7 +92,6 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
             textViewVicinity.setText(R.string.no_information);
         }
 
-        // TODO: to add dependence for settings (km or miles) and show the relevant one.
         if (distanceText != null) {
             textViewDistance.setText(distanceText);
         } else {
@@ -123,9 +122,6 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
             textViewRating.setText("");
         }
 
-        // TODO: load image, need to decide from where
-        // TODO: probably to load from Data Base.
-
         // Show image in item.
         String photoReference = poi.getPhotoReference();
 
@@ -134,8 +130,6 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
                 + photoReference + "&key=" + Constants.ACCESS_KEY_GOOGLE_PLACE_API;
         Picasso.with(context)
                 .load(urlPhoto)
-//                .error(android.R.drawable.ic_menu_crop)
-//                .fit()
                 .transform(new RoundedTransformation(16, 0)) // used 3rd side class
                 .into(imageViewPhoto, new Callback() {
                     @Override
@@ -150,27 +144,20 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
                 });
     }
 
-    // Do it on poi item (data or photo) clicked.
+    // Do it on poi item clicked.
     @Override
     public void onClick(View v) {
 
-        if (v instanceof LinearLayout) { // data part
-//            Log.i(TAG, textViewName.getText().toString());
             onClickListener.onDataClick(poi);
-        } else { // photo part
-//            Log.i(TAG, "Photo of " + textViewName.getText().toString());
-            onClickListener.onPhotoClick(poi);
-        }
     }
 
     // Do it on poi data long click.
     @Override
     public boolean onLongClick(View v) {
 
-//        Log.i(TAG, textViewName.getText().toString() + " long touched.");
         onClickListener.onDataLongClick(poi, linearLayoutPoiData, position);
 
-        return true; //  don't do onQuickSearchClick too.
+        return true; //  don't do onClick too.
     }
 
     public interface OnClickListener {
@@ -178,7 +165,5 @@ public class PoiHolder extends RecyclerView.ViewHolder implements
         void onDataClick(Poi poi);
 
         void onDataLongClick(Poi poi, LinearLayout linearLayoutPoiData, int position);
-
-        void onPhotoClick(Poi poi);
     }
 }
