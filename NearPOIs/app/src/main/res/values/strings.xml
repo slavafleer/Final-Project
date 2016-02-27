@@ -63,7 +63,7 @@
     <string name="poi_added_to_favorites">The POI was added to Favorites.</string>
     <string name="poi_deleted_from_favorites">The POI was deleted from Favorites.</string>
     <string name="no_favorites">You do not have any favorites at this moment.\n\nPress long click on any item and choose \"Add to Favorites\".</string>
-    <string name="enable_location_settings">Enable Location Settings.</string>
+    <string name="enable_location_settings">Enable Location Settings.\nOn some devices you need also internet connection.</string>
     <string name="location_still_not_found">Device location still not found.\nPlease try later.</string>
     <string name="no_results_found">No results were found.</string>
 

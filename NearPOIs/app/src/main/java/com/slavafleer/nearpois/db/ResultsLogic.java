@@ -131,6 +131,11 @@ public class ResultsLogic extends BaseLogic {
     public void addAllResults(ArrayList<Poi> pois) {
 
         for (Poi poi : pois) {
+            poi.setDistanceText("");
+            poi.setIsOpen("");
+            poi.setDrivingDurationText("");
+            poi.setWalkingDurationText("");
+
             addPoi(poi);
         }
     }
