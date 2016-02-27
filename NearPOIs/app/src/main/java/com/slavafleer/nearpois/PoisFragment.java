@@ -87,6 +87,7 @@ public class PoisFragment extends Fragment implements
 
     private static boolean isFirstTimeRun = true;
     private static boolean actionsDisabled;
+    private static boolean isIsFirstTimeNoLocation = true;
 
     private int readyPoisCounter; // Show completed data of Pois
 
@@ -218,7 +219,7 @@ public class PoisFragment extends Fragment implements
     // Find all POIs
     private void findAllPois() {
         if (lastLocation == null) {
-            Toast.makeText(activity, R.string.location_still_not_found, Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, R.string.location_still_not_found, Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -338,9 +339,12 @@ public class PoisFragment extends Fragment implements
             public void onErrorResponse(VolleyError error) {
                 Log.e(TAG, error.getMessage());
 
-                Toast.makeText(activity, R.string.connection_error_check_settings, Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, R.string.connection_error_check_settings, Toast.LENGTH_LONG).show();
 
-                Intent intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+                actionsDisabled = false;
+                Log.d("test", "Actions enabled.");
+
+                Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
                 startActivity(intent);
 
                 if (isFirstTimeRun) {
@@ -592,11 +596,21 @@ public class PoisFragment extends Fragment implements
                 sharedPreferences.edit().putBoolean(Constants.KEY_IS_FAVORITES, isListOfFavorites).commit();
             }
         } else {
-            Log.i(TAG, "Client location is not found.");
-            Toast.makeText(activity, R.string.enable_location_settings, Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivity(intent);
+            if (isIsFirstTimeNoLocation) {
+
+                isIsFirstTimeNoLocation = false;
+                isFirstTimeRun = false;
+
+                Log.i(TAG, "Client location is not found.");
+                Toast.makeText(activity, R.string.enable_location_settings, Toast.LENGTH_SHORT).show();
+
+                actionsDisabled = false;
+                Log.d("test", "Actions enabled.");
+
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+            }
         }
     }
 
